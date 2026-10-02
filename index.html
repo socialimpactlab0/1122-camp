@@ -1844,19 +1844,6 @@
             </div>
 
             <div class="field full">
-              <label for="photoConsent">活動拍照與紀錄同意 <span class="required">*</span></label>
-              <select id="photoConsent" name="photoConsent" required>
-                <option value="">請選擇</option>
-                <option value="同意，活動照片可作為活動紀錄與非商業宣傳使用">
-                  同意，活動照片可作為活動紀錄與非商業宣傳使用
-                </option>
-                <option value="不同意，請避免拍攝孩子正面特寫">
-                  不同意，請避免拍攝孩子正面特寫
-                </option>
-              </select>
-            </div>
-
-            <div class="field full">
               <label for="note">備註</label>
               <textarea id="note" name="note" placeholder="例如：孩子特殊狀況、需注意事項等"></textarea>
             </div>
@@ -1981,7 +1968,6 @@
           childName: data.childName.trim(),
           grade: data.grade,
           school: data.school.trim(),
-          photoConsent: data.photoConsent,
           note: data.note.trim(),
           adSource: adSource,
           pageUrl: window.location.href
