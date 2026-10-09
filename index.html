@@ -1,653 +1,2226 @@
+<!-- trigger pages rebuild -->
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <base target="_top">
-  <title>2027 拜訪回報</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>從神韻看見自律之美｜免費親子自律成長活動</title>
+  <meta name="description" content="孩子能管好手機，也能管好自己嗎？免費親子自律成長活動，透過趣味搶答、影片判斷、3C節制與親子互動，陪孩子看見自律對生活與未來的影響。2026/11/22 台南維悅酒店，國小3～6年級親子參加，限家長30名＋孩子30名。" />
+
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '770057572700869');
+    fbq('track', 'PageView');
+  </script>
+
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=770057572700869&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
-    :root{--bg:#f5f6f3;--paper:#fff;--ink:#1f3430;--muted:#63736e;--brand:#216856;--light:#e9f2ed;--line:#dce4df;--warn:#865512;--warning:#fff6e3;--danger:#a53731;--shadow:0 8px 30px #17352b0b}
-    *{box-sizing:border-box} [hidden]{display:none!important}
-    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
-    button,input,select,textarea{font:inherit} button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
-    button{cursor:pointer} button:disabled{cursor:wait;opacity:.55}
-    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #62a48d;outline-offset:3px}
-    .app{max-width:1020px;margin:auto;padding:28px 24px 70px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
-    .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--brand);margin:0 0 5px}
-    h1{font-size:28px;line-height:1.3;margin:0;font-weight:750;letter-spacing:.03em}
-    .subtitle{font-size:14px;color:var(--muted);margin:7px 0 0}
-    .button{border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);padding:10px 16px;min-height:46px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-weight:650;gap:6px}
-    .button.primary{background:var(--brand);border-color:var(--brand);color:#fff}.button.ghost{background:transparent}
-    .button.secondary{background:var(--light);border-color:var(--brand);color:var(--brand)}
-    .button.secondary:hover:not(:disabled){background:#d6e8dd}
-    #saveOnly{flex:0 0 auto;white-space:nowrap;min-height:50px}
-    @media(max-width:380px){.dialog-actions{flex-wrap:wrap}.dialog-actions .button{flex:1 1 100%!important}}
-    .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
-    .filters{display:grid;grid-template-columns:150px 1fr;gap:14px}
-    label.field{display:block;font-size:13px;font-weight:700;color:var(--muted)}
-    input[type=search],input[type=text],input[type=date],select,textarea{width:100%;background:#fff;color:var(--ink);border:1px solid #cbd7d0;border-radius:10px;min-height:48px;padding:10px 12px;font-size:16px}
-    label.field input,label.field select{margin-top:6px}textarea{resize:vertical;min-height:96px;line-height:1.5}
-    .search{margin-top:14px}.progress-line{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin:20px 0 9px}.progress-line strong{font-weight:700}
-    progress{appearance:none;width:100%;height:6px;border:0;border-radius:5px;display:block;overflow:hidden;background:var(--light)}progress::-webkit-progress-bar{background:var(--light)}progress::-webkit-progress-value{background:var(--brand)}progress::-moz-progress-bar{background:var(--brand)}
-    .tabs{display:flex;gap:7px;margin-top:20px;flex-wrap:wrap}.tab{border:1px solid var(--line);border-radius:30px;padding:8px 15px;background:#fff;color:var(--muted);font-size:14px;min-height:42px}.tab[aria-pressed=true]{color:#fff;background:var(--brand);border-color:var(--brand)}
-    .list-head{display:flex;justify-content:space-between;align-items:center;margin:22px 2px 12px;font-size:13px;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
-    .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.stop-no{font-size:12px;color:var(--muted);font-weight:600}.badge{font-size:11px;line-height:1.5;padding:4px 8px;border-radius:7px;background:var(--light);color:var(--brand);max-width:70%;text-align:right}.badge.stopped{background:#f8eae6;color:var(--danger)}.badge.pending{background:#eff1ef;color:#68766c}
-    .card h2{font-size:19px;line-height:1.45;margin:0;font-weight:700;overflow-wrap:anywhere}.address{font-size:14px;color:var(--muted);margin:0;overflow-wrap:anywhere}.card-foot{display:flex;gap:9px;margin-top:auto;padding-top:6px}.card-foot .primary{flex:1}.small-alert{font-size:12px;color:var(--warn);margin:0;overflow-wrap:anywhere}.small-alert summary{cursor:pointer;padding:8px 0;min-height:36px}.small-alert p{white-space:pre-wrap;margin:4px 0 8px}.empty{text-align:center;color:var(--muted);padding:42px 16px;grid-column:1/-1;background:#fff;border:1px dashed var(--line);border-radius:16px}
-    .notice{padding:12px 14px;border-radius:10px;background:var(--warning);color:var(--warn);font-size:14px;margin:0 0 16px;overflow-wrap:anywhere}.notice.error{background:#fff0ed;color:var(--danger)}.notice.success{background:var(--light);color:var(--brand)}
-    .loading{text-align:center;padding:55px 10px;color:var(--muted)}.loading::before{content:"";display:block;margin:0 auto 15px;width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
-    .footnote{color:var(--muted);font-size:12px;margin-top:18px}
-    dialog{padding:0;border:0;border-radius:20px;width:min(620px,calc(100% - 24px));max-height:92dvh;color:var(--ink);background:#fff;box-shadow:0 22px 80px #162c3240}
-    dialog::backdrop{background:#112c2b80;backdrop-filter:blur(3px)}
-    .dialog-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}.dialog-head strong{font-size:15px}.close{border:0;background:#f0f3f0;border-radius:50%;width:42px;height:42px;color:var(--ink);font-size:23px}
-    .dialog-content{padding:20px 24px 12px}.shop-meta{font-size:12px;color:var(--brand);margin:0 0 6px}.shop-name{font-size:24px;line-height:1.35;margin:0 0 8px;overflow-wrap:anywhere}.shop-address{display:block;color:var(--brand);font-size:14px;margin:0 0 14px;text-underline-offset:3px}.last{font-size:13px;color:var(--muted);background:#f5f7f4;border-radius:10px;padding:12px;margin-bottom:18px;white-space:pre-wrap;overflow-wrap:anywhere}
-    fieldset{border:0;padding:0;margin:0;min-width:0}legend{font-weight:700;font-size:16px;padding:0;margin:0 0 5px}.hint{color:var(--muted);font-size:12px;margin:4px 0 12px}
-    .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{position:relative;display:flex;align-items:center;gap:10px;border:1px solid #cbd7d0;border-radius:12px;padding:13px 12px;min-height:54px;font-size:15px;cursor:pointer;background:#fff}.choice.selected{border:2px solid var(--brand);padding:12px 11px;background:var(--light);color:var(--brand);font-weight:700}.choice.wide{grid-column:1/-1}.choice input{width:19px;height:19px;accent-color:var(--brand);flex-shrink:0;margin:0}.field-gap{margin-top:20px}.field-title{display:block;font-size:15px;font-weight:700;margin-bottom:9px}.optional{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}.radios{display:flex;gap:10px}.radios .choice{flex:1}.new-name{margin-top:12px}.new-name input{margin-top:6px}
-    .dialog-actions{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:14px 22px max(14px,env(safe-area-inset-bottom));display:flex;gap:10px;z-index:2}.dialog-actions .primary{flex:1;min-height:50px}
-    .history-button{background:none;border:0;text-decoration:underline;text-underline-offset:4px;color:var(--muted);padding:14px 0;min-height:44px;font-size:13px}.history-item{border-top:1px solid var(--line);padding:12px 0;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.history-item strong{display:block;color:var(--brand);margin-bottom:4px}.history-item p{margin:3px 0}.history-area{margin-bottom:10px}.inline-error{margin-top:14px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:20;background:#173f34;color:#fff;border-radius:12px;box-shadow:0 5px 25px #173f3430;padding:12px 20px;max-width:calc(100% - 28px);width:max-content;font-size:14px}
-    @media(max-width:640px){.app{padding:20px 14px 50px}.top{margin-bottom:18px}h1{font-size:24px}.subtitle{font-size:12px}.top .button{font-size:13px;padding:8px 12px}.panel{padding:16px;border-radius:15px}.filters{grid-template-columns:106px 1fr;gap:10px}.grid{grid-template-columns:1fr}.tabs{gap:6px}.tab{padding:8px 11px;font-size:13px}.card{padding:16px}.card h2{font-size:18px}.dialog-content{padding:18px 18px 8px}.dialog-head{padding:12px 18px}.dialog-actions{padding-left:16px;padding-right:16px}.shop-name{font-size:22px}.choice{font-size:14px}.progress-line{font-size:13px}dialog{max-height:95dvh}.list-head{font-size:12px}}
-    @media(prefers-reduced-motion:reduce){.loading::before{animation:none}}
-  .business-hours{padding:10px 12px;background:#f0f6f2;border-radius:9px;font-size:14px}.hours-today{margin:0;color:#245e50;font-weight:600}.hours-week summary{cursor:pointer;padding-top:8px;min-height:34px}.hours-week p{margin:6px 0;overflow-wrap:anywhere}
-  .claim-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.claim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}.claim-grid ol{padding-left:22px;font-size:14px;overflow-wrap:anywhere}.claim-grid li{margin:8px 0}#claimsPanel{margin:16px 0}#claimsPanel h2{font-size:18px}#claimsPanel p{white-space:pre-wrap}[hidden]{display:none!important}.page-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 18px}.page-nav .button{min-height:52px;font-size:18px}.page-nav .button[aria-current="page"]{background:var(--brand);color:#fff;border-color:var(--brand)}.page-help{font-size:16px;line-height:1.7;color:#455e56}.claim-card-help{font-size:14px;line-height:1.7;color:#54675f;margin:10px 0 0}.claim-actions .primary{width:100%}#claimsPanel .field{margin-top:16px}#claimsPanel .hint{font-size:14px;line-height:1.7}.subtitle{line-height:1.7}.claim-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 8px}.claim-metric{padding:12px 6px;background:#f3f6f4;border-radius:12px;text-align:center}.claim-metric span{display:block;font-size:14px}.claim-metric strong{display:block;font-size:26px;margin-top:6px}.claimed{color:#1b7046}.unclaimed{color:#a84509}.claim-summary{width:100%;border-collapse:collapse;table-layout:fixed;font-size:15px;margin:16px 0 28px}.claim-summary caption{text-align:left;font-weight:700;padding-bottom:12px}.claim-summary th,.claim-summary td{border:1px solid #d3dfd9;padding:12px 4px;text-align:center}.claim-summary thead,.claim-summary tr:last-child{background:#edf4ef}.claim-details-title{border-top:1px solid #d3dfd9;padding-top:22px}.claim-badge{display:inline-block;border-radius:20px;padding:5px 12px;font-weight:700}.claim-badge.claimed{background:#e3f2e6}.claim-badge.unclaimed{background:#fff0de}.claim-person{font-size:18px;font-weight:700;overflow-wrap:anywhere}#claimsPanel .claim-actions button[aria-pressed=true]{background:var(--brand);color:white;border-color:var(--brand)}@media(max-width:400px){.claim-metric strong{font-size:23px}.claim-summary{font-size:14px}}.business-hours{white-space:pre-wrap;overflow-wrap:anywhere}.business-hours p{margin:6px 0}.claim-grid li .business-hours{margin:8px 0 16px}.business-hours .hint{font-size:13px;line-height:1.6}.hours-status{font-size:13px;font-weight:700;padding:4px 8px;border-radius:6px;background:#f1f3f2;display:inline-block}.hours-status-A{color:#166046;background:#e0f3e9}.hours-status-B{color:#315571;background:#e5eff7}.hours-status-C,.hours-status-D{color:#84420e;background:#fff0dd}.hours-days{margin:12px 0}.hours-days>div{display:grid;grid-template-columns:58px 1fr;border-bottom:1px solid #e3ebe7;padding:6px 0;gap:8px}.hours-days dt,.hours-days dd{margin:0;font-size:14px}.hours-note{font-size:14px;line-height:1.7}.hours-sources{display:flex;flex-wrap:wrap;gap:12px}.hours-sources a{display:inline-block;padding:8px 0;color:#1c6556}.business-hours summary{cursor:pointer;padding:8px 0;font-size:14px}</style>
+    :root {
+      --cream: #fff7e8;
+      --cream-2: #fffaf2;
+      --orange: #ff6b18;
+      --orange-dark: #e9570c;
+      --yellow: #ffd95a;
+      --green: #7ed6a2;
+      --mint: #dff8e9;
+      --sky: #dff5ff;
+      --blue: #2f95d8;
+      --text: #222222;
+      --muted: #666666;
+      --line: #f0dfc6;
+      --white: #ffffff;
+      --shadow: 0 16px 36px rgba(132, 84, 33, 0.14);
+      --shadow-soft: 0 8px 22px rgba(132, 84, 33, 0.10);
+      --radius: 24px;
+      --radius-lg: 36px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      color: var(--text);
+      background: var(--cream-2);
+      line-height: 1.75;
+      font-size: 17px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid #f2e6d2;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .brand img {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-hint {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fff0d8;
+      border: 1px solid #f2d2a3;
+      color: #8a4b00;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      font-size: 15px;
+      color: #555;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-cta {
+      color: white !important;
+      background: var(--orange);
+      padding: 9px 18px;
+      border-radius: 999px;
+      box-shadow: 0 8px 18px rgba(255, 107, 24, 0.28);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 30px;
+      font-weight: 900;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: inherit;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      box-shadow: 0 12px 26px rgba(255, 107, 24, 0.30);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(255, 107, 24, 0.38);
+    }
+
+    .btn-soft {
+      color: #333;
+      background: #fff0d8;
+      border: 1px solid #f2d2a3;
+    }
+
+    .btn-green {
+      color: #175c36;
+      background: #dff8e9;
+      border: 1px solid #a9dfbd;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      height: calc(100vh - 66px);
+      min-height: 520px;
+      max-height: 620px;
+      background: #fff6e8;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #f2e6d2;
+    }
+
+    .hero-picture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  display: block;
+}
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 247, 232, 0.98) 0%,
+        rgba(255, 247, 232, 0.90) 36%,
+        rgba(255, 247, 232, 0.30) 64%,
+        rgba(255, 247, 232, 0.02) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      padding: 58px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid #f1dfc4;
+      color: #754200;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 18px;
+    }
+
+    .eyebrow-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 6px rgba(255, 107, 24, 0.14);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .hero-title .orange {
+      color: var(--orange);
+    }
+
+    .hero-sub {
+      margin: 22px 0 0;
+      max-width: 600px;
+      color: #444;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .hero-sub strong {
+      color: var(--orange-dark);
+      font-weight: 900;
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-tags {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-tags span {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 900;
+      color: #754200;
+      box-shadow: var(--shadow-soft);
+      font-size: 15px;
+    }
+
+    section {
+      padding: 74px 0;
+    }
+
+    section[id] {
+      scroll-margin-top: 82px;
+    }
+
+    .section-center {
+      text-align: center;
+    }
+
+    .section-label {
+      display: inline-flex;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: #fff0d8;
+      color: #8a4b00;
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.25;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -0.03em;
+    }
+
+    .section-lead {
+      margin: 14px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .benefit-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .benefit-card {
+      min-height: 275px;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255,255,255,0.75);
+      transition: 0.2s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-yellow {
+      background: linear-gradient(145deg, #ffe16b, #ffd64f);
+    }
+
+    .benefit-green {
+      background: linear-gradient(145deg, #9fe3b7, #78d49b);
+    }
+
+    .benefit-orange {
+      background: linear-gradient(145deg, #ff9967, #ff7b48);
+    }
+
+    .benefit-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.55);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      font-size: 34px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
+    .benefit-card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .benefit-card ul {
+      margin: 0;
+      padding-left: 20px;
+      font-weight: 700;
+      color: #222;
+      font-size: 16px;
+    }
+
+    .info-section {
+      background: linear-gradient(180deg, #fff9ee, #fff3dd);
+      border-top: 1px solid #f2e6d2;
+      border-bottom: 1px solid #f2e6d2;
+    }
+
+    .info-box {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .info-visual {
+      min-height: 300px;
+      border-radius: 34px;
+      background: white;
+      border: 1px solid #f1dfc4;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-visual::before {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background: #ffd95a;
+      border-radius: 50%;
+      left: -50px;
+      bottom: -50px;
+      opacity: 0.8;
+    }
+
+    .info-visual::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: #7ed6a2;
+      border-radius: 50%;
+      right: -60px;
+      top: -60px;
+      opacity: 0.8;
+    }
+
+    .info-icons {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      width: 100%;
+    }
+
+    .info-icon-card {
+      background: #fffaf2;
+      border: 1px solid #f1dfc4;
+      border-radius: 22px;
+      padding: 20px 14px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .info-icon-card .emoji {
+      display: block;
+      font-size: 38px;
+      margin-bottom: 6px;
+    }
+
+    .info-icon-card strong {
+      display: block;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-item {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: 20px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 14px;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .info-label {
+      color: #8a4b00;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .info-value {
+      color: #222;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .flow {
+      position: relative;
+      max-width: 720px;
+      margin: 42px auto 0;
+      padding: 8px 0;
+    }
+
+    .flow::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      bottom: 20px;
+      width: 4px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #333 0,
+        #333 6px,
+        transparent 6px,
+        transparent 14px
+      );
+      transform: translateX(-50%);
+      opacity: 0.45;
+    }
+
+    .flow-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 78px 1fr;
+      align-items: center;
+      margin: 22px 0;
+    }
+
+    .flow-content {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: 22px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-soft);
+      font-weight: 900;
+    }
+
+    .flow-time {
+      color: var(--orange-dark);
+      font-size: 18px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .flow-title {
+      color: #111;
+      font-size: 20px;
+    }
+
+    .flow-node {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      background: var(--yellow);
+      border: 4px solid white;
+      box-shadow: var(--shadow-soft);
+      font-size: 20px;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .flow-item:nth-child(even) .flow-content {
+      grid-column: 3;
+    }
+
+    .flow-item:nth-child(even) .flow-node {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .flow-item:nth-child(odd) .flow-content {
+      grid-column: 1;
+      text-align: right;
+    }
+
+    .flow-item:nth-child(odd) .flow-node {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .review-box,
+    .host-box,
+    .faq-box {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: var(--radius-lg);
+      padding: 42px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .video-wrap {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 26px;
+      box-shadow: var(--shadow-soft);
+      background: #fff3dd;
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .host-box {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .host-logo {
+      max-width: 320px;
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .host-card {
+      background: #fffaf2;
+      border: 1px solid #f1dfc4;
+      border-radius: 20px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+    }
+
+    .host-card small {
+      display: block;
+      color: #8a4b00;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .host-card strong,
+    .host-card li {
+      color: #222;
+      font-weight: 900;
+    }
+
+    .host-card ul {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .host-card li {
+      margin: 2px 0;
+    }
+
+    .host-link-card {
+      display: block;
+      background: #eefaf2;
+      border-color: #a9dfbd;
+      transition: 0.2s ease;
+    }
+
+    .host-link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .host-link-card p {
+      margin: 6px 0 0;
+      color: #4d6b56;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .host-link-arrow {
+      color: var(--orange-dark);
+      margin-left: 4px;
+    }
+
+    .faq {
+      margin-top: 26px;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      background: #fffaf2;
+      border: 1px solid #f1dfc4;
+      border-radius: 20px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 900;
+      color: #222;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "＋";
+      color: var(--orange);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    details[open] summary::after {
+      content: "－";
+    }
+
+    details p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 30%, rgba(255, 217, 90, 0.60), transparent 24%),
+        radial-gradient(circle at 90% 30%, rgba(126, 214, 162, 0.55), transparent 26%),
+        linear-gradient(135deg, #ffe2c1, #eadfff 70%, #dff5ff);
+      padding: 74px 0;
+      text-align: center;
+    }
+
+    .cta-title {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.2;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .cta-sub {
+      margin: 14px auto 0;
+      color: #4a4a4a;
+      max-width: 680px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .speech {
+      position: absolute;
+      background: white;
+      border: 2px solid #222;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .speech.s1 { left: 10%; top: 24%; }
+    .speech.s2 { right: 10%; top: 25%; }
+    .speech.s3 { left: 14%; bottom: 18%; }
+    .speech.s4 { right: 14%; bottom: 18%; }
+
+    .signup-section {
+      background: #fffaf2;
+    }
+
+    .form-wrap {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .form-note {
+      background: linear-gradient(145deg, #ff7b48, #ff6b18);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 86px;
+    }
+
+    .form-note h2 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .form-note p {
+      margin: 0;
+      opacity: 0.92;
+      font-weight: 700;
+    }
+
+    .signup-tags {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .signup-tag {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.30);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .form-note .small {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.30);
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .form-box {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-box-title {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .form-box-subtitle {
+      margin: 6px 0 24px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 900;
+      color: #333;
+      font-size: 15px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #dfc9a8;
+      border-radius: 15px;
+      padding: 13px 14px;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 107, 24, 0.13);
+    }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .required {
+      color: #d93636;
+    }
+
+    .submit-row {
+      margin-top: 22px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .status {
+      font-weight: 900;
+    }
+
+    .status.ok {
+      color: #16864b;
+    }
+
+    .status.err {
+      color: #d93636;
+    }
+
+    .mobile-cta {
+      display: none;
+    }
+
+    footer {
+      background: #222;
+      color: #f6e9d6;
+      text-align: center;
+      padding: 32px 0;
+      font-size: 14px;
+    }
+
+
+    .hero-proof {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #f1dfc4;
+      border-radius: 22px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+      max-width: 610px;
+    }
+
+    .hero-proof-title {
+      margin: 0 0 10px;
+      color: #8a4b00;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .hero-proof-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #333;
+      font-size: 15.5px;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .hero-proof-list li::before {
+      content: "✓";
+      color: var(--orange-dark);
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    .worry-section {
+      background: #fffaf2;
+      border-top: 1px solid #f2e6d2;
+    }
+
+    .worry-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .worry-card {
+      background: white;
+      border: 1px solid #f1dfc4;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .worry-card h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.35;
+      color: #111;
+      font-weight: 900;
+    }
+
+    .worry-card p {
+      margin: 0;
+      color: #555;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .worry-card strong {
+      color: var(--orange-dark);
+      font-weight: 900;
+    }
+
+    .decision-box {
+      margin-top: 34px;
+      background: linear-gradient(135deg, #fff0d8, #fffaf2);
+      border: 1px solid #f1dfc4;
+      border-radius: 28px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .decision-box h3 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.35;
+      font-weight: 900;
+      color: #111;
+    }
+
+    .decision-box p {
+      margin: 10px auto 0;
+      max-width: 760px;
+      color: #555;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .prize-section {
+      background: linear-gradient(180deg, #fff9ee 0%, #f8fbff 100%);
+      border-top: 1px solid #f2e6d2;
+      border-bottom: 1px solid #e4edf6;
+    }
+
+    .grade-chips {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .grade-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid #e4d5bd;
+      color: #744300;
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .prize-grid {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .prize-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: white;
+      border: 1px solid #eadcc7;
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .prize-card.gold {
+      border-top: 7px solid #e4ae20;
+    }
+
+    .prize-card.silver {
+      border-top: 7px solid #9fa9b4;
+    }
+
+    .prize-card.bronze {
+      border-top: 7px solid #b66a35;
+    }
+
+    .prize-image {
+      height: 270px;
+      padding: 18px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prize-image img {
+      position: absolute;
+      inset: 18px;
+      width: calc(100% - 36px);
+      height: calc(100% - 36px);
+      display: block;
+      object-fit: contain;
+    }
+
+    .prize-placeholder {
+      width: 100%;
+      height: 270px;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 50% 42%, #fff8e9 0 28%, #f4eadc 72%);
+      color: #9a5429;
+      font-size: 92px;
+      line-height: 1;
+    }
+
+    .prize-body {
+      flex: 1;
+      padding: 22px 24px 26px;
+      text-align: center;
+      border-top: 1px solid #f1e8db;
+      position: relative;
+      z-index: 1;
+      background: #fff;
+    }
+
+    .prize-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 5px 16px;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #553100;
+      background: #fff0bf;
+    }
+
+    .silver .prize-rank {
+      color: #3f4a55;
+      background: #edf1f5;
+    }
+
+    .bronze .prize-rank {
+      color: #6d3517;
+      background: #f7dfce;
+    }
+
+    .prize-body h3 {
+      margin: 14px 0 6px;
+      color: #111;
+      font-size: 23px;
+      line-height: 1.4;
+      font-weight: 900;
+    }
+
+    .prize-body p {
+      margin: 0;
+      color: #666;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .prize-note {
+      margin: 24px auto 0;
+      max-width: 820px;
+      padding: 15px 20px;
+      border-radius: 18px;
+      background: #fff0d8;
+      color: #6f4308;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .signup-push {
+      margin-bottom: 22px;
+      background: #fffaf2;
+      border: 1px solid #f1dfc4;
+      border-radius: 20px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .signup-push strong {
+      display: block;
+      color: #111;
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .signup-push p {
+      margin: 0;
+      color: #555;
+      font-size: 15.5px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding-bottom: 82px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .brand img {
+        height: 34px;
+        max-width: calc(100vw - 126px);
+      }
+
+      .brand-hint {
+        margin-left: 8px;
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+
+      .hero {
+        height: calc(100svh - 66px);
+        min-height: 640px;
+        max-height: 760px;
+        display: flex;
+        align-items: flex-end;
+        background: var(--cream);
+        padding: 0;
+      }
+
+      .hero::after {
+        display: block;
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 247, 232, 0.00) 0%,
+          rgba(255, 247, 232, 0.04) 36%,
+          rgba(255, 247, 232, 0.86) 62%,
+          rgba(255, 247, 232, 0.99) 100%
+        );
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .hero .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: none;
+        padding: 0 0 118px;
+      }
+
+      .hero-picture {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+
+      .hero-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+
+      .eyebrow {
+        margin-bottom: 16px;
+      }
+
+      .hero-title {
+        font-size: 31px;
+        line-height: 1.18;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-sub {
+        font-size: 15.5px;
+        line-height: 1.6;
+        margin-top: 10px;
+      }
+
+      .hero-actions {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .hero-actions .btn-soft {
+        display: none;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .hero-tags {
+        display: none;
+      }
+
+
+      .hero-proof {
+        margin-top: 12px;
+        padding: 13px 14px;
+        border-radius: 18px;
+      }
+
+      .hero-proof-title {
+        font-size: 14px;
+        margin-bottom: 7px;
+      }
+
+      .hero-proof-list {
+        font-size: 14px;
+        gap: 5px;
+      }
+
+      .worry-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .prize-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .prize-image,
+      .prize-placeholder {
+        height: 245px;
+      }
+
+
+      #benefits {
+        padding-top: 54px;
+      }
+
+      .info-box,
+      .host-box,
+      .form-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .benefit-grid,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .info-list {
+        gap: 12px;
+      }
+
+      .info-item {
+        grid-template-columns: 80px 1fr;
+      }
+
+      .flow::before {
+        left: 28px;
+        transform: none;
+      }
+
+      .flow-item {
+        grid-template-columns: 58px 1fr;
+        gap: 14px;
+      }
+
+      .flow-node {
+        grid-column: 1 !important;
+        grid-row: 1;
+      }
+
+      .flow-content {
+        grid-column: 2 !important;
+        text-align: left !important;
+      }
+
+      .review-box,
+      .host-box,
+      .faq-box,
+      .form-box {
+        padding: 26px;
+      }
+
+      .form-note {
+        position: static;
+        padding: 28px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .speech {
+        display: none;
+      }
+
+      .mobile-cta {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 60;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 10px 14px 14px;
+        background: rgba(255, 255, 255, 0.96);
+        border-top: 1px solid #f1dfc4;
+        box-shadow: 0 -10px 30px rgba(132, 84, 33, 0.14);
+        backdrop-filter: blur(12px);
+      }
+
+      .mobile-cta a {
+        min-height: 48px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 16px;
+      }
+
+      .mobile-cta .signup {
+        color: white;
+        background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      }
+
+      .mobile-cta .phone {
+        color: #175c36;
+        background: #dff8e9;
+        border: 1px solid #a9dfbd;
+      }
+    }
+
+    @media (min-width: 560px) and (max-width: 900px) {
+      .benefit-grid,
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+
+    /* 2026-06 mobile hero gap fix: reduce blank space under CTA */
+    @media (max-width: 900px) {
+      .hero {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+
+      .hero-content {
+        padding: 330px 0 6px !important;
+      }
+
+      .hero-actions {
+        margin-top: 14px !important;
+        margin-bottom: 0 !important;
+      }
+
+      .hero-actions .btn {
+        margin-bottom: 0 !important;
+      }
+
+      #benefits {
+        padding-top: 22px !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <main class="app">
-    <header class="top">
-      <div><p class="eyebrow">TAINAN · 2027</p><h1 id="pageTitle">路線認領</h1><p class="subtitle" id="pageSubtitle">選擇負責路線，安排拜訪人員。</p></div>
-      <div><button type="button" class="button" id="dailyButton" hidden>查詢已填回報</button> <button type="button" class="button ghost" id="refresh">重新整理</button></div>
-    </header>
-    <div id="globalError" class="notice error" role="alert" hidden></div>
-    <div id="offline" class="notice" role="status" hidden>目前沒有網路，填寫內容會保留；恢復連線後請按儲存。</div>
-    <div id="loading" class="loading" role="status">正在載入店家名單…</div>
-    <datalist id="peopleOptions"></datalist><section id="appContent" hidden><nav class="page-nav" aria-label="功能頁面"><button id="claimsTab" type="button" class="button" aria-controls="claimsPanel">路線認領</button><button id="visitsTab" type="button" class="button" aria-controls="visitPage">拜訪回報</button></nav>      <section id="claimsPanel" class="panel" hidden><h2>第二波｜三區認領總覽</h2><div id="claimTotals" class="claim-totals" aria-live="polite"></div><p id="claimUpdated" class="hint"></p><p class="hint">按右上方「重新整理」查看最新認領狀態。下方篩選不影響三區統計。</p><table class="claim-summary"><caption>三區認領進度</caption><thead><tr><th scope="col">區域</th><th scope="col">總組數</th><th scope="col">已認領</th><th scope="col">未認領</th></tr></thead><tbody id="claimSummaryRows"></tbody></table><h2 class="claim-details-title">路線認領明細</h2><p class="page-help">先選擇您要負責的路線，讓大家知道哪些路線已有人安排拜訪。</p><label class="field" for="claimDistrict">選擇區域<select id="claimDistrict"><option value="">全部區域</option><option>中西區</option><option>安平區</option><option>南區</option></select></label><p class="hint">認領只代表負責這組，不代表已完成拜訪。</p><label class="field" for="claimPerson">認領人員（必填，可選擇或填入）<input id="claimPerson" type="text" list="peopleOptions" maxlength="80" placeholder="例如：珍如、雅玲"></label><p class="hint">可選擇或輸入姓名；多人同行請用「、」分隔。新姓名會加入人員名單。</p><div class="claim-actions"><button id="allClaims" type="button" class="button" aria-pressed="true">全部</button><button id="claimedClaims" type="button" class="button" aria-pressed="false">已認領</button><button id="unclaimedClaims" type="button" class="button" aria-pressed="false">未認領</button><button id="myClaims" type="button" class="button" aria-pressed="false">我的路線</button></div><p id="claimStatus" role="status"></p><p class="hint">請固定同一瀏覽器認領及取消；換裝置或清除資料後，請管理者協助。姓名為登記資料，並非登入驗證。</p><div id="claimError" class="notice error" role="alert" hidden></div><div id="claimCards" class="claim-grid"></div></section>
-      <section id="visitPage" aria-label="拜訪回報"><section class="panel" aria-label="選擇拜訪路線">
-        <label class="field" for="wave">推廣波次<select id="wave"><option value="1">第一波｜233 家</option><option value="2">第二波｜176 家</option></select></label><div class="filters" style="margin-top:14px">
-          <label class="field" for="district">區<select id="district"><option value="">載入中…</option></select></label>
-          <label class="field" for="route">路線編號<select id="route"></select></label>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="https://taiwantsamt.com/" target="_blank" rel="noopener" aria-label="前往臺灣自媒體應用科技學會官網">
+        <img src="images/tsamt-logo.jpg" alt="臺灣自媒體應用科技學會">
+      </a>
+
+      <nav class="nav-links">
+        <a href="#benefits">三大收穫</a>
+        <a href="#info">活動資訊</a>
+        <a href="#schedule">活動流程</a>
+        <a href="#review">活動回顧</a>
+        <a href="#host">主辦團隊</a>
+        <a href="#signup" class="nav-cta">立即報名</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <picture class="hero-picture">
+  <source media="(max-width: 900px)" srcset="images/Hero-dm-mobile.jpg">
+  <img class="hero-bg-img" src="images/Hero-dm.jpg" alt="母親與孩子在溫暖的家中相視微笑，呈現親子陪伴與溝通">
+</picture>
+
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            免費親子自律成長活動｜家長30名＋孩子30名
+          </div>
+
+          <h1 class="hero-title">
+            孩子能管好手機，<br>
+            <span class="orange">也能管好自己嗎？</span>
+          </h1>
+
+          <p class="hero-sub">
+            從享譽世界的神韻藝術，看見藝術家如何靠自律走上世界舞台。
+            透過<strong>趣味搶答、影片判斷與親子互動</strong>，陪孩子練習為自己的選擇負責。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#signup">立即免費報名</a>
+            <a class="btn btn-soft" href="#prizes">查看分組獎品</a>
+          </div>
+
+          <div class="hero-tags">
+            <span>專業教師團隊設計</span>
+            <span>親子同行</span>
+            <span>互動搶答與積分</span>
+            <span>有精美禮物・人人有獎</span>
+          </div>
+
+          <div class="hero-proof">
+            <p class="hero-proof-title">陪孩子把「少看一點」變成「我會為自己做選擇」</p>
+            <ul class="hero-proof-list">
+              <li>11/22（日）13:30報到，14:00–16:30</li>
+              <li>國小3～6年級，需父母陪同，免費參加</li>
+              <li>學會判斷影片、練習3C節制，也勇敢表達想法</li>
+            </ul>
+          </div>
         </div>
-        <div class="field-gap">
-          <p class="hint" id="routeDefaultLabel"></p>
-          <label class="field" for="routePromoter">本次路線推廣人員<input id="routePromoter" type="text" list="peopleOptions" maxlength="80" placeholder="選擇或填入姓名" autocomplete="off"></label>
-          <p class="hint" id="routePromoterHint">在這裡選一次，這條路線各店會自動帶入；單店仍可換人。</p>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="container">
+        <div class="section-center">
+          <span class="section-label">家長為什麼會想帶孩子來</span>
+          <h2 class="section-title">自律不是一直忍耐，而是學會為自己做出好選擇</h2>
+          <p class="section-lead">
+            面對手機、短影音與AI帶來的大量資訊，孩子需要的不只是大人提醒，
+            更需要建立「看得懂、選得好、懂得停」的能力。
+          </p>
         </div>
-        
-        <label class="field search" for="search">搜尋本區店家<input id="search" type="search" placeholder="輸入店名、地址或 NO" autocomplete="off"></label>
-        <div class="progress-line"><strong id="progressText"></strong><span id="totalText"></span></div>
-        <progress id="progress" value="0" max="1" aria-label="本路線回報進度"></progress>
-        <div class="tabs" role="group" aria-label="回報狀態篩選">
-          <button class="tab" type="button" data-filter="pending" aria-pressed="true">未回報</button>
-          <button class="tab" type="button" data-filter="visited" aria-pressed="false">已回報</button>
-          <button class="tab" type="button" data-filter="all" aria-pressed="false">全部</button>
-          <button class="tab" type="button" data-filter="stopped" aria-pressed="false">不再拜訪</button>
+
+        <div class="benefit-grid">
+          <div class="benefit-card benefit-yellow">
+            <div class="benefit-icon">🔍</div>
+            <h3>學會判斷好內容</h3>
+            <ul>
+              <li>分辨影片帶來的不同影響</li>
+              <li>不被刺激的內容一直牽著走</li>
+              <li>練習選擇真正值得看的內容</li>
+            </ul>
+          </div>
+
+          <div class="benefit-card benefit-green">
+            <div class="benefit-icon">💚</div>
+            <h3>看見自律的成果</h3>
+            <ul>
+              <li>認識藝術家長期訓練的態度</li>
+              <li>理解堅持、專注與時間管理</li>
+              <li>知道成就來自每天的累積</li>
+            </ul>
+          </div>
+
+          <div class="benefit-card benefit-orange">
+            <div class="benefit-icon">💡</div>
+            <h3>親子一起練習</h3>
+            <ul>
+              <li>用勾選與搶答說出真實想法</li>
+              <li>家長也一起檢視3C習慣</li>
+              <li>完成一份親子自律約定</li>
+            </ul>
+          </div>
         </div>
-      </section>
-<div class="list-head"><span id="listCount"></span><span>依建議拜訪順序排列</span></div>
-      <section id="list" class="grid" aria-label="店家名單"></section>
-      <p class="footnote">導航開啟後請選「機車」模式；騎乘依現場交通標誌。回報時請選擇或填入本次推廣人員。</p>
-      </section>
+      </div>
+    </section>
+
+    <section class="worry-section">
+      <div class="container">
+        <div class="section-center">
+          <span class="section-label">家長最在意的事</span>
+          <h2 class="section-title">不是坐著聽課，孩子會一直參與</h2>
+          <p class="section-lead">
+            我們用孩子聽得懂的生活情境，讓親子一起勾選、搶答、討論與累積積分，從參與中理解自律。
+          </p>
+        </div>
+
+        <div class="worry-grid">
+          <div class="worry-card">
+            <h3>會不會像在上課？</h3>
+            <p><strong>活動以互動為主。</strong>孩子會透過生活題目、勾選、搶答與積分挑戰，一步步說出自己的想法。</p>
+          </div>
+
+          <div class="worry-card">
+            <h3>神韻內容會不會太難？</h3>
+            <p><strong>會用孩子聽得懂的方式引導。</strong>從舞台藝術家的日常訓練，認識專注、堅持與自律的價值。</p>
+          </div>
+
+          <div class="worry-card">
+            <h3>為什麼家長也要參加？</h3>
+            <p><strong>孩子的自律需要家庭一起練習。</strong>親子會比較彼此的3C習慣，找到可以共同做到的小改變。</p>
+          </div>
+        </div>
+
+        <div class="decision-box">
+          <h3>如果你希望孩子不是一直被提醒，而是慢慢學會自己選擇，這場活動值得親子一起來。</h3>
+          <p>我們希望孩子看見：管理手機、安排時間、勇敢表達與堅持做好一件事，都是可以從生活開始練習的自律。</p>
+          <div style="margin-top:22px;">
+            <a class="btn btn-primary" href="#signup">立即免費報名</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prizes" class="prize-section">
+      <div class="container">
+        <div class="section-center">
+          <span class="section-label">分組積分獎勵</span>
+          <h2 class="section-title">中年級、高年級各有金銀銅獎</h2>
+          <p class="section-lead">
+            兩個年級組的獎品內容相同，孩子在互動、搶答與積分挑戰中認真參與，也能為自己贏得一份鼓勵。
+          </p>
+
+          <div class="grade-chips" aria-label="競賽分組">
+            <span class="grade-chip">中年級組｜國小3～4年級</span>
+            <span class="grade-chip">高年級組｜國小5～6年級</span>
+          </div>
+        </div>
+
+        <div class="prize-grid">
+          <article class="prize-card gold">
+            <div class="prize-image">
+              <img src="images/prize-gold.webp" alt="金獎獎品保溫瓶" loading="lazy">
+            </div>
+            <div class="prize-body">
+              <span class="prize-rank">金獎</span>
+              <h3>保溫瓶 × 1<br>＋迷宮球 × 1</h3>
+              <p>中、高年級組各設金獎</p>
+            </div>
+          </article>
+
+          <article class="prize-card silver">
+            <div class="prize-image">
+              <img src="images/prize-silver.webp" alt="銀獎獎品書籤" loading="lazy">
+            </div>
+            <div class="prize-body">
+              <span class="prize-rank">銀獎</span>
+              <h3>書籤 × 1<br>＋軌道積木 × 2</h3>
+              <p>中、高年級組各設銀獎</p>
+            </div>
+          </article>
+
+          <article class="prize-card bronze">
+            <div class="prize-placeholder" aria-hidden="true">🎁</div>
+            <div class="prize-body">
+              <span class="prize-rank">銅獎</span>
+              <h3>磁力陀螺 × 1<br>＋環保吸管 × 1</h3>
+              <p>中、高年級組各設銅獎</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="prize-note">以上為分組積分獎品；活動另有精美禮物，人人有獎。</p>
+      </div>
+    </section>
+
+    <section id="info" class="info-section">
+      <div class="container info-box">
+        <div class="info-visual">
+          <div class="info-icons">
+            <div class="info-icon-card">
+              <span class="emoji">📅</span>
+              <strong>日期</strong>
+            </div>
+            <div class="info-icon-card">
+              <span class="emoji">🕘</span>
+              <strong>時間</strong>
+            </div>
+            <div class="info-icon-card">
+              <span class="emoji">📍</span>
+              <strong>地點</strong>
+            </div>
+            <div class="info-icon-card">
+              <span class="emoji">👨‍👩‍👧</span>
+              <strong>親子同行</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span class="section-label">活動資訊</span>
+          <h2 class="section-title">11/22 週日下午，親子一起練習自律與好選擇</h2>
+          <p class="section-lead" style="margin-left:0;">
+            活動免費參加，國小3～6年級孩子需由父母陪同。家長30名、孩子30名，額滿即止。
+          </p>
+
+          <div class="info-list" style="margin-top:22px;">
+            <div class="info-item">
+              <div class="info-label">日期</div>
+              <div class="info-value">2026/11/22（日）</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">時間</div>
+              <div class="info-value">13:30報到｜14:00–16:30</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">地點</div>
+              <div class="info-value">台南維悅酒店</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">地址</div>
+              <div class="info-value">台南市安平區慶平路539號</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">對象</div>
+              <div class="info-value">國小3～6年級孩子與父母</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">費用</div>
+              <div class="info-value">免費參加｜家長30名＋孩子30名</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="container">
+        <div class="section-center">
+          <span class="section-label">活動流程</span>
+          <h2 class="section-title">從生活選擇到世界舞台，看見自律的力量</h2>
+          <p class="section-lead">
+            活動包含趣味搶答、積分挑戰、影片判斷、親子互動與藝術欣賞，
+            讓孩子在參與中理解自律，也把方法帶回日常生活。
+          </p>
+        </div>
+
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-node">1</div>
+            <div class="flow-content">
+              <span class="flow-time">13:30–14:00</span>
+              <span class="flow-title">報到與親子暖身</span>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-node">2</div>
+            <div class="flow-content">
+              <span class="flow-time">14:00 開始</span>
+              <span class="flow-title">趣味搶答＋自律生活情境</span>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-node">3</div>
+            <div class="flow-content">
+              <span class="flow-time">活動進行</span>
+              <span class="flow-title">影片判斷＋3C節制練習</span>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-node">4</div>
+            <div class="flow-content">
+              <span class="flow-time">活動進行</span>
+              <span class="flow-title">從神韻看見自律之美</span>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-node">5</div>
+            <div class="flow-content">
+              <span class="flow-time">16:30</span>
+              <span class="flow-title">完成親子自律約定、領取精美禮物</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="review">
+      <div class="container">
+        <div class="review-box">
+          <span class="section-label">過去親子活動紀錄</span>
+          <h2 class="section-title">我們曾經陪伴親子一起學習</h2>
+          <p class="section-lead" style="margin-left:0;">
+            過去活動中，孩子透過體驗勇敢參與，家長也在陪伴中看見孩子不同的一面。
+            這次延續親子互動的經驗，把主題帶到自律、3C選擇與時間管理。以下為過去活動紀錄，本次內容以11月22日活動說明為準。
+          </p>
+
+          <div class="gallery">
+            <img src="images/review-1.jpg" alt="孩子專心參與活動" loading="lazy">
+            <img src="images/review-3.jpg" alt="親子一起參與活動" loading="lazy">
+            <img src="images/review-2.jpg" alt="過往親子活動歡樂氣氛" loading="lazy">
+          </div>
+
+          <div style="margin-top:24px; text-align:center;">
+            <a
+              href="https://www.ganjingworld.com/s/ZpqWp1lmbX"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-green">
+              查看完整活動影片
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="host">
+      <div class="container">
+        <div class="host-box">
+          <div>
+            <img class="host-logo" src="images/tsamt-logo.jpg" alt="臺灣自媒體應用科技學會" loading="lazy">
+            <div class="host-card">
+              <small>活動洽詢</small>
+              <strong>陳小姐 0913-837-389</strong>
+            </div>
+            <div class="host-card">
+              <small>活動地點</small>
+              <strong>台南維悅酒店</strong>
+            </div>
+            <div class="host-card">
+              <small>地址</small>
+              <strong>台南市安平區慶平路539號</strong>
+            </div>
+
+            <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+              <a
+                class="btn btn-primary"
+                href="https://www.google.com/maps/search/?api=1&query=台南市安平區慶平路539號"
+                target="_blank"
+                rel="noopener">
+                開啟導航
+              </a>
+              <a class="btn btn-green" href="tel:0913837389">電話報名</a>
+            </div>
+          </div>
+
+          <div>
+            <span class="section-label">主辦單位</span>
+            <h2 class="section-title">讓家長放心的活動團隊</h2>
+
+            <div style="margin-top:22px;">
+              <div class="host-card">
+                <small>主辦單位</small>
+                <ul>
+                  <li>社團法人法輪大法學會</li>
+                  <li>臺灣自媒體應用科技學會</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="section-lead" style="margin-left:0; margin-top:18px;">
+              本活動由社團法人法輪大法學會與臺灣自媒體應用科技學會共同主辦，
+              透過藝術欣賞、趣味互動與親子練習，陪孩子理解自律對生活與未來的影響。
+            </p>
+
+            <div style="margin-top:22px;">
+              <a
+                class="btn btn-green"
+                href="https://taiwantsamt.com/"
+                target="_blank"
+                rel="noopener">
+                了解主辦單位
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="faq-box">
+          <div class="section-center">
+            <span class="section-label">常見問題</span>
+            <h2 class="section-title">家長可能會想知道</h2>
+            <p class="section-lead">
+              本活動免費參加，孩子需由父母陪同，一起完成活動與親子練習。
+            </p>
+          </div>
+
+          <div class="faq">
+            <details>
+              <summary>這是一堂需要一直坐著聽的課嗎？</summary>
+              <p>不是。活動包含勾選回答、趣味搶答、積分挑戰、影片判斷與親子互動，孩子會持續參與。</p>
+            </details>
+
+            <details>
+              <summary>沒有看過神韻，也可以參加嗎？</summary>
+              <p>可以。活動會用孩子容易理解的方式，從藝術家的訓練與舞台成果認識自律，不需要先具備藝術背景。</p>
+            </details>
+
+            <details>
+              <summary>哪些年級可以報名？</summary>
+              <p>本次活動對象為國小3～6年級孩子，並需由父母陪同參加。</p>
+            </details>
+
+            <details>
+              <summary>家長需要全程陪同嗎？</summary>
+              <p>需要。活動中安排親子共同回答、討論與完成自律約定，請父母陪同孩子全程參加。</p>
+            </details>
+
+            <details>
+              <summary>需要費用嗎？</summary>
+              <p>本活動免費參加，限家長30名＋孩子30名，並且有精美禮物、人人有獎。</p>
+            </details>
+
+            <details>
+              <summary>報名後會再通知嗎？</summary>
+              <p>報名成功後，主辦單位會於活動前再以電話或訊息提醒。</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="speech s1">學會判斷好影片！</div>
+      <div class="speech s2">親子一起練自律！</div>
+      <div class="speech s3">免費參加，名額有限！</div>
+      <div class="speech s4">精美禮物，人人有獎！</div>
+
+      <div class="container">
+        <h2 class="cta-title">陪孩子把自律，變成照顧自己未來的能力</h2>
+        <p class="cta-sub">
+          11/22 週日下午，親子一起看見自律的力量。免費參加，限家長30名＋孩子30名，額滿即止。
+        </p>
+
+        <div style="margin-top:28px;">
+          <a class="btn btn-primary" href="#signup">立即報名</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="signup" class="signup-section">
+      <div class="container form-wrap">
+        <div class="form-note">
+          <h2>立即報名</h2>
+          <p>
+            如果你也希望孩子不只是在提醒下放下手機，
+            而是慢慢學會管理時間、判斷內容並為自己的選擇負責，歡迎親子一起參加。
+          </p>
+
+          <div class="signup-tags">
+            <span class="signup-tag">免費參加</span>
+            <span class="signup-tag">親子同行</span>
+            <span class="signup-tag">有精美禮物・人人有獎</span>
+            <span class="signup-tag">額滿即止</span>
+          </div>
+
+          <div class="small">
+            日期：2026/11/22（日）<br>
+            時間：13:30報到｜14:00–16:30<br>
+            地點：台南維悅酒店<br>
+            地址：台南市安平區慶平路539號<br>
+            報名專線：0913-837-389 陳小姐
+          </div>
+        </div>
+
+        <form class="form-box" id="signupForm">
+          <input type="hidden" id="adSource" name="adSource" value="">
+          <div class="signup-push">
+            <strong>名額確認後，活動前會再通知。</strong>
+            <p>本活動免費參加，孩子需由父母陪同。表單約1分鐘完成，請確認11/22（日）13:30報到、14:00–16:30可親子同行後再送出。</p>
+          </div>
+          <h2 class="form-box-title">填寫報名資料</h2>
+          <p class="form-box-subtitle">參加對象為國小3～6年級孩子與父母，家長與孩子請共同出席。</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="parentName">家長姓名 <span class="required">*</span></label>
+              <input id="parentName" name="parentName" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">手機 <span class="required">*</span></label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="09xxxxxxxx" required />
+            </div>
+
+            <div class="field">
+              <label for="childName">孩子姓名 <span class="required">*</span></label>
+              <input id="childName" name="childName" required />
+            </div>
+
+            <div class="field">
+              <label for="grade">年級 <span class="required">*</span></label>
+              <select id="grade" name="grade" required>
+                <option value="">請選擇</option>
+                <option value="國小三年級">國小三年級</option>
+                <option value="國小四年級">國小四年級</option>
+                <option value="國小五年級">國小五年級</option>
+                <option value="國小六年級">國小六年級</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="school">學校 <span class="required">*</span></label>
+              <input id="school" name="school" required />
+            </div>
+
+            <div class="field full">
+              <label for="photoConsent">活動拍照與紀錄同意 <span class="required">*</span></label>
+              <select id="photoConsent" name="photoConsent" required>
+                <option value="">請選擇</option>
+                <option value="同意，活動照片可作為活動紀錄與非商業宣傳使用">
+                  同意，活動照片可作為活動紀錄與非商業宣傳使用
+                </option>
+                <option value="不同意，請避免拍攝孩子正面特寫">
+                  不同意，請避免拍攝孩子正面特寫
+                </option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="note">備註</label>
+              <textarea id="note" name="note" placeholder="例如：孩子特殊狀況、需注意事項等"></textarea>
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn btn-primary" type="submit" id="submitBtn">送出報名</button>
+            <span class="status" id="formStatus"></span>
+          </div>
+        </form>
+      </div>
     </section>
   </main>
 
-  <dialog id="dailyDialog" aria-labelledby="dailyTitle">
-    <div class="dialog-head"><strong id="dailyTitle">今日回報</strong><button type="button" class="close" id="closeDaily" aria-label="關閉今日回報">×</button></div>
-    <div class="dialog-content">
-      <label class="field" for="dailyDate">拜訪日期<input type="date" id="dailyDate" required></label>
-      <label class="field field-gap" for="dailyPerson">推廣人員<input id="dailyPerson" type="text" list="peopleOptions" maxlength="80" placeholder="輸入其中一人姓名；空白查看全部"></label>
-      <button type="button" class="button primary field-gap" id="queryDaily">查詢已儲存回報</button>
-      <p class="hint">共同推廣如「珍如、雅玲」，查「珍如」或「雅玲」皆可找到。依台灣日期查詢，更正不增加拜訪次數。</p>
-      <label class="hint" style="display:block;margin-top:14px"><input type="checkbox" id="showOldReports"> 顯示已被更正的舊紀錄</label>
-      <div id="dailyError" class="notice error" hidden></div><p id="dailySummary"></p><div id="dailyItems"></div>
-    </div>
-  </dialog>
-  <dialog id="reportDialog" aria-labelledby="shopName">
-    <div class="dialog-head"><strong>拜訪後回報</strong><button type="button" class="close" id="closeDialog" aria-label="返回店家清單">×</button></div>
-    <form id="reportForm">
-      <div class="dialog-content">
-        <p class="shop-meta" id="shopMeta"></p><h2 class="shop-name" id="shopName"></h2>
-        <a id="shopAddress" class="shop-address" target="_blank" rel="noopener noreferrer"></a>
-        <div id="shopHours" class="field-gap"></div>
-        <div id="shopAlert" class="notice" hidden></div>
-        <div id="lastReport" class="last" hidden></div>
-        <div id="draftNotice" class="notice success" hidden></div>
-        <fieldset id="reportFields">
-          <label class="field" for="promoter">推廣人員（必填）<input type="text" id="promoter" list="peopleOptions" maxlength="80" required autocomplete="name" placeholder="選擇或填入本次推廣人員"></label>
-          <p class="hint">自動帶入本次路線人員；此處換人只影響這家店，不影響下一家。</p>
-          <fieldset><legend>這次拜訪結果</legend><p class="hint">海報、DM 可複選；店名有改也可另外勾選。整修、尚未開門等情況請選「其他」，並填寫備註。</p>
-            <div class="choices">
-              <label class="choice"><input type="checkbox" name="result" value="放海報">放海報</label>
-              <label class="choice"><input type="checkbox" name="result" value="放DM">放DM</label>
-              <label class="choice"><input type="checkbox" name="result" value="店名已改">店名已改</label>
-              <label class="choice"><input type="checkbox" name="result" value="不接受">不接受</label>
-              <label class="choice"><input type="checkbox" name="result" value="以後不用再拜訪">以後不用再拜訪</label>
-              <label class="choice"><input type="checkbox" name="result" value="其他">其他</label>
-            </div>
-            <label class="field new-name" id="newNameWrap" for="newName" hidden>新店名<input type="text" id="newName" maxlength="150" autocomplete="off" placeholder="請填寫現在的店名"></label>
-          </fieldset>
-          <div class="field-gap"><label class="field-title" for="notes">備註<span class="optional" id="notesRequirement">選填</span></label><textarea id="notes" maxlength="1500" placeholder="例如：海報放在門口、老闆希望下週再來"></textarea></div>
-          <fieldset class="field-gap"><legend>是否放聚合頁</legend><div class="radios">
-            <label class="choice"><input type="radio" name="aggregate" value="否" checked>否</label>
-            <label class="choice"><input type="radio" name="aggregate" value="是">是</label>
-          </div><p class="hint">此處記錄是否列入聚合頁，儲存後不會自動發布。</p></fieldset>
-        </fieldset>
-        <div id="formError" class="notice error inline-error" role="alert" hidden></div>
-        <button class="button" type="button" id="useLatest" hidden>已看過最新資料，保留我的填寫內容</button>
-        <button type="button" class="history-button" id="historyButton" aria-expanded="false">查看歷次回報</button>
-        <div id="history" class="history-area" hidden></div>
-      </div>
-      <div class="dialog-actions"><button type="button" class="button secondary" id="saveOnly">儲存並返回</button><button type="submit" class="button primary" id="saveNext">儲存並下一家 →</button></div>
-    </form>
-  </dialog>
-  <div class="toast" id="toast" role="status" hidden></div>
+  <footer>
+    社團法人法輪大法學會・臺灣自媒體應用科技學會｜從神韻看見自律之美
+  </footer>
+
+  <div class="mobile-cta" aria-label="手機快速報名按鈕">
+    <a class="signup" href="#signup">立即報名</a>
+    <a class="phone" href="tel:0913837389">電話報名</a>
+  </div>
 
   <script>
-  'use strict';
-  const $ = id => document.getElementById(id);
-  const state = { page:'claims', claimDistrict:'', wave:'2', claims:[], claimView:'all', claimBusy:false, merchants: [], district: '中西區', route: '01', filter: 'pending', search: '',
-    today: '', correctionId: '', confirmHistoryOnly: false, dailySequence: 0, people: [], routeDefaults: [], routeOverrides: new Map(), scope: '', current: null, busy: false, dirty: false, pending: null, conflict: null, toastTimer: null };
-  const resultInputs = [...document.querySelectorAll('input[name=result]')];
-  const aggregateInputs = [...document.querySelectorAll('input[name=aggregate]')];
-  function node(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
-  function storageKey(key) { return 'tainan-visit-2027:' + state.scope + ':' + key; }
-  function loadLocal(key) { try { return JSON.parse(localStorage.getItem(storageKey(key)) || 'null'); } catch (e) { return null; } }
-  function storeLocal(key, value) { try { if (value === null) localStorage.removeItem(storageKey(key)); else localStorage.setItem(storageKey(key), JSON.stringify(value)); } catch (e) { /* 禁用儲存時仍可直接回報 */ } }
-  function toast(message) { clearTimeout(state.toastTimer); $('toast').textContent = message; $('toast').hidden = false; state.toastTimer = setTimeout(() => $('toast').hidden = true, 4500); }
-  function message(id, text) { $(id).textContent = text || ''; $(id).hidden = !text; }
-  function rpc(name, ...args) {
-    return new Promise((resolve, reject) => {
-      if (!window.google || !google.script || !google.script.run) { reject(new Error('請使用 GAS 部署後的網址開啟。直接開啟 HTML 檔無法連接試算表。')); return; }
-      const timer = setTimeout(() => reject(new Error('連線等候較久，尚未確認儲存結果。請使用同一筆資料重試。')), 45000);
-      google.script.run.withSuccessHandler(value => { clearTimeout(timer); resolve(value); })
-        .withFailureHandler(error => { clearTimeout(timer); reject(new Error(error && error.message || '連線失敗，請重試。')); })[name](...args);
-    });
-  }
-  function normalized(s) { return String(s || '').normalize('NFKC').toLowerCase().replaceAll('臺', '台').replace(/\s+/g, ''); }
-  function sorted(rows) { return [...rows].sort((a, b) => a.route.localeCompare(b.route) || a.order - b.order || a.id.localeCompare(b.id)); }
-  function navigationUrl(m) { if(m.detail?.navigation)return m.detail.navigation; return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(m.address + (m.id === 'AP-066' ? ' 深緣及水安平航海城' : '')); }
-  function taipeiDate(now = new Date()) {
-    const p = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
-    const value = type => p.find(x=>x.type===type).value;
-    return value('year')+'-'+value('month')+'-'+value('day');
-  }
-  function hoursPanel(m) {
-    if(m.detail){
-      const p=node('div','business-hours');
-      const audit=m.detail.hoursAudit;
-      p.append(node('p','','電話：'+(m.detail.phone||'未提供')));
-      if(!audit || !Array.isArray(audit.week) || audit.week.length!==7){
-        p.append(node('p','hours-today','營業時間待確認'));
-        p.append(node('p','hint','原名單（未核實）：'+(m.detail.hours||'未提供')));
-        return p;
-      }
-      const labels={G:'Google 營業時間',M:'商家比對有差異，時間未套用',N:'未取得 Google 週表',A:'官方完整週表',B:'官方資訊，週表待補',C:'參考時間，待複核',D:'資料不足或有衝突'};
-      const date=taipeiDate();
-      const day=(new Date(date+'T12:00:00+08:00').getUTCDay()+6)%7;
-      const time=String(audit.week[day]||'待確認');
-      const prefix=['A','G'].includes(audit.status)?'今日登錄時段：':'今日參考資料：';
-      p.append(node('p','hours-today',prefix+time));
-      p.append(node('p','hours-status hours-status-'+audit.status,labels[audit.status]||'待確認'));
-      p.append(node('p','hint','查核日期：'+(audit.checkedAt||'未記錄')+'｜非即時營業狀態'));
-      if(audit.businessStatus && audit.status!=='M') {
-        const statusText=audit.businessStatus==='營業中'?'商家狀態：營運中（不代表此刻開門）':'商家狀態：'+audit.businessStatus;
-        p.append(node('p','hours-note',statusText+'｜依查詢時資料'));
-      }
-      const week=node('details','hours-week');
-      week.append(node('summary','','查看整週時間、來源與提醒'));
-      const table=node('dl','hours-days');
-      audit.week.forEach((t,i)=>{const row=node('div');row.append(node('dt','','星期'+['一','二','三','四','五','六','日'][i]),node('dd','',String(t||'待確認')));table.append(row);});
-      week.append(table,node('p','hours-note',audit.note||''));
-      if(audit.googleName)week.append(node('p','hint','Google 店名：'+audit.googleName));
-      if(audit.googleAddress)week.append(node('p','hint','Google 地址：'+audit.googleAddress));
-      if(audit.specialHours && audit.specialHours!=='無特殊時段資料')week.append(node('p','hours-note','查詢當時的假日提醒（僅適用所列日期）：'+audit.specialHours));
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
 
-      const links=node('p','hours-sources');
-      (audit.sources||[]).forEach((url,i)=>{
-        if(!/^https:\/\//i.test(url))return;
-        const link=node('a','',audit.googleName?'查看 Google 商家資料':'查核來源 '+(i+1));link.href=url;link.target='_blank';link.rel='noopener noreferrer';links.append(link);
-      });
-      week.append(links,node('p','hint','原名單（未核實，保留比對）：'+(m.detail.hours||'未提供')));
-      week.append(node('p','hint','待確認不代表公休；預約、臨時公休及特殊節日，請依店家公告。'));
-      p.append(week);
-      return p;
+    const form = document.getElementById('signupForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+    const adSourceInput = document.getElementById('adSource');
+
+    function getAdSource() {
+      const params = new URLSearchParams(window.location.search);
+      return (
+        params.get('ad') ||
+        params.get('utm_content') ||
+        params.get('utm_campaign') ||
+        params.get('utm_source') ||
+        'direct'
+      );
     }
 
-    const info = (state.hours || {})[m.id];
-    const date = taipeiDate();
-    const day = (new Date(date+'T12:00:00+08:00').getUTCDay()+6)%7;
-    const time = info && info.days[day] ? String(info.days[day]).trim() : '';
-    const text = !time || time==='未提供' ? '營業時間待確認' : time==='休息' ? '今日公休（依登錄）' : '今日營業：'+time;
-    const box = node('div','business-hours');
-    box.append(node('p','hours-today',text));
-    if(info) {
-      const details=node('details','hours-week');
-      details.append(node('summary','','查看整週營業時間'));
-      info.days.forEach((t,i)=>details.append(node('p','','星期'+['一','二','三','四','五','六','日'][i]+'：'+(String(t).trim() || '待確認'))));
-      details.append(node('p','hint','資料更新：'+(info.updated || '未記錄')+'｜來源：'+(info.source || '未記錄')));
-      details.append(node('p','hint','依登錄時間，臨時公休另依店家公告。'));
-      box.append(details);
+    const adSource = getAdSource();
+    if (adSourceInput) {
+      adSourceInput.value = adSource;
     }
-    return box;
-  }
-  let hoursDate = taipeiDate();
-  setInterval(()=>{
-    const date=taipeiDate();
-    if(date!==hoursDate) { hoursDate=date; if(state.merchants.length) renderList(); }
-  },30000);
-  function rememberFilters() { storeLocal('filters', {wave:state.wave,district:state.district, route:state.route, filter:state.filter}); }
-  function routeKey(district, route, wave=state.wave) { return wave+':'+district+':'+route; }
-  function routeDefault(district, route, wave=state.wave) {
-    if(wave==='2') return (state.claims.find(c=>c.district===district&&c.route===route)||{}).promoter||'';
-    return (state.routeDefaults.find(r=>r.district===district && r.route===route) || {}).promoter || '';
-  }
-  function routePerson(district, route, wave=state.wave) {
-    const key=routeKey(district,route,wave);
-    return state.routeOverrides.has(key) ? state.routeOverrides.get(key) : routeDefault(district,route,wave);
-  }
-  function showRoutePerson() {
-    const specific=Boolean(state.route);
-    $('routePromoter').disabled=!specific;
-    $('routePromoter').value=specific ? routePerson(state.district,state.route) : '';
-    $('routeDefaultLabel').textContent=specific ? '路線預設人員：'+(routeDefault(state.district,state.route) || '尚未設定') : '目前顯示全部路線';
-    $('routePromoterHint').textContent=specific ? '已設定的人員會自動帶入各店；若某家由其他人拜訪，請在該店回報時修改姓名。本欄更改只在此頁面生效。' : '請選一條路線設定本次人員；直接開啟店家時會帶入該店所屬路線的人員。';
-  }
-  function setRoutes() {
-    const routes = new Map();
-    sorted(state.merchants.filter(m => m.wave === state.wave && m.district === state.district)).forEach(m => routes.set(m.route, m.routeName));
-    $('route').replaceChildren();
-    const all = node('option', '', '全部路線'); all.value = ''; $('route').append(all);
-    routes.forEach((name, code) => { const option = node('option', '', code + ' · ' + name); option.value = code; $('route').append(option); });
-    if (state.route && !routes.has(state.route)) state.route = routes.keys().next().value || '';
-    $('route').value = state.route; $('district').value = state.district;
-  }
-  function renderList() {
-    showRoutePerson();renderClaims();
-    const routeRows = sorted(state.merchants.filter(m => m.wave === state.wave && m.district === state.district && (!state.route || m.route === state.route)));
-    const visited = routeRows.filter(m => m.visited).length;
-    $('progressText').textContent = '已回報 ' + visited + ' / ' + routeRows.length + ' 家';
-    $('totalText').textContent = '本波 ' + state.merchants.filter(m=>m.wave===state.wave).length + ' 家';
-    $('progress').max = routeRows.length || 1; $('progress').value = visited;
-    const q = normalized(state.search);
-    const shown = routeRows.filter(m => {
-      const match = !q || normalized(m.name + m.originalName + m.address + m.id).includes(q);
-      const status = state.filter === 'all' || (state.filter === 'pending' && !m.visited && !m.stopped) ||
-        (state.filter === 'visited' && m.visited && !m.stopped) || (state.filter === 'stopped' && m.stopped);
-      return match && status;
-    });
-    document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === state.filter)));
-    $('listCount').textContent = state.district + (state.route ? ' · 路線 ' + state.route : ' · 全部路線') + '　顯示 ' + shown.length + ' 家';
-    $('list').replaceChildren();
-    if (!shown.length) $('list').append(node('div', 'empty', q ? '沒有符合的店家。可清除搜尋，或改選「全部」。' : '目前沒有符合的店家，可切換上方回報狀態查看。'));
-    shown.forEach(m => {
-      const card = node('article', 'card'); card.dataset.id = m.id;
-      const top = node('div', 'card-top'); top.append(node('span','stop-no',(state.route ? '' : m.route + ' 路線 · ') + '第 ' + m.order + ' 家 · ' + m.id));
-      top.append(node('span','badge ' + (m.stopped ? 'stopped' : m.visited ? '' : 'pending'),m.result || '未回報'));
-      card.append(top,node('h2','',m.name),node('p','address',m.address),hoursPanel(m));
-      if (m.visited) card.append(node('p','hint','推廣人員：'+(m.promoter || '未記錄')));
-      if (m.alert) {
-        const reminder=node('details','small-alert');
-        reminder.append(node('summary','','拜訪提醒（點開查看）'),node('p','',m.alert));
-        card.append(reminder);
-      }
-      const foot = node('div','card-foot');
-      const nav = node('a','button','導航'); nav.href = navigationUrl(m); nav.target = '_blank'; nav.rel = 'noopener noreferrer'; nav.setAttribute('aria-label', '導航至' + m.name);
-      const report = node('button','button primary',m.visited ? '再次回報' : '填寫回報'); report.type='button'; report.addEventListener('click', () => openMerchant(m.id));
-      foot.append(nav,report); card.append(foot); $('list').append(card);
-    });
-  }
-  async function refresh(initial=false) {
-    $('refresh').disabled = true; message('globalError','');
-    try {
-      const data = await rpc('getAppData');
-      if (!Array.isArray(data.merchants)) throw new Error('店家資料格式不正確，請重新整理。');
-      state.today=String(data.serverTime || '').slice(0,10);
-      state.merchants = data.merchants; state.claims=data.claims||[]; state.claimsReadAt=String(data.serverTime||''); state.hours = data.hours || {};
-      if (state.scope && state.scope !== data.scope) state.routeOverrides.clear();
-      state.scope = data.scope; state.people=data.people || []; state.routeDefaults=data.routeDefaults || [];
-      $('peopleOptions').replaceChildren();
-      [...new Set(state.people.filter(p=>p.active).map(p=>p.name))].forEach(name=>{ const option=node('option','',name); option.value=name; $('peopleOptions').append(option); });
-      const districts = data.districts || [...new Set(data.merchants.map(m => m.district))];
-      $('district').replaceChildren();
-      districts.forEach(name => { const option=node('option','',name); option.value=name; $('district').append(option); });
-      if (!districts.includes(state.district)) state.district=districts[0] || '';
-      if (initial) {
-        $('claimPerson').value=loadLocal('claimPerson')||'';
-        const prefs = loadLocal('filters');
-        if(prefs)state.wave=prefs.wave==='1'?'1':'2';
-        if (prefs) { state.district = districts.includes(prefs.district) ? prefs.district : (districts[0] || ''); state.route = String(prefs.route || ''); state.filter = ['pending','visited','all','stopped'].includes(prefs.filter) ? prefs.filter : 'pending'; }
-      }
-      $('wave').value=state.wave;setRoutes(); renderList();showPage(state.page,false); $('appContent').hidden=false; $('loading').hidden=true;
-      if (initial) {
-        const pending = loadLocal('pending');
-        if (pending && pending.payload && state.merchants.some(m => m.id === pending.payload.id)) {
-          state.pending = pending; openMerchant(pending.payload.id);
-          message('formError', '上次儲存尚未確認。請按「重試儲存」，同一筆回報不會重複寫入。'); setBusy(false);
+
+    function shouldLogVisit() {
+      const key = 'campVisitLogged:' + adSource + ':' + window.location.pathname;
+      try {
+        if (sessionStorage.getItem(key)) {
+          return false;
         }
-      } else toast('已更新最新回報');
-    } catch (e) { message('globalError', e.message); $('loading').hidden=true; }
-    finally { $('refresh').disabled=false; }
-  }
-  function currentForm() {
-    return { ...(state.correctionId ? {correctionId:state.correctionId,confirmHistoryOnly:state.confirmHistoryOnly} : {}), token: state.current.token, results: resultInputs.filter(i=>i.checked).map(i=>i.value),
-      promoter: $('promoter').value.trim(), newName: $('newName').value, notes: $('notes').value,
-      aggregate: aggregateInputs.find(i=>i.checked).value };
-  }
-  function applyForm(form) {
-    state.correctionId=form.correctionId || ''; state.confirmHistoryOnly=form.confirmHistoryOnly===true;
-    resultInputs.forEach(i => i.checked = (form.results || []).includes(i.value));
-    $('promoter').value = form.promoter === undefined ? routePerson(state.current.district, state.current.route, state.current.wave) : form.promoter;
-    $('newName').value = form.newName || ''; $('notes').value = form.notes || '';
-    aggregateInputs.forEach(i => i.checked = i.value === (form.aggregate || '否'));
-    updateChoices();
-  }
-  function updateChoices() {
-    [...resultInputs,...aggregateInputs].forEach(i=>i.closest('label').classList.toggle('selected',i.checked));
-    const changed = resultInputs.some(i=>i.checked && i.value==='店名已改');
-    $('newNameWrap').hidden = !changed; $('newName').required = changed;
-    const other = resultInputs.some(i=>i.checked && i.value==='其他');
-    $('notes').required = other;
-    $('notesRequirement').textContent = other ? '必填：請說明其他原因' : '選填';
-    $('notes').placeholder = other ? '例如：店面整修，預計下月再訪；尚未開門，下午再來' : '例如：海報放在門口、老闆希望下週再來';
-  }
-  function displayCurrent() {
-    const m = state.current;
-    $('shopName').textContent = m.name;
-    $('shopMeta').textContent = '第'+m.wave+'波 · '+m.district + ' · 路線 ' + m.route + ' · 第 ' + m.order + ' 家 · ' + m.id;
-    $('shopAddress').textContent = m.address + ' ↗ 導航'; $('shopAddress').href = navigationUrl(m);
-    $('shopHours').replaceChildren(hoursPanel(m));
-    message('shopAlert',m.alert);
-    message('lastReport',m.visited ? '上次推廣人員：' + (m.promoter || '未記錄') + '\n上次：' + m.result + '　' + m.updatedAt + (m.notes ? '\n備註：' + m.notes : '') : '這家店尚未回報。');
-  }
-  function openMerchant(id) {
-    showPage('visits',false);
-    const m = state.merchants.find(x=>x.id===id); if (!m) return;
-    state.correctionId=''; state.confirmHistoryOnly=false;
-    state.current = {...m}; state.dirty = false; state.conflict = null;
-    displayCurrent(); message('formError',''); message('draftNotice',''); $('useLatest').hidden=true;
-    $('history').hidden=true; $('history').replaceChildren(); $('historyButton').disabled=false;
-    $('historyButton').textContent='查看歷次回報'; $('historyButton').setAttribute('aria-expanded','false');
-    const draft = loadLocal('draft:'+id);
-    if (state.pending && state.pending.payload.id === id) {
-      applyForm(state.pending.payload); state.current.token=state.pending.payload.token; state.dirty=true;
-    } else if (draft) {
-      applyForm(draft); state.current.token=draft.token; state.dirty=true;
-      message('draftNotice',draft.token === m.token ? '已帶回這家店尚未儲存的草稿。' : '已帶回草稿；店家資料已更新，送出時會先請您確認。');
-    } else applyForm({results:[],notes:'',newName:'',aggregate:m.aggregate});
-    setBusy(false);
-    if (!$('reportDialog').open) $('reportDialog').showModal();
-    $('shopName').setAttribute('tabindex','-1');
-    $('shopName').focus({preventScroll:true});
-    $('reportDialog').scrollTop=0;
-  }
-  function saveDraft() { if (!state.current || state.pending) return; state.dirty=true; storeLocal('draft:'+state.current.id,currentForm()); }
-  function closeReport(force=false) {
-    if (!force && (state.busy || state.pending)) { toast('請先完成這筆儲存或重試'); return; }
-    if (!force && state.dirty && !confirm('目前內容尚未儲存。先返回清單嗎？此瀏覽器可用時會保留草稿。')) return;
-    $('reportDialog').close(); state.current=null; state.dirty=false; state.conflict=null;
-  }
-  function setBusy(busy) {
-    state.busy=busy; $('reportFields').disabled=busy || !!state.pending;
-    $('closeDialog').disabled=busy || !!state.pending; $('useLatest').disabled=busy;
-    $('saveOnly').disabled=busy; $('saveNext').disabled=busy;
-    $('saveOnly').hidden=!!state.pending;
-    $('saveNext').textContent = busy ? '儲存中…' : state.pending ? '重試儲存' : state.correctionId ? '儲存更正' : '儲存並下一家 →';
-  }
-  function requestId() { return window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'visit_' + Date.now() + '_' + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2); }
-  function updateMerchant(m) { const i=state.merchants.findIndex(x=>x.id===m.id); if(i>=0) state.merchants[i]=m; }
-  function nextMerchant(m) {
-    const remaining=sorted(state.merchants.filter(x=>x.wave===m.wave && x.district===m.district && x.route===m.route && !x.visited && !x.stopped));
-    return remaining.find(x=>x.order>m.order) || remaining[0];
-  }
-  async function submitReport(goNext) {
-    if (state.busy || !state.current) return;
-    if (navigator.onLine === false) { message('formError','目前沒有網路。填寫內容已保留，請恢復連線後再儲存。'); return; }
-    if (!state.pending) {
-      if (!$('promoter').value.trim()) { message('formError','請選擇或填入本次推廣人員。'); $('promoter').focus(); return; }
-      if (!$('reportForm').reportValidity()) return;
-      const form=currentForm();
-      if (!form.promoter) { message('formError','請選擇或填入本次推廣人員。'); $('promoter').focus(); return; }
-      if (!form.results.length) { message('formError','請先選擇這次拜訪結果。'); return; }
-      if (form.results.includes('其他') && !form.notes.trim()) { message('formError','選擇「其他」時，請在備註說明原因，例如：店面整修、尚未開門。'); $('notes').focus(); return; }
-      if (state.conflict) { message('formError','請先查看最新資料，再按「已看過最新資料」確認。'); return; }
-      state.pending={payload:{...form,id:state.current.id,requestId:requestId()},next:state.correctionId ? false : goNext};
-      storeLocal('pending',state.pending);
-    }
-    const sent=state.pending;
-    setBusy(true); message('formError','');
-    try {
-      const response=await rpc('saveVisit',sent.payload);
-      if (!response || typeof response.ok !== 'boolean') throw new Error('未收到明確的儲存結果，請按重試。');
-      if (!response.ok) {
-        state.pending=null; storeLocal('pending',null); message('formError',response.message);
-        if (response.code==='CORRECTION_CONFIRM') { state.confirmHistoryOnly=confirm(response.message); saveDraft(); }
-        if (response.code==='CONFLICT' && response.current) {
-          state.conflict=response.current; updateMerchant(response.current); renderList();
-          message('lastReport','最新資料：' + response.current.name + '\n' + (response.current.result || '未回報') + '　' + response.current.updatedAt + (response.current.notes ? '\n備註：'+response.current.notes : ''));
-          $('useLatest').hidden=false;
-        }
-        return;
+        sessionStorage.setItem(key, '1');
+        return true;
+      } catch (err) {
+        return true;
       }
-      const saved=response.merchant; updateMerchant(saved);
-      storeLocal('draft:'+saved.id,null); storeLocal('pending',null); state.pending=null; state.dirty=false;
-      renderList(); setBusy(false);
-      const next=sent.next ? nextMerchant(saved) : null;
-      const receipt=response.receipt || saved;
-      const summary=(sent.payload.correctionId ? '已更正：' : '已儲存：') + receipt.name + '／' + receipt.promoter + '／' + receipt.result;
-      if (next) { openMerchant(next.id); toast(summary); }
-      else { closeReport(true); toast(summary); }
-      if (sent.payload.correctionId) { $('dailyPerson').value=receipt.promoter || sent.payload.promoter; $('dailyDate').value=receipt.visitDate || $('dailyDate').value; $('showOldReports').checked=false; $('dailyDialog').showModal(); loadDaily(); }
-    } catch(e) { message('formError',e.message + ' 填寫內容已保留，請按「重試儲存」。'); }
-    finally { setBusy(false); }
-  }
-  async function showHistory() {
-    if (!state.current) return;
-    if (!$('history').hidden) { $('history').hidden=true; $('historyButton').setAttribute('aria-expanded','false'); return; }
-    const id=state.current.id; $('historyButton').disabled=true; $('historyButton').textContent='載入回報紀錄…';
-    try {
-      const data=await rpc('getVisitHistory',id);
-      if(!state.current || state.current.id!==id) return;
-      $('history').replaceChildren(); $('history').hidden=false; $('historyButton').setAttribute('aria-expanded','true');
-      if(!data.items.length) $('history').append(node('p','hint','尚無回報紀錄。'));
-      if(data.total>50) $('history').append(node('p','hint','顯示最近 50 筆，完整紀錄保留在試算表。'));
-      data.items.forEach(item=>{
-        const box=node('div','history-item'); box.append(node('strong','',item.time+' · '+item.result));
-        if(item.oldName!==item.name) box.append(node('p','','店名：'+item.oldName+' → '+item.name));
-        box.append(node('p','','推廣人員：'+(item.promoter || '未記錄')));
-        if(item.notes) box.append(node('p','',item.notes));
-        box.append(node('p','','聚合頁：'+item.aggregate+(item.superseded?' · 已被更正':item.correctionId?' · 更正紀錄':item.state==='已完成'?'':' · '+item.state)));
-        $('history').append(box);
-      });
-    } catch(e) { if(state.current && state.current.id===id) message('formError',e.message); }
-    finally { if(state.current && state.current.id===id) { $('historyButton').disabled=false; $('historyButton').textContent='查看歷次回報'; } }
-  }
-  async function loadDaily() {
-    const sequence=++state.dailySequence;
-    $('queryDaily').disabled=true; message('dailyError','');
-    $('dailyItems').replaceChildren(); $('dailySummary').textContent='讀取已儲存紀錄…';
-    try {
-      const data=await rpc('getDailyReports',{wave:state.wave,date:$('dailyDate').value,promoter:$('dailyPerson').value.trim()});
-      if(sequence!==state.dailySequence) return;
-      $('dailySummary').textContent='有效回報 '+data.shops+' 家，共 '+data.visits+' 次拜訪（更正不重算）；紀錄 '+data.items.length+' 筆';
-      if(!data.items.length) $('dailyItems').append(node('p','hint',data.dateRecords ? '這一天有 '+data.dateRecords+' 筆歷史，但沒有符合此姓名。請清空姓名查看全部，核對紀錄中的人員。' : '這一天沒有回報歷史。請核對日期；直接在店家名單填寫的內容不會自動建立回報歷史。'));
-      const visibleItems=data.items.filter(item=>!item.superseded || $('showOldReports').checked);
-      if(data.items.length && !visibleItems.length) $('dailyItems').append(node('p','hint','符合此姓名的紀錄已被更正。可清空姓名查最新資料，或勾選「顯示已被更正的舊紀錄」，再按「查看／更正最新紀錄」。'));
-      visibleItems.forEach(item=>{
-        const box=node('div','history-item');
-        box.append(node('strong','',item.time+'｜第'+item.wave+'波｜'+item.district+' '+item.route+'｜'+item.name));
-        box.append(node('p','','推廣人員：'+(item.promoter || '未記錄')));
-        box.append(node('p','','回報：'+item.result));
-        box.append(node('p','','狀態：'+(item.superseded ? '已被更正（不計次）' : item.state==='已完成' ? (item.correctionId ? '更正已儲存' : '已儲存') : item.state)));
-        const detail=node('details','');detail.append(node('summary','','查看詳情'));
-        detail.append(node('p','','備註：'+(item.notes || '無')),node('p','','是否放聚合頁：'+item.aggregate),node('p','','店家編號：'+item.id));
-        if(item.oldName!==item.name) detail.append(node('p','','店名：'+item.oldName+' → '+item.name));
-        if(item.historyOnly) detail.append(node('p','','僅更正原回報歷史，店家後續更新保留。'));
-        box.append(detail);
-        if(item.state==='已完成') {
-          const edit=node('button','button',item.superseded ? '查看／更正最新紀錄' : '更正這筆');edit.type='button';
-          edit.addEventListener('click',()=>startCorrection(item.reportId,edit));box.append(edit);
-        }
-        $('dailyItems').append(box);
-      });
-    } catch(e) { if(sequence===state.dailySequence) {message('dailyError',e.message);$('dailySummary').textContent='查詢未完成';} }
-    finally {if(sequence===state.dailySequence) $('queryDaily').disabled=false;}
-  }
-  async function startCorrection(reportId,button) {
-    button.disabled=true;
-    try {
-      if(state.pending) throw new Error('請先完成待重試的回報。');
-      const data=await rpc('getCorrection',reportId);
-      if(data.historyOnly && !confirm('店家已有後續更新。這次只更正原回報歷史，不覆蓋店家最新資料，是否繼續？')) return;
-      updateMerchant(data.current);$('dailyDialog').close();openMerchant(data.current.id);
-      const draft=loadLocal('draft:'+data.current.id);
-      if(draft && !confirm('此店有未儲存草稿。要改為編輯這筆歷史回報嗎？')) {closeReport(true);$('dailyDialog').showModal();return;}
-      applyForm({correctionId:data.item.reportId,confirmHistoryOnly:data.historyOnly,results:data.item.result.split('、'),promoter:data.item.promoter,notes:data.item.notes,newName:data.item.name,aggregate:data.item.aggregate});
-      state.current={...data.current};saveDraft();setBusy(false);
-      message('draftNotice',(data.item.reportId!==reportId ? '已帶入最新更正紀錄。' : '')+'正在更正 '+data.item.time+' 的回報；原紀錄保留，不新增拜訪次數。'+(data.historyOnly?'本次只更新歷史。':''));
-    } catch(e) {message('dailyError',e.message);}
-    finally {button.disabled=false;}
-  }
-  $('dailyButton').addEventListener('click',()=>{
-    if(state.pending) {toast('請先完成待重試的回報');return;}
-    $('dailyDate').value=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-    $('dailyPerson').value=state.route ? routePerson(state.district,state.route) : '';
-    $('dailyDialog').showModal();loadDaily();
-  });
-  $('queryDaily').addEventListener('click',loadDaily);
-  $('showOldReports').addEventListener('change',loadDaily);
-  $('closeDaily').addEventListener('click',()=>{$('dailyDialog').close();});
-  $('routePromoter').addEventListener('input',()=>{ if(state.route) state.routeOverrides.set(routeKey(state.district,state.route),$('routePromoter').value.trim()); });
-  $('district').addEventListener('change',()=>{state.district=$('district').value;state.route='01';state.search='';$('search').value='';setRoutes();rememberFilters();renderList();});
-  $('route').addEventListener('change',()=>{state.route=$('route').value;rememberFilters();renderList();});
-  $('search').addEventListener('input',()=>{state.search=$('search').value;if(state.search){state.route='';$('route').value='';}renderList();});
-  document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.filter;rememberFilters();renderList();}));
-  resultInputs.forEach(input=>input.addEventListener('change',()=>{
-    if(input.checked && ['不接受','以後不用再拜訪'].includes(input.value)) resultInputs.forEach(i=>{if(i!==input && ['放海報','放DM','不接受','以後不用再拜訪'].includes(i.value)) i.checked=false;});
-    if(input.checked && ['放海報','放DM'].includes(input.value)) resultInputs.forEach(i=>{if(['不接受','以後不用再拜訪'].includes(i.value)) i.checked=false;});
-    updateChoices();saveDraft();
-  }));
-  aggregateInputs.forEach(i=>i.addEventListener('change',()=>{updateChoices();saveDraft();}));
-  ['newName','notes','promoter'].forEach(id=>$(id).addEventListener('input',saveDraft));
-  $('reportForm').addEventListener('submit',e=>{e.preventDefault();submitReport(true);});
-  $('saveOnly').addEventListener('click',()=>submitReport(false));
-  $('closeDialog').addEventListener('click',()=>closeReport());
-  $('reportDialog').addEventListener('cancel',e=>{e.preventDefault();closeReport();});
-  $('historyButton').addEventListener('click',showHistory);
-  $('useLatest').addEventListener('click',()=>{
-    if(!state.conflict)return;
-    state.current={...state.conflict}; state.conflict=null; $('useLatest').hidden=true; displayCurrent();saveDraft();
-    message('formError','');message('draftNotice','已使用最新資料。您的填寫內容仍保留，確認後請再按儲存。');
-  });
-  $('refresh').addEventListener('click',()=>refresh(!state.scope));
-  window.addEventListener('beforeunload',e=>{if(state.dirty || state.busy || state.pending){e.preventDefault();e.returnValue='';}});
-  function onlineStatus(){ $('offline').hidden=navigator.onLine!==false; }
-  window.addEventListener('online',onlineStatus);window.addEventListener('offline',onlineStatus);
-    function myClaim(c) { const saved=loadLocal('claim:'+c.key);return Boolean(saved&&saved.claimId===c.claimId&&c.promoter); }
-
-  function isClaimed(c) { return Boolean(String(c.promoter||'').trim()); }
-  function claimStatistics(claims) {
-    return ['中西區','安平區','南區'].map(district=>{
-      const rows=claims.filter(c=>c.district===district),claimed=rows.filter(isClaimed).length;
-      return {district,total:rows.length,claimed,unclaimed:rows.length-claimed};
-    });
-  }
-  function renderClaimOverview() {
-    const stats=claimStatistics(state.claims),total=stats.reduce((a,r)=>a+r.total,0),claimed=stats.reduce((a,r)=>a+r.claimed,0);
-    $('claimTotals').replaceChildren();
-    [['總組數',total,''],['已認領',claimed,'claimed'],['未認領',total-claimed,'unclaimed']].forEach(([label,value,style])=>{
-      const card=node('div','claim-metric '+style);card.append(node('span','',label),node('strong','',value+' 組'));$('claimTotals').append(card);
-    });
-    $('claimSummaryRows').replaceChildren();
-    stats.concat([{district:'合計',total,claimed,unclaimed:total-claimed}]).forEach(r=>{
-      const tr=node('tr');const th=node('th','',r.district);th.scope='row';tr.append(th,node('td','',String(r.total)),node('td','claimed',String(r.claimed)),node('td','unclaimed',String(r.unclaimed)));$('claimSummaryRows').append(tr);
-    });
-    $('claimUpdated').textContent=state.claimsReadAt?'資料讀取時間：'+state.claimsReadAt+'（台灣時間）':'';
-  }
-
-  function renderClaims() {
-    if(state.page!=='claims')return;
-    renderClaimOverview();
-    const all=state.claims.filter(c=>!state.claimDistrict||c.district===state.claimDistrict);
-    const shown=state.claimView==='mine'?state.claims.filter(myClaim):all.filter(c=>state.claimView==='claimed'?isClaimed(c):state.claimView==='unclaimed'?!isClaimed(c):true);
-    $('claimDistrict').disabled=state.claimView==='mine';
-    [['allClaims','all'],['claimedClaims','claimed'],['unclaimedClaims','unclaimed'],['myClaims','mine']].forEach(([id,view])=>$(id).setAttribute('aria-pressed',String(state.claimView===view)));
-    $('claimCards').replaceChildren();
-    $('claimStatus').textContent=state.claimView==='mine'?'本裝置認領 '+shown.length+' 組（跨三區）':(state.claimDistrict||'三區全部')+'｜'+({all:'全部',claimed:'已認領',unclaimed:'未認領'}[state.claimView]||'全部')+' '+shown.length+' 組';
-    if(!shown.length)$('claimCards').append(node('p','hint','目前沒有符合的路線。'));
-    shown.forEach(c=>{
-      const rr=sorted(state.merchants.filter(m=>m.wave==='2'&&m.district===c.district&&m.route===c.route));
-      const box=node('article','card');box.append(node('h2','',c.district+' '+c.route+'｜'+c.name),node('p','',rr.length+' 家 · 已回報 '+rr.filter(m=>m.visited).length+' 家'));
-      box.append(node('span','claim-badge '+(isClaimed(c)?'claimed':'unclaimed'),isClaimed(c)?'已認領':'未認領'),node('p','claim-person',isClaimed(c)?'認領人員：'+c.promoter:'認領人員：尚未有人認領'));if(c.time)box.append(node('p','hint','認領時間：'+c.time));
-      const detail=node('details');detail.append(node('summary','','查看店家順序'));
-      const list=node('ol');rr.forEach(m=>{const item=node('li','',m.name+'｜'+m.address);item.append(hoursPanel(m));list.append(item);});detail.append(list);box.append(detail);
-      const actions=node('div','claim-actions');
-      const open=node('button','button','前往這條路線回報 →');open.type='button';open.onclick=()=>openClaimRoute(c);actions.append(open);
-      if(!c.promoter||myClaim(c)){
-        const b=node('button','button '+(!c.promoter?'primary':'secondary'),c.promoter?'取消認領':'認領這組');b.type='button';b.disabled=state.claimBusy;b.onclick=()=>claimAction(c,c.promoter?'cancel':'claim');actions.append(b);
-      }
-      box.append(actions,node('p','claim-card-help','前往回報會開啟這組店家並帶入路線與人員；拜訪後仍需逐店填寫並儲存。'));$('claimCards').append(box);
-    });
-  }
-  async function claimAction(c,action) {
-    if(state.claimBusy)return;
-    const promoter=$('claimPerson').value.trim();
-    if(action==='claim'&&!promoter){message('claimError','請選擇或填入認領人員。');$('claimPerson').focus();return;}
-    if(action==='cancel'&&!confirm('取消 '+c.district+' '+c.route+' 組認領？取消後其他人可以認領；已儲存的拜訪紀錄會保留。'))return;
-    state.claimBusy=true;renderClaims();message('claimError','');
-    try {
-    const key='claim:'+c.key;
-    let saved=loadLocal(key);
-    if(action==='claim'&&!saved){
-      if(!window.crypto||!crypto.getRandomValues||!crypto.subtle){message('claimError','無法建立認領憑證，請用正式部署網址及一般瀏覽器開啟。');return;}
-      saved={secret:Array.from(crypto.getRandomValues(new Uint8Array(32)),x=>x.toString(16).padStart(2,'0')).join('')};
-      const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('claim:'+saved.secret));
-      saved.claimId=Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');storeLocal(key,saved);
-      if(loadLocal(key)?.secret!==saved.secret){message('claimError','瀏覽器無法保存認領憑證，請開啟一般瀏覽器並允許網站儲存。');return;}
     }
-    if(!saved){message('claimError','請用原認領裝置取消，或聯絡管理者。');return;}
-      const data=await rpc('changeRouteClaim',{district:c.district,route:c.route,action,promoter,secret:saved.secret});
-      state.claims=data.claims;
-      const current=state.claims.find(x=>x.key===c.key);
-      if(action==='claim'){saved.claimId=current.claimId;storeLocal(key,saved);storeLocal('claimPerson',promoter);}
-      else storeLocal(key,null);
-      state.routeOverrides.delete('2:'+c.district+':'+c.route);
-      toast(action==='claim'?'認領成功，已帶入路線推廣人員。':'已取消認領，原回報保留。');
-      await refresh();
-    }catch(e){message('claimError',e.message+' 若連線中斷，請按原按鈕重試。');}
-    finally{state.claimBusy=false;renderClaims();showRoutePerson();}
-  }
-  $('wave').onchange=()=>{state.wave=$('wave').value;state.route='01';state.search='';$('search').value='';setRoutes();rememberFilters();renderList();renderClaims();};
-  $('allClaims').onclick=()=>{state.claimView='all';renderClaims();};
-  $('claimedClaims').onclick=()=>{state.claimView='claimed';renderClaims();};
-  $('unclaimedClaims').onclick=()=>{state.claimView='unclaimed';renderClaims();};
-  $('myClaims').onclick=()=>{state.claimView='mine';renderClaims();};
-  $('claimPerson').oninput=()=>storeLocal('claimPerson',$('claimPerson').value.trim());
 
+    function setStatus(message, type) {
+      formStatus.textContent = message;
+      formStatus.className = 'status ' + (type || '');
+    }
 
-  function showPage(page, scroll=true) {
-    state.page=page==='visits'?'visits':'claims';
-    const claiming=state.page==='claims';
-    $('claimsPanel').hidden=!claiming;
-    $('visitPage').hidden=claiming;
-    $('dailyButton').hidden=claiming;
-    $('claimsTab').setAttribute('aria-current',claiming?'page':'false');
-    $('visitsTab').setAttribute('aria-current',claiming?'false':'page');
-    $('pageTitle').textContent=claiming?'路線認領':'拜訪回報';
-    $('pageSubtitle').textContent=claiming?'先認領負責的路線，再安排拜訪。':'找到店家、導航前往，拜訪後逐店填寫並儲存。';
-    if(claiming){$('claimDistrict').value=state.claimDistrict;renderClaims();}
-    if(scroll)window.scrollTo({top:0,behavior:'smooth'});
-  }
-  function openClaimRoute(c) {
-    state.wave='2'; state.district=c.district; state.route=c.route;
-    state.search='';state.filter='all';$('search').value='';$('wave').value='2';
-    state.routeOverrides.delete(routeKey(c.district,c.route,'2'));
-    setRoutes();rememberFilters();showPage('visits');renderList();
-    toast('已帶入路線與人員；請逐店填寫並儲存拜訪結果。');
-  }
-  $('claimsTab').onclick=()=>showPage('claims');
-  $('visitsTab').onclick=()=>{showPage('visits');renderList();};
-  $('claimDistrict').onchange=()=>{state.claimDistrict=$('claimDistrict').value;state.claimView='all';renderClaims();};
+    function jsonpRequest(url, params) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'campCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const script = document.createElement('script');
 
-  onlineStatus();refresh(true);
+        params.callback = callbackName;
+
+        const query = new URLSearchParams(params).toString();
+        script.src = url + '?' + query;
+
+        window[callbackName] = function(response) {
+          cleanup();
+          resolve(response);
+        };
+
+        script.onerror = function() {
+          cleanup();
+          reject(new Error('連線失敗，請稍後再試。'));
+        };
+
+        function cleanup() {
+          delete window[callbackName];
+          script.remove();
+        }
+
+        document.body.appendChild(script);
+      });
+    }
+
+    if (shouldLogVisit()) {
+      jsonpRequest(GAS_WEB_APP_URL, {
+        action: 'visit',
+        adSource: adSource,
+        pageUrl: window.location.href,
+        referrer: document.referrer || '',
+        userAgent: navigator.userAgent || '',
+        screenSize: (window.screen ? window.screen.width + 'x' + window.screen.height : '')
+      }).catch(function() {
+        // 進站紀錄失敗不影響報名功能。
+      });
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送出中...';
+      setStatus('資料送出中，請稍候。', '');
+
+      try {
+        const response = await jsonpRequest(GAS_WEB_APP_URL, {
+          action: 'register',
+          parentName: data.parentName.trim(),
+          phone: data.phone.trim(),
+          childName: data.childName.trim(),
+          grade: data.grade,
+          school: data.school.trim(),
+          photoConsent: data.photoConsent,
+          note: data.note.trim(),
+          adSource: adSource,
+          pageUrl: window.location.href
+        });
+
+        if (response.ok) {
+          if (typeof fbq === 'function') {
+            fbq('track', 'CompleteRegistration', {
+              content_name: '1122親子自律成長活動',
+              ad_source: adSource,
+              status: 'success'
+            });
+          }
+
+          setStatus(response.message || '報名成功！我們已收到您的資料。', 'ok');
+          form.reset();
+        } else {
+          setStatus(response.message || '報名失敗，請稍後再試。', 'err');
+        }
+      } catch (err) {
+        setStatus(err.message || '連線失敗，請稍後再試。', 'err');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '送出報名';
+      }
+    });
   </script>
 </body>
 </html>
