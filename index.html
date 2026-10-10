@@ -2079,6 +2079,41 @@
       });
     }
 
+    // GAS v2: write via POST only. POST is intentionally opaque cross-origin;
+    // the server is checked later by a random clientRecordId (GET read-only).
+    function postV2(payload) {
+      return fetch(GAS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        credentials: 'omit',
+        referrerPolicy: 'no-referrer',
+        body: new URLSearchParams(payload)
+      });
+    }
+    async function submitV2WithVerification(payload) {
+      const token = payload.clientRecordId;
+      try {
+        await postV2(payload);
+      } catch (err) {
+        // A failed browser response does not prove the server did not write.
+      }
+      for (let attempt = 0; attempt < 10; attempt++) {
+        await new Promise(function(resolve) { setTimeout(resolve, attempt === 0 ? 1100 : 1600); });
+        try {
+          const check = await jsonpRequest(GAS_WEB_APP_URL, {
+            action: 'checkRegistration',
+            clientRecordId: token
+          }, 5000);
+          if (check && check.ok && (check.found || check.registered)) {
+            return {ok:true,record_id:check.record_id || token,message:'報名成功！我們已收到您的資料。'};
+          }
+        } catch (ignored) {
+          // Network interruptions should not cause a second registration.
+        }
+      }
+      throw new Error('無法確認報名結果');
+    }
+
     const commonTracking = Object.assign({
       visitor_id: visitorId,
       session_id: sessionId,
@@ -2090,17 +2125,20 @@
     }, attribution);
     function logEvent(eventName, extra) {
       if (!BACKEND_V2_READY) return;
-      // Until GAS action=track is upgraded, these requests may not be persisted server-side.
       const payload = Object.assign({}, commonTracking, extra || {}, {action:'track', event_name:eventName});
-      jsonpRequest(GAS_WEB_APP_URL, payload, 8000).catch(function() {});
+      postV2(payload).catch(function() {});
     }
     if (!sessionStorage.getItem('camp1122_page_view_logged')) {
       sessionStorage.setItem('camp1122_page_view_logged', '1');
-      jsonpRequest(GAS_WEB_APP_URL, Object.assign({}, commonTracking, {
+      const visitPayload = Object.assign({}, commonTracking, {
         action:'visit',
         screenSize: window.screen ? window.screen.width + 'x' + window.screen.height : ''
-      }), 8000).catch(function() {});
-      logEvent('page_view');
+      });
+      if (BACKEND_V2_READY) {
+        postV2(visitPayload).catch(function() {});
+      } else {
+        jsonpRequest(GAS_WEB_APP_URL, visitPayload, 8000).catch(function() {});
+      }
     }
     document.querySelectorAll('a[href="#signup"]').forEach(function(link) {
       link.addEventListener('click', function() { logEvent('registration_click'); });
@@ -2142,10 +2180,12 @@
         note: (data.note || '').trim()
       });
       try {
-        const response = await jsonpRequest(GAS_WEB_APP_URL, payload, 25000);
+        const response = BACKEND_V2_READY
+          ? await submitV2WithVerification(payload)
+          : await jsonpRequest(GAS_WEB_APP_URL, payload, 25000);
         if (response && response.ok) {
           const recordId = response.record_id || response.recordId || clientRecordId;
-          logEvent('registration_success', {record_id: recordId, clientRecordId: clientRecordId});
+          if (!BACKEND_V2_READY) logEvent('registration_success', {record_id: recordId, clientRecordId: clientRecordId});
           if (typeof fbq === 'function') {
             fbq('track', 'CompleteRegistration', {
               content_name:'1122親子自律成長活動',
@@ -2168,7 +2208,7 @@
             action:'checkRegistration', clientRecordId:clientRecordId
           }, 8000);
           if (verification && verification.ok && (verification.found || verification.registered)) {
-            logEvent('registration_success', {record_id:verification.record_id || clientRecordId,clientRecordId:clientRecordId});
+            if (!BACKEND_V2_READY) logEvent('registration_success', {record_id:verification.record_id || clientRecordId,clientRecordId:clientRecordId});
             if (typeof fbq === 'function') fbq('track', 'CompleteRegistration', {content_name:'1122親子自律成長活動',status:'success'}, {eventID:clientRecordId});
             setStatus('已確認報名成功，請勿重複送出。', 'ok');
             form.reset();
