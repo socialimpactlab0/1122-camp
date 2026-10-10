@@ -2013,6 +2013,8 @@
 
   <script>
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
+    // 目前沿用既有 GAS，尚未部署 v2；避免把未知 action 送往正式報名資料庫。
+    const BACKEND_V2_READY = false;
     const form = document.getElementById('signupForm');
     const submitBtn = document.getElementById('submitBtn');
     const formStatus = document.getElementById('formStatus');
@@ -2087,6 +2089,7 @@
       device: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
     }, attribution);
     function logEvent(eventName, extra) {
+      if (!BACKEND_V2_READY) return;
       // Until GAS action=track is upgraded, these requests may not be persisted server-side.
       const payload = Object.assign({}, commonTracking, extra || {}, {action:'track', event_name:eventName});
       jsonpRequest(GAS_WEB_APP_URL, payload, 8000).catch(function() {});
@@ -2160,6 +2163,7 @@
         // An ambiguous timeout must not silently create a second record.
         // Query support must be implemented in GAS before this can guarantee deduplication.
         try {
+          if (!BACKEND_V2_READY) throw new Error('後端尚未部署查詢功能');
           const verification = await jsonpRequest(GAS_WEB_APP_URL, {
             action:'checkRegistration', clientRecordId:clientRecordId
           }, 8000);
