@@ -940,6 +940,10 @@
       font-weight: 900;
     }
 
+    .status[hidden] {
+      display: none !important;
+    }
+
     .status.ok {
       color: #16864b;
     }
@@ -1975,19 +1979,6 @@
             </div>
 
             <div class="field full">
-              <label for="photoConsent">活動拍照與紀錄同意 <span class="required">*</span></label>
-              <select id="photoConsent" name="photoConsent" required>
-                <option value="">請選擇</option>
-                <option value="同意，活動照片可作為活動紀錄與非商業宣傳使用">
-                  同意，活動照片可作為活動紀錄與非商業宣傳使用
-                </option>
-                <option value="不同意，請避免拍攝孩子正面特寫">
-                  不同意，請避免拍攝孩子正面特寫
-                </option>
-              </select>
-            </div>
-
-            <div class="field full">
               <label for="note">備註</label>
               <textarea id="note" name="note" placeholder="例如：孩子特殊狀況、需注意事項等"></textarea>
             </div>
@@ -1995,7 +1986,7 @@
 
           <div class="submit-row">
             <button class="btn btn-primary" type="submit" id="submitBtn">送出報名</button>
-            <span class="status" id="formStatus"></span>
+            <span class="status" id="formStatus" role="status" aria-live="polite" hidden></span>
           </div>
         </form>
       </div>
@@ -2018,6 +2009,17 @@
   const submitBtn = document.getElementById('submitBtn');
   const formStatus = document.getElementById('formStatus');
   const adSourceInput = document.getElementById('adSource');
+
+  // Do not display a prior registration message before the current submission.
+  function clearStatus() {
+    formStatus.textContent = '';
+    formStatus.className = 'status';
+    formStatus.hidden = true;
+  }
+  clearStatus();
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) clearStatus();
+  });
 
   function uuid() {
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -2054,8 +2056,9 @@
   },utm);
 
   function status(message,level) {
-    formStatus.textContent=message;
+    formStatus.textContent=message||'';
     formStatus.className='status '+(level||'');
+    formStatus.hidden=!message;
   }
   function post(payload,timeoutMs) {
     const controller=new AbortController();
@@ -2104,8 +2107,12 @@
     track('form_start');
     if(typeof fbq==='function')fbq('track','Lead',{content_name:'1122親子自律成長活動'});
   }
-  form.addEventListener('input',markFormStarted);
-  form.addEventListener('change',markFormStarted);
+  function onFormEdit() {
+    if(formStatus.classList.contains('ok')) clearStatus();
+    markFormStarted();
+  }
+  form.addEventListener('input',onFormEdit);
+  form.addEventListener('change',onFormEdit);
 
   async function verify(token) {
     for(let attempt=0;attempt<8;attempt++) {
@@ -2130,7 +2137,7 @@
       phone:(data.phone||'').trim(),
       childName:(data.childName||'').trim(),
       grade:data.grade||'',school:(data.school||'').trim(),
-      photoConsent:data.photoConsent||'',note:(data.note||'').trim()
+      note:(data.note||'').trim()
     });
     submitBtn.disabled=true;
     submitBtn.textContent='送出中...';
