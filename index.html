@@ -2012,133 +2012,153 @@
   </div>
 
   <script>
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
 
-    const form = document.getElementById('signupForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const formStatus = document.getElementById('formStatus');
-    const adSourceInput = document.getElementById('adSource');
+  const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
+  const form = document.getElementById('signupForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+  const adSourceInput = document.getElementById('adSource');
 
-    function getAdSource() {
-      const params = new URLSearchParams(window.location.search);
-      return (
-        params.get('ad') ||
-        params.get('utm_content') ||
-        params.get('utm_campaign') ||
-        params.get('utm_source') ||
-        'direct'
-      );
-    }
+  function uuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    const bytes = new Uint8Array(20);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function storageGet(store,key) { try { return store.getItem(key); } catch (_) { return null; } }
+  function storageSet(store,key,val) { try { store.setItem(key,val); } catch (_) {} }
+  function storageRemove(store,key) { try { store.removeItem(key); } catch (_) {} }
+  function ensureId(store,key) {
+    let value=storageGet(store,key);
+    if(!value) { value=uuid(); storageSet(store,key,value); }
+    return value;
+  }
+  const visitorId=ensureId(localStorage,'camp1122_visitor_id');
+  const sessionId=ensureId(sessionStorage,'camp1122_session_id');
+  const query=new URLSearchParams(location.search);
+  const utm={};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(key=>{
+    const current=query.get(key);
+    const saved=storageGet(localStorage,'camp1122_'+key)||'';
+    utm[key]=current||saved;
+    if(current) storageSet(localStorage,'camp1122_'+key,current);
+  });
+  const adSource=query.get('ad')||utm.utm_content||utm.utm_campaign||utm.utm_source||'direct';
+  if(adSourceInput) adSourceInput.value=adSource;
+  const base=Object.assign({
+    visitor_id:visitorId,session_id:sessionId,adSource,
+    pageUrl:location.href,referrer:document.referrer||'',
+    userAgent:navigator.userAgent||'',
+    screenSize:screen.width+'x'+screen.height,
+    device:/Mobi|iPhone|Android/i.test(navigator.userAgent)?'mobile':'desktop'
+  },utm);
 
-    const adSource = getAdSource();
-    if (adSourceInput) {
-      adSourceInput.value = adSource;
-    }
-
-    function shouldLogVisit() {
-      const key = 'campVisitLogged:' + adSource + ':' + window.location.pathname;
-      try {
-        if (sessionStorage.getItem(key)) {
-          return false;
-        }
-        sessionStorage.setItem(key, '1');
-        return true;
-      } catch (err) {
-        return true;
+  function status(message,level) {
+    formStatus.textContent=message;
+    formStatus.className='status '+(level||'');
+  }
+  function post(payload,timeoutMs) {
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),timeoutMs||15000);
+    return fetch(GAS_WEB_APP_URL,{
+      method:'POST',mode:'no-cors',credentials:'omit',
+      body:new URLSearchParams(payload),signal:controller.signal,
+      referrerPolicy:'no-referrer'
+    }).finally(()=>clearTimeout(timer));
+  }
+  function lookup(token,timeoutMs) {
+    return new Promise((resolve,reject)=>{
+      const callback='campCallback_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+      const script=document.createElement('script');
+      let done=false,timer;
+      function finish(err,result) {
+        if(done)return;
+        done=true;clearTimeout(timer);
+        delete window[callback];script.remove();
+        if(err)reject(err);else resolve(result);
       }
-    }
-
-    function setStatus(message, type) {
-      formStatus.textContent = message;
-      formStatus.className = 'status ' + (type || '');
-    }
-
-    function jsonpRequest(url, params) {
-      return new Promise((resolve, reject) => {
-        const callbackName = 'campCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-        const script = document.createElement('script');
-
-        params.callback = callbackName;
-
-        const query = new URLSearchParams(params).toString();
-        script.src = url + '?' + query;
-
-        window[callbackName] = function(response) {
-          cleanup();
-          resolve(response);
-        };
-
-        script.onerror = function() {
-          cleanup();
-          reject(new Error('連線失敗，請稍後再試。'));
-        };
-
-        function cleanup() {
-          delete window[callbackName];
-          script.remove();
-        }
-
-        document.body.appendChild(script);
-      });
-    }
-
-    if (shouldLogVisit()) {
-      jsonpRequest(GAS_WEB_APP_URL, {
-        action: 'visit',
-        adSource: adSource,
-        pageUrl: window.location.href,
-        referrer: document.referrer || '',
-        userAgent: navigator.userAgent || '',
-        screenSize: (window.screen ? window.screen.width + 'x' + window.screen.height : '')
-      }).catch(function() {
-        // 進站紀錄失敗不影響報名功能。
-      });
-    }
-
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = '送出中...';
-      setStatus('資料送出中，請稍候。', '');
-
-      try {
-        const response = await jsonpRequest(GAS_WEB_APP_URL, {
-          action: 'register',
-          parentName: data.parentName.trim(),
-          phone: data.phone.trim(),
-          childName: data.childName.trim(),
-          grade: data.grade,
-          school: data.school.trim(),
-          photoConsent: data.photoConsent,
-          note: data.note.trim(),
-          adSource: adSource,
-          pageUrl: window.location.href
-        });
-
-        if (response.ok) {
-          if (typeof fbq === 'function') {
-            fbq('track', 'CompleteRegistration', {
-              content_name: '1122親子自律成長活動',
-              ad_source: adSource,
-              status: 'success'
-            });
-          }
-
-          setStatus(response.message || '報名成功！我們已收到您的資料。', 'ok');
-          form.reset();
-        } else {
-          setStatus(response.message || '報名失敗，請稍後再試。', 'err');
-        }
-      } catch (err) {
-        setStatus(err.message || '連線失敗，請稍後再試。', 'err');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = '送出報名';
-      }
+      window[callback]=result=>finish(null,result);
+      script.onerror=()=>finish(new Error('查詢連線失敗'));
+      script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({action:'checkRegistration',clientRecordId:token,callback});
+      timer=setTimeout(()=>finish(new Error('查詢逾時')),timeoutMs||6000);
+      document.body.appendChild(script);
     });
+  }
+  function track(eventName) {
+    if(!['registration_click','form_start'].includes(eventName))return;
+    post(Object.assign({},base,{action:'track',event_name:eventName}),10000).catch(()=>{});
+  }
+  if(storageGet(sessionStorage,'camp1122_visit_sent')!=='1') {
+    post(Object.assign({},base,{action:'visit'}),12000)
+      .then(()=>storageSet(sessionStorage,'camp1122_visit_sent','1'))
+      .catch(()=>{});
+  }
+  document.querySelectorAll('a[href="#signup"]').forEach(a=>{
+    a.addEventListener('click',()=>track('registration_click'));
+  });
+  let formStarted=storageGet(sessionStorage,'camp1122_form_started')==='1';
+  function markFormStarted() {
+    if(formStarted)return;
+    formStarted=true;
+    storageSet(sessionStorage,'camp1122_form_started','1');
+    track('form_start');
+    if(typeof fbq==='function')fbq('track','Lead',{content_name:'1122親子自律成長活動'});
+  }
+  form.addEventListener('input',markFormStarted);
+  form.addEventListener('change',markFormStarted);
+
+  async function verify(token) {
+    for(let attempt=0;attempt<8;attempt++) {
+      await new Promise(resolve=>setTimeout(resolve,attempt===0?1100:1500));
+      try {
+        const result=await lookup(token,5500);
+        if(result&&result.ok&&result.found)return {ok:true,serial:result.serial};
+        if(result&&result.ok&&result.final)return {ok:false,final:true,message:result.message};
+      } catch (_) {}
+    }
+    return {ok:false,unknown:true,message:'目前無法確認是否報名成功。請先聯繫主辦單位，勿重複送出。'};
+  }
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(submitBtn.disabled)return;
+    const data=Object.fromEntries(new FormData(form).entries());
+    const token=ensureId(sessionStorage,'camp1122_pending_record_id');
+    const payload=Object.assign({},base,{
+      action:'register',clientRecordId:token,
+      parentName:(data.parentName||'').trim(),
+      phone:(data.phone||'').trim(),
+      childName:(data.childName||'').trim(),
+      grade:data.grade||'',school:(data.school||'').trim(),
+      photoConsent:data.photoConsent||'',note:(data.note||'').trim()
+    });
+    submitBtn.disabled=true;
+    submitBtn.textContent='送出中...';
+    status('資料送出中，正在確認報名結果。','');
+    try {
+      try { await post(payload,22000); }
+      catch (_) { /* POST 的網路錯誤不表示伺服器未完成寫入 */ }
+      const result=await verify(token);
+      if(result.ok) {
+        const sentKey='camp1122_meta_complete_'+token;
+        if(storageGet(sessionStorage,sentKey)!=='1') {
+          if(typeof fbq==='function') fbq('track','CompleteRegistration',{
+            content_name:'1122親子自律成長活動',ad_source:adSource,status:'success'
+          },{eventID:token});
+          storageSet(sessionStorage,sentKey,'1');
+        }
+        status('報名成功！您的報名編號：'+result.serial,'ok');
+        form.reset();
+        storageRemove(sessionStorage,'camp1122_pending_record_id');
+      } else {
+        status(result.message||'報名未成功。','err');
+        if(result.final) storageRemove(sessionStorage,'camp1122_pending_record_id');
+      }
+    } finally {
+      submitBtn.disabled=false;
+      submitBtn.textContent='送出報名';
+    }
+  });
   </script>
 </body>
 </html>
