@@ -2013,127 +2013,168 @@
 
   <script>
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
-
     const form = document.getElementById('signupForm');
     const submitBtn = document.getElementById('submitBtn');
     const formStatus = document.getElementById('formStatus');
     const adSourceInput = document.getElementById('adSource');
 
-    function getAdSource() {
-      const params = new URLSearchParams(window.location.search);
-      return (
-        params.get('ad') ||
-        params.get('utm_content') ||
-        params.get('utm_campaign') ||
-        params.get('utm_source') ||
-        'direct'
-      );
+    function newId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+      return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2) + '-' + Math.random().toString(36).slice(2);
     }
-
-    const adSource = getAdSource();
-    if (adSourceInput) {
-      adSourceInput.value = adSource;
-    }
-
-    function shouldLogVisit() {
-      const key = 'campVisitLogged:' + adSource + ':' + window.location.pathname;
+    function storedId(store, key) {
       try {
-        if (sessionStorage.getItem(key)) {
-          return false;
-        }
-        sessionStorage.setItem(key, '1');
-        return true;
-      } catch (err) {
-        return true;
-      }
+        let value = store.getItem(key);
+        if (!value) { value = newId(); store.setItem(key, value); }
+        return value;
+      } catch (err) { return newId(); }
     }
+    const visitorId = storedId(localStorage, 'camp1122_visitor_id');
+    const sessionId = storedId(sessionStorage, 'camp1122_session_id');
+    const params = new URLSearchParams(window.location.search);
+    const utmFields = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
+    const attribution = {};
+    utmFields.forEach(function(key) {
+      let saved = '';
+      try { saved = localStorage.getItem('camp1122_' + key) || ''; } catch (err) {}
+      const incoming = params.get(key);
+      if (incoming) {
+        saved = incoming;
+        try { localStorage.setItem('camp1122_' + key, incoming); } catch (err) {}
+      }
+      attribution[key] = saved;
+    });
+    const adSource = params.get('ad') || attribution.utm_content || attribution.utm_campaign || attribution.utm_source || 'direct';
+    if (adSourceInput) adSourceInput.value = adSource;
 
     function setStatus(message, type) {
       formStatus.textContent = message;
       formStatus.className = 'status ' + (type || '');
     }
-
-    function jsonpRequest(url, params) {
-      return new Promise((resolve, reject) => {
-        const callbackName = 'campCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    function jsonpRequest(url, payload, timeoutMs) {
+      return new Promise(function(resolve, reject) {
+        const callbackName = 'campCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
         const script = document.createElement('script');
-
-        params.callback = callbackName;
-
-        const query = new URLSearchParams(params).toString();
-        script.src = url + '?' + query;
-
-        window[callbackName] = function(response) {
-          cleanup();
-          resolve(response);
-        };
-
-        script.onerror = function() {
-          cleanup();
-          reject(new Error('連線失敗，請稍後再試。'));
-        };
-
+        let timer;
+        let finished = false;
         function cleanup() {
-          delete window[callbackName];
+          if (timer) clearTimeout(timer);
+          try { delete window[callbackName]; } catch (err) { window[callbackName] = undefined; }
           script.remove();
         }
-
+        function finish(error, response) {
+          if (finished) return;
+          finished = true;
+          cleanup();
+          if (error) reject(error); else resolve(response);
+        }
+        window[callbackName] = function(response) { finish(null, response); };
+        script.onerror = function() { finish(new Error('連線失敗，請稍後再試。')); };
+        const query = new URLSearchParams(Object.assign({}, payload, {callback:callbackName}));
+        script.src = url + '?' + query.toString();
+        timer = setTimeout(function() { finish(new Error('連線逾時，請確認是否已報名，勿重複送出。')); }, timeoutMs || 12000);
         document.body.appendChild(script);
       });
     }
 
-    if (shouldLogVisit()) {
-      jsonpRequest(GAS_WEB_APP_URL, {
-        action: 'visit',
-        adSource: adSource,
-        pageUrl: window.location.href,
-        referrer: document.referrer || '',
-        userAgent: navigator.userAgent || '',
-        screenSize: (window.screen ? window.screen.width + 'x' + window.screen.height : '')
-      }).catch(function() {
-        // 進站紀錄失敗不影響報名功能。
-      });
+    const commonTracking = Object.assign({
+      visitor_id: visitorId,
+      session_id: sessionId,
+      adSource: adSource,
+      pageUrl: window.location.href,
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent || '',
+      device: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+    }, attribution);
+    function logEvent(eventName, extra) {
+      // Until GAS action=track is upgraded, these requests may not be persisted server-side.
+      const payload = Object.assign({}, commonTracking, extra || {}, {action:'track', event_name:eventName});
+      jsonpRequest(GAS_WEB_APP_URL, payload, 8000).catch(function() {});
     }
+    if (!sessionStorage.getItem('camp1122_page_view_logged')) {
+      sessionStorage.setItem('camp1122_page_view_logged', '1');
+      jsonpRequest(GAS_WEB_APP_URL, Object.assign({}, commonTracking, {
+        action:'visit',
+        screenSize: window.screen ? window.screen.width + 'x' + window.screen.height : ''
+      }), 8000).catch(function() {});
+      logEvent('page_view');
+    }
+    document.querySelectorAll('a[href="#signup"]').forEach(function(link) {
+      link.addEventListener('click', function() { logEvent('registration_click'); });
+    });
+    let formStarted = false;
+    form.addEventListener('input', function() {
+      if (formStarted) return;
+      formStarted = true;
+      logEvent('form_start');
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name:'1122親子自律成長活動'});
+    });
+    form.addEventListener('change', function() {
+      if (formStarted) return;
+      formStarted = true;
+      logEvent('form_start');
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name:'1122親子自律成長活動'});
+    });
 
+    function pendingRecordId() {
+      return storedId(sessionStorage, 'camp1122_pending_record_id');
+    }
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-
+      if (submitBtn.disabled) return;
       const data = Object.fromEntries(new FormData(form).entries());
-
+      const clientRecordId = pendingRecordId();
       submitBtn.disabled = true;
       submitBtn.textContent = '送出中...';
       setStatus('資料送出中，請稍候。', '');
-
+      const payload = Object.assign({}, commonTracking, {
+        action: 'register',
+        clientRecordId: clientRecordId,
+        parentName: (data.parentName || '').trim(),
+        phone: (data.phone || '').trim(),
+        childName: (data.childName || '').trim(),
+        grade: data.grade,
+        school: (data.school || '').trim(),
+        photoConsent: data.photoConsent,
+        note: (data.note || '').trim()
+      });
       try {
-        const response = await jsonpRequest(GAS_WEB_APP_URL, {
-          action: 'register',
-          parentName: data.parentName.trim(),
-          phone: data.phone.trim(),
-          childName: data.childName.trim(),
-          grade: data.grade,
-          school: data.school.trim(),
-          photoConsent: data.photoConsent,
-          note: data.note.trim(),
-          adSource: adSource,
-          pageUrl: window.location.href
-        });
-
-        if (response.ok) {
+        const response = await jsonpRequest(GAS_WEB_APP_URL, payload, 25000);
+        if (response && response.ok) {
+          const recordId = response.record_id || response.recordId || clientRecordId;
+          logEvent('registration_success', {record_id: recordId, clientRecordId: clientRecordId});
           if (typeof fbq === 'function') {
             fbq('track', 'CompleteRegistration', {
-              content_name: '1122親子自律成長活動',
-              ad_source: adSource,
-              status: 'success'
-            });
+              content_name:'1122親子自律成長活動',
+              ad_source:adSource,
+              status:'success'
+            }, {eventID: clientRecordId});
           }
-
           setStatus(response.message || '報名成功！我們已收到您的資料。', 'ok');
           form.reset();
+          try { sessionStorage.removeItem('camp1122_pending_record_id'); } catch (err) {}
         } else {
-          setStatus(response.message || '報名失敗，請稍後再試。', 'err');
+          setStatus(response && response.message || '報名未成功，請確認資料後再試。', 'err');
         }
       } catch (err) {
-        setStatus(err.message || '連線失敗，請稍後再試。', 'err');
+        // An ambiguous timeout must not silently create a second record.
+        // Query support must be implemented in GAS before this can guarantee deduplication.
+        try {
+          const verification = await jsonpRequest(GAS_WEB_APP_URL, {
+            action:'checkRegistration', clientRecordId:clientRecordId
+          }, 8000);
+          if (verification && verification.ok && (verification.found || verification.registered)) {
+            logEvent('registration_success', {record_id:verification.record_id || clientRecordId,clientRecordId:clientRecordId});
+            if (typeof fbq === 'function') fbq('track', 'CompleteRegistration', {content_name:'1122親子自律成長活動',status:'success'}, {eventID:clientRecordId});
+            setStatus('已確認報名成功，請勿重複送出。', 'ok');
+            form.reset();
+            try { sessionStorage.removeItem('camp1122_pending_record_id'); } catch (ignore) {}
+          } else {
+            setStatus('無法確認是否報名成功，請先聯繫主辦單位，勿重複送出。', 'err');
+          }
+        } catch (verificationError) {
+          setStatus('無法確認是否報名成功，請先聯繫主辦單位，勿重複送出。', 'err');
+        }
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '送出報名';
