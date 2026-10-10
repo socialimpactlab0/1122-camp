@@ -125,6 +125,8 @@ function checkRegistration1122_(p) {
       return {ok:true,found:true,registered:true,record_id:recordId};
     }
   }
+  const alias = PropertiesService.getScriptProperties().getProperty('camp1122_alias_' + token);
+  if (alias) return {ok:true,found:true,registered:true,duplicate:true,record_id:alias};
   return {ok:true,found:false};
 }
 
@@ -241,6 +243,8 @@ function register1122_(ss, p) {
     if (!canceled &&
         normalizePhone1122_(row[4]) === phone &&
         (row[5] || '').trim() === childName) {
+      // 此次請求對應到舊報名編號，讓 POST 之後的 read-only 查詢仍能確認結果。
+      PropertiesService.getScriptProperties().setProperty('camp1122_alias_' + clientRecordId, String(row[1]));
       return {ok:true,duplicate:true,record_id:row[1],message:'此孩子已報名'};
     }
   }
