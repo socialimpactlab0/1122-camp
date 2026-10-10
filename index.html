@@ -2105,7 +2105,7 @@
             clientRecordId: token
           }, 5000);
           if (check && check.ok && (check.found || check.registered)) {
-            return {ok:true,record_id:check.record_id || token,message:'報名成功！我們已收到您的資料。'};
+            return {ok:true,duplicate:!!check.duplicate,record_id:check.record_id || token,message:check.duplicate ? '此孩子已報名，請勿重複送出。' : '報名成功！我們已收到您的資料。'};
           }
         } catch (ignored) {
           // Network interruptions should not cause a second registration.
@@ -2186,7 +2186,7 @@
         if (response && response.ok) {
           const recordId = response.record_id || response.recordId || clientRecordId;
           if (!BACKEND_V2_READY) logEvent('registration_success', {record_id: recordId, clientRecordId: clientRecordId});
-          if (typeof fbq === 'function') {
+          if (!response.duplicate && typeof fbq === 'function') {
             fbq('track', 'CompleteRegistration', {
               content_name:'1122親子自律成長活動',
               ad_source:adSource,
@@ -2209,7 +2209,7 @@
           }, 8000);
           if (verification && verification.ok && (verification.found || verification.registered)) {
             if (!BACKEND_V2_READY) logEvent('registration_success', {record_id:verification.record_id || clientRecordId,clientRecordId:clientRecordId});
-            if (typeof fbq === 'function') fbq('track', 'CompleteRegistration', {content_name:'1122親子自律成長活動',status:'success'}, {eventID:clientRecordId});
+            if (!verification.duplicate && typeof fbq === 'function') fbq('track', 'CompleteRegistration', {content_name:'1122親子自律成長活動',status:'success'}, {eventID:clientRecordId});
             setStatus('已確認報名成功，請勿重複送出。', 'ok');
             form.reset();
             try { sessionStorage.removeItem('camp1122_pending_record_id'); } catch (ignore) {}
