@@ -142,7 +142,11 @@
   .node.sel{transform:translate(-50%,-50%) scale(1.1);z-index:5}
   .node.sel .art{animation:pop .55s ease;filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 9px rgba(255,170,60,.95))}
   @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.22) translateY(-6px)}70%{transform:scale(.96)}100%{transform:scale(1)}}
-  .node.dim{opacity:.35;filter:grayscale(.8)}
+  /* 不在目前能力線上的站：小建築稍微淡化，站名仍保持清楚 */
+  /* （正在看的那一站就算不在線上，也不淡化） */
+  .node.dim:not(.sel) .art{opacity:.6;filter:grayscale(.55)}
+  .node.dim:not(.sel) .num,.node.dim:not(.sel) .stamp{opacity:.6}
+  .node.dim:not(.sel) .lbl{color:#8a7458;border-color:#b9a283;box-shadow:none}
   .node.next{z-index:4}
   .node.next::after{
     content:"點我！";position:absolute;left:64%;bottom:64%;
@@ -358,8 +362,9 @@
     // 「立即報名」按鈕要去的地方（結尾 ad=map 會讓報名資料記錄來源是地圖）
     registerUrl: 'index.html?ad=map#signup',
 
-    // 報名截止時間（用來算「剩 N 天」）
+    // 報名截止時間（用來算「剩 N 天」）和畫面上顯示的截止日
     deadline: '2026-11-15T23:59:59+08:00',
+    deadlineText: '11/15',
 
     // 之後有 AI 插畫時，把圖放進 images 資料夾，再把檔名寫在這裡。
     // 例：'images/map-bg.jpg'　　留空 '' 就是用現在程式畫的 Q 版底圖
@@ -449,6 +454,8 @@
 
   var $ = function (s) { return document.querySelector(s); };
   var byId = {}; STATIONS.forEach(function (s) { byId[s.id] = s; });
+  // 防呆：能力線裡如果打錯站點代號，自動略過，避免整張地圖壞掉
+  LINES.forEach(function (l) { l.stations = l.stations.filter(function (s) { return byId[s]; }); });
   var SPOTS = STATIONS.filter(function (s) { return s.num; });
   var ORDER = STATIONS.map(function (s) { return s.id; });
   var KEY = 'map1122_visited_v1';
@@ -598,7 +605,8 @@
     }
   };
   function artSvg(st, color) {
-    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + ART[st.art](color || st.color) + '</svg>';
+    var draw = ART[st.art] || ART.flag;   // 防呆：art 名稱打錯時改畫旗子，不會整頁壞掉
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + draw(color || st.color) + '</svg>';
   }
 
   // Q 版親子（手牽手）
@@ -721,12 +729,22 @@
   }
 
   /* ---- 上方小標籤 ---- */
-  function daysLeft() { return Math.ceil((new Date(CONFIG.deadline) - new Date()) / 86400000); }
+  // 用台灣時間的「日曆天」計算剩幾天（10/26 → 11/15 是 20 天；11/15 當天顯示「今天截止」）
+  function tpeDay(t) { return Math.floor((t + 8 * 3600000) / 86400000); }
+  function daysLeft() {
+    var end = new Date(CONFIG.deadline).getTime(), now = Date.now();
+    if (isNaN(end)) return null;
+    if (now > end) return -1;
+    return tpeDay(end) - tpeDay(now);
+  }
   (function () {
     var box = $('#chips');
     INFO_CHIPS.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; box.appendChild(s); });
     var d = daysLeft(), hot = document.createElement('span'); hot.className = 'hot';
-    hot.textContent = d > 0 ? '11/15 截止・剩 ' + d + ' 天' : '報名已截止';
+    hot.textContent = d === null ? CONFIG.deadlineText + ' 截止'
+      : d < 0 ? '報名已截止'
+      : d === 0 ? '今天 ' + CONFIG.deadlineText + ' 截止'
+      : CONFIG.deadlineText + ' 截止・剩 ' + d + ' 天';
     box.appendChild(hot);
   })();
 
@@ -811,7 +829,10 @@
     if (!line) {
       note.textContent = '👆 點地圖上的站點看說明，也可以選一條能力線，看看各站是怎麼串在一起的。';
     } else {
-      note.textContent = line.icon + ' ' + line.name + '線：' + line.stations.map(function (s) { return '①②③④⑤'[byId[s].num - 1] + ' ' + byId[s].name; }).join(' → ') + '。' + line.tagline;
+      note.textContent = line.icon + ' ' + line.name + '線：' + line.stations.map(function (s) {
+        var st = byId[s];
+        return (st.num ? '①②③④⑤'.charAt(st.num - 1) + ' ' : '') + st.name;
+      }).join(' → ') + '。' + line.tagline;
     }
   }
 
@@ -887,7 +908,7 @@
         '<li><b>地點</b>台南維悅酒店<br><span style="color:#7a6650;font-size:14px">' + esc(ADDRESS) + '</span></li>' +
         '<li><b>對象</b>國小 3～6 年級孩子與父母</li>' +
         '<li><b>費用</b>免費參加｜家長 30 名＋孩子 30 名</li>' +
-        '<li><b>截止</b>11/15</li></ul></div>';
+        '<li><b>截止</b>' + esc(CONFIG.deadlineText) + '</li></ul></div>';
     }
     if (st.extra === 'prizes') {
       h += '<div class="p-extra">' + PRIZES.map(function (p) {
@@ -907,13 +928,27 @@
     panel.innerHTML = '<div class="p-empty">' + DUO + '點一下地圖上的站點，<br>就會在這裡看到那一站要做什麼、學什麼。</div>';
   }
 
-  function openPanel() { panel.classList.add('open'); if (!desktop.matches) document.body.classList.add('sheet-open'); }
-  function closePanel() {
+  // 手機上打開說明卡時，多記一筆瀏覽紀錄：
+  // 家長按手機「返回鍵」會先關掉說明卡，而不是直接離開網頁
+  var sheetPushed = false;
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  function openPanel() {
+    panel.classList.add('open');
+    if (!desktop.matches) {
+      document.body.classList.add('sheet-open');
+      if (!sheetPushed) { try { history.pushState({ mapSheet: 1 }, ''); sheetPushed = true; } catch (e) {} }
+    }
+  }
+  function closePanel(fromHistory) {
     panel.classList.remove('open'); document.body.classList.remove('sheet-open');
     if (current && nodes[current]) nodes[current].classList.remove('sel');
     current = null; updateProgress();
     if (desktop.matches) renderEmpty();
+    if (sheetPushed && fromHistory !== true) { sheetPushed = false; try { history.back(); } catch (e) {} }
   }
+  window.addEventListener('popstate', function () {
+    if (sheetPushed) { sheetPushed = false; closePanel(true); }
+  });
 
   function revealNode(id) {
     if (desktop.matches) return;
