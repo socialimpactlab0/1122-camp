@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
+<title>親子自律挑戰地圖（測試版）｜從神韻看見自律之美</title>
+<meta name="description" content="11/22 親子自律成長活動互動地圖：點一點每個站點，看看當天會玩什麼、學什麼。" />
+
+<!-- Q 版圓體字「粉圓體」（Google Fonts）。載入失敗時會自動改用系統字型，不影響功能 -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet" />
+
+<!--
+  ┌──────────────────────────────────────────────────────────┐
+  │ 這是「測試頁」：只有地圖，沒有報名表，也沒有連到 GAS。        │
+  │ 要改文字 → 往下找「設定區」，只改引號裡面的中文即可。          │
+  │ 要換成 AI 插畫 → 只改設定區的 backgroundImage 那一行。       │
+  └──────────────────────────────────────────────────────────┘
+-->
+
+<style>
+  :root{
+    --ink:#5b3a1e;               /* 插畫外框的咖啡色 */
+    --cream:#fff7e8; --cream-2:#fffaf2;
+    --orange:#ff6b18; --orange-dark:#e9570c;
+    --yellow:#ffd95a; --mint:#dff8e9; --sky:#dff5ff; --blue:#2f95d8;
+    --text:#3a2614; --muted:#7a6650; --line:#f0dfc6;
+    --shadow:0 16px 36px rgba(132,84,33,.16);
+    --shadow-soft:0 8px 22px rgba(132,84,33,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;
+    font-synthesis:none;
+    color:var(--text);
+    background:#fff8ec radial-gradient(circle,rgba(255,186,110,.22) 3px,transparent 4px) 0 0/38px 38px;
+    line-height:1.7; font-size:16px;
+    -webkit-text-size-adjust:100%;
+  }
+  body.sheet-open{padding-bottom:62vh}
+  button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  a{color:inherit;text-decoration:none}
+  [hidden]{display:none !important}
+
+  .test-banner{background:#3a2614;color:#ffe9b8;text-align:center;font-size:13px;padding:6px 12px}
+  .wrap{width:min(1040px,calc(100% - 24px));margin:0 auto}
+
+  /* ===== 標題區 ===== */
+  .head{padding:22px 0 8px;text-align:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:2px solid var(--ink);color:var(--ink);
+    border-radius:999px;padding:4px 14px;font-size:13px;
+    box-shadow:0 3px 0 #e5c9a0;
+  }
+  .eyebrow i{width:9px;height:9px;border-radius:50%;background:var(--orange)}
+  h1{
+    margin:14px 0 6px;font-size:clamp(34px,9.5vw,54px);line-height:1.15;
+    font-weight:900;letter-spacing:.03em;color:var(--ink);
+    text-shadow:0 4px 0 #ffe0b8;
+  }
+  h1 em{font-style:normal;color:var(--orange);text-shadow:0 4px 0 #ffd0a8}
+  .lead{margin:0 auto;max-width:560px;color:#5b4423;font-size:16px;text-wrap:balance}
+  .nb{white-space:nowrap}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+  .chips span{
+    background:#fff;border:2px solid #ead2ac;border-radius:999px;
+    padding:2px 12px;font-size:14px;color:var(--ink);
+  }
+  .chips span.hot{background:var(--orange);border-color:var(--ink);color:#fff;box-shadow:0 3px 0 #b8460a}
+
+  /* ===== 能力線按鈕 ===== */
+  .lines{margin:16px 0 12px;text-align:center}
+  .lines-title{font-size:15px;color:#8a4b00;margin-bottom:8px}
+  .line-btns{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+  .line-btn{
+    --lc:#999;
+    background:#fff;border:2px solid var(--ink);border-radius:999px;color:var(--ink);
+    padding:5px 11px;font-size:15px;min-height:44px;
+    box-shadow:0 4px 0 #e5c9a0;transition:transform .12s,box-shadow .12s;
+  }
+  .line-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #e5c9a0}
+  .line-btn[aria-pressed="true"]{background:var(--lc);color:#fff;box-shadow:0 4px 0 rgba(60,30,0,.28)}
+  .line-note{
+    margin:12px auto 0;max-width:560px;min-height:3.4em;
+    background:#fff;border:2px dashed #e2c08e;border-radius:18px;
+    padding:8px 14px;font-size:15px;color:#5b4423;
+  }
+
+  /* ===== 版面 ===== */
+  .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;justify-content:center}
+
+  /* ===== 地圖 ===== */
+  .map{
+    position:relative;width:100%;max-width:560px;margin:0 auto;
+    aspect-ratio:3/4;border-radius:30px;overflow:hidden;
+    background:#bfe7fb;border:3px solid var(--ink);
+    box-shadow:0 6px 0 #e5c9a0,var(--shadow);
+    touch-action:manipulation;
+  }
+  /* 舊版 iPhone（iOS 14 以前）不支援 aspect-ratio，用這招撐出 3:4 高度，避免地圖消失 */
+  @supports not (aspect-ratio:3/4){ .map{height:0;padding-top:133.333%} }
+  .map > svg, .map > .bg{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:block}
+  .map > .bg{object-fit:cover}
+
+  .seg{fill:none;stroke-linecap:round;opacity:0;transition:opacity .3s}
+  .map[data-line="all"] .seg{opacity:.45;stroke-width:4;stroke-dasharray:2 11}
+  .seg.on{opacity:1 !important;stroke-width:8 !important;stroke-dasharray:14 12 !important;animation:flow 1.1s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-26}}
+
+  /* 站點（小建築） */
+  .node{
+    position:absolute;z-index:3;transform:translate(-50%,-50%);
+    width:clamp(70px,20vw,96px);height:clamp(70px,20vw,96px);
+    transition:transform .2s,opacity .3s,filter .3s;
+  }
+  .node::before{content:"";position:absolute;top:-8px;right:-8px;bottom:-8px;left:-8px;border-radius:50%} /* 加大點擊範圍 */
+  .node .art{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 4px 0 rgba(91,58,30,.18))}
+  .node .num{
+    position:absolute;top:0;left:-2px;width:25px;height:25px;border-radius:50%;
+    background:var(--orange);color:#fff;font-size:14px;line-height:1;
+    display:grid;place-items:center;border:2px solid #fff;box-shadow:0 0 0 2px var(--ink);
+  }
+  .node .stamp{
+    position:absolute;right:-2px;bottom:8px;width:26px;height:26px;border-radius:50%;
+    background:#2fb36b;color:#fff;font-size:15px;line-height:1;border:2px solid #fff;box-shadow:0 0 0 2px var(--ink);
+    display:none;place-items:center;
+  }
+  .node.done .stamp{display:grid}
+  .node .lbl{
+    position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:-6px;
+    background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:999px;
+    padding:0 9px;font-size:13px;line-height:1.65;white-space:nowrap;box-shadow:0 3px 0 rgba(91,58,30,.22);
+  }
+  .node.finish .art{animation:bob 2.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .node.sel{transform:translate(-50%,-50%) scale(1.1);z-index:5}
+  .node.sel .art{animation:pop .55s ease;filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 9px rgba(255,170,60,.95))}
+  @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.22) translateY(-6px)}70%{transform:scale(.96)}100%{transform:scale(1)}}
+  .node.dim{opacity:.35;filter:grayscale(.8)}
+  .node.next{z-index:4}
+  .node.next::after{
+    content:"點我！";position:absolute;left:64%;bottom:64%;
+    background:var(--orange);color:#fff;font-size:12px;line-height:1.75;padding:0 8px;
+    border-radius:999px;border:2px solid #fff;box-shadow:0 0 0 2px var(--ink);
+    white-space:nowrap;pointer-events:none;animation:hop 1s ease-in-out infinite;
+  }
+  @keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+  /* Q 版親子 */
+  .kid{
+    position:absolute;z-index:6;width:clamp(46px,14vw,72px);pointer-events:none;
+    transform:translate(28%,-104%);
+    transition:left .8s cubic-bezier(.4,0,.2,1),top .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);
+  }
+  .kid.at-start{transform:translate(62%,-72%)} /* 在起點時站到右邊小路上，避免擋到上方標籤 */
+  .kid svg{display:block;width:100%;height:auto;overflow:visible}
+  .kid.walk svg{animation:hopwalk .27s ease-in-out 3}
+  @keyframes hopwalk{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-4deg)}}
+
+  /* 集章列 */
+  .progress{
+    max-width:560px;margin:16px auto 0;background:#fff;border:2px solid var(--ink);
+    border-radius:22px;padding:10px 14px;box-shadow:0 4px 0 #e5c9a0;
+    display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;justify-content:center;
+  }
+  .progress b{font-weight:400;font-size:16px;color:var(--ink)}
+  .stamps{display:flex;gap:7px}
+  .stamps span{
+    width:38px;height:38px;border-radius:50%;border:2px dashed #d9b98a;color:#c9a869;
+    font-size:15px;display:grid;place-items:center;background:#fffaf2;transition:.3s;
+  }
+  .stamps span.on{border:2px solid var(--ink);background:#fff3c4;transform:rotate(-8deg)}
+  .stamps span svg{width:32px;height:32px;display:block}
+  .reset{font-size:13px;color:var(--muted);text-decoration:underline;min-height:32px;padding:0 6px}
+
+  /* ===== 說明卡（手機＝底部滑出；電腦＝右側面板） ===== */
+  .panel{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    max-height:60vh;max-height:60dvh;overflow-y:auto;overscroll-behavior:contain;
+    background:#fff;border-radius:28px 28px 0 0;border-top:3px solid var(--ink);
+    box-shadow:0 -12px 40px rgba(80,50,10,.28);
+    padding:10px 18px calc(18px + env(safe-area-inset-bottom));
+    transform:translateY(106%);visibility:hidden;
+    transition:transform .35s cubic-bezier(.3,.9,.3,1),visibility 0s .35s;
+  }
+  .panel.open{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.3,.9,.3,1)}
+  .grab{width:44px;height:5px;border-radius:99px;background:#e6d6bb;margin:0 auto 10px}
+  .p-head{display:flex;align-items:center;gap:12px}
+  .p-ico{
+    flex:none;width:66px;height:66px;border-radius:50%;background:var(--c,#ffd95a);
+    display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 2px var(--ink);
+  }
+  .p-ico svg{width:56px;height:56px;display:block;overflow:visible}
+  .p-title{flex:1;min-width:0}
+  .p-kicker{font-size:14px;color:var(--orange-dark)}
+  .p-title h2{margin:0;font-size:24px;line-height:1.25;font-weight:900;color:var(--ink)}
+  .p-close{
+    flex:none;width:44px;height:44px;border-radius:50%;background:#fff4e0;border:2px solid var(--ink);
+    font-size:17px;color:var(--ink);box-shadow:0 3px 0 #e5c9a0;
+  }
+  .p-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 2px}
+  .tag{
+    --lc:#999;background:#fff;border:2px solid var(--lc);color:var(--lc);
+    border-radius:999px;padding:1px 11px;font-size:14px;min-height:32px;
+  }
+  .p-block{margin-top:12px;border-radius:18px;padding:10px 14px;border:2px solid transparent}
+  .p-block h3{margin:0 0 2px;font-size:16px;font-weight:900;color:var(--ink)}
+  .p-block p{margin:0;font-size:16px}
+  .b-what{background:#fff3d6;border-color:#f6dca0}
+  .b-learn{background:var(--mint);border-color:#b9e8c9}
+  .b-parent{background:var(--sky);border-color:#b8e1f5}
+  .p-extra{margin-top:12px}
+  .info-list{margin:0;padding:0;list-style:none;font-size:15px}
+  .info-list li{padding:5px 0;border-bottom:2px dashed var(--line)}
+  .info-list b{display:inline-block;min-width:3.4em;font-weight:400;color:var(--orange-dark)}
+  .prize{display:flex;gap:12px;align-items:center;margin-top:10px;background:#fffaf2;border:2px solid #f0dfc6;border-radius:18px;padding:8px}
+  .prize img{flex:none;width:84px;height:84px;object-fit:cover;border-radius:14px;background:#fff}
+  .prize strong{display:block;font-weight:400;font-size:16px;color:var(--ink)}
+  .prize span{font-size:14px;color:#5b4423;line-height:1.55}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    min-height:52px;border-radius:999px;padding:12px 26px;font-size:19px;letter-spacing:.04em;
+    color:#fff;background:linear-gradient(180deg,#ff8a3d,var(--orange));
+    border:2px solid var(--ink);box-shadow:0 5px 0 #b8460a;
+    transition:transform .12s,box-shadow .12s;
+  }
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b8460a}
+  .btn.ghost{background:#fff4e0;color:var(--ink);box-shadow:0 5px 0 #e5c9a0}
+  .p-nav{display:flex;gap:10px;margin-top:16px}
+  .p-nav button{
+    flex:1;min-height:50px;border-radius:16px;background:#fff4e0;border:2px solid var(--ink);
+    box-shadow:0 3px 0 #e5c9a0;font-size:14px;color:var(--ink);padding:6px 10px;line-height:1.35;
+  }
+  .p-nav button:disabled{opacity:.35;cursor:default}
+  .p-empty{text-align:center;padding:22px 8px;color:#7a6641}
+  .p-empty svg{width:120px;height:auto;display:block;margin:0 auto 6px}
+
+  /* ===== 底部報名 ===== */
+  .cta{
+    max-width:560px;margin:24px auto 0;text-align:center;
+    background:linear-gradient(160deg,#ffe777,#ffd64f);border:3px solid var(--ink);border-radius:30px;padding:24px 18px;
+    box-shadow:0 6px 0 #e5b94a;
+  }
+  .cta h2{margin:0;font-size:clamp(28px,7.5vw,36px);line-height:1.2;font-weight:900;color:var(--ink)}
+  .cta p{margin:8px 0 18px;color:#5b4423}
+  .cta .btn{max-width:360px;margin:0 auto}
+  .cta small{display:block;margin-top:14px;font-size:14px;color:#6b5420}
+  footer{text-align:center;color:#9a8a6a;font-size:13px;padding:22px 12px 40px}
+
+  /* ===== 完成視窗 ===== */
+  .modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:80;background:rgba(40,25,5,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal-card{background:#fff;border:3px solid var(--ink);border-radius:30px;padding:24px 22px;max-width:380px;width:100%;text-align:center;box-shadow:0 6px 0 #e5c9a0}
+  .modal-card .big svg{width:120px;height:120px;display:block;margin:0 auto;overflow:visible}
+  .modal-card h2{margin:6px 0 6px;font-size:28px;font-weight:900;color:var(--ink)}
+  .modal-card p{margin:0 0 18px;color:#5b4423}
+  .modal-card .btn + .btn{margin-top:12px}
+  .confetti{position:fixed;top:-30px;z-index:90;font-size:26px;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+
+  /* ===== 電腦版 ===== */
+  @media (min-width:900px){
+    body.sheet-open{padding-bottom:0}
+    .layout{grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:30px;align-items:start}
+    .map{margin:0}
+    .progress{margin-left:0}
+    .panel{
+      position:sticky;top:16px;z-index:1;max-height:none;
+      transform:none;visibility:visible;border-radius:30px;border:3px solid var(--ink);
+      box-shadow:0 6px 0 #e5c9a0,var(--shadow);padding:18px 20px 20px;
+      transition:none;
+    }
+    .grab,.p-close{display:none}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+
+<body>
+<div class="test-banner">🧪 測試版預覽（尚未公開）｜正式報名請至活動網頁</div>
+
+<header class="head wrap">
+  <span class="eyebrow"><i></i>從神韻看見自律之美・11/22 親子自律成長活動</span>
+  <h1>親子自律<em>挑戰地圖</em></h1>
+  <p class="lead"><span class="nb">跟著小路走一圈，</span><span class="nb">看看 11/22 下午</span><span class="nb">我們會一起玩什麼、學什麼。</span><br>點點看每個站點吧！</p>
+  <div class="chips" id="chips"></div>
+</header>
+
+<section class="lines wrap" aria-label="能力線">
+  <div class="lines-title">選一條能力線，看看各站怎麼串在一起 👇</div>
+  <div class="line-btns" id="lineBtns"></div>
+  <div class="line-note" id="lineNote" aria-live="polite"></div>
+</section>
+
+<main class="wrap">
+  <div class="layout">
+    <div>
+      <div class="map" id="map" data-line="all">
+        <!-- AI 插畫（設定區 backgroundImage 有填才會出現） -->
+        <img class="bg" id="bgImg" alt="" hidden />
+        <svg id="mapSvg" viewBox="0 0 600 800" aria-hidden="true">
+          <g id="decor"></g>   <!-- 海、小島、樹、雲、太陽、鯨魚（程式畫的 Q 版底圖） -->
+          <g id="road"></g>    <!-- 小路 -->
+          <g id="segs"></g>    <!-- 能力線 -->
+        </svg>
+        <div class="kid" id="kid" aria-hidden="true"></div>
+      </div>
+
+      <div class="progress" id="progress">
+        <b id="ptext">已探索 0/5 站</b>
+        <div class="stamps" id="stamps" aria-hidden="true"></div>
+        <button class="reset" id="reset" type="button">重新集章</button>
+      </div>
+    </div>
+
+    <aside class="panel" id="panel" aria-label="站點說明" aria-live="polite"></aside>
+  </div>
+
+  <section class="cta" aria-label="立即報名">
+    <h2>完成挑戰・人人有禮</h2>
+    <p><span class="nb">免費參加，</span><span class="nb">家長 30 名＋孩子 30 名，</span><span class="nb">額滿即止</span></p>
+    <a class="btn" id="ctaBtn" href="#">立即免費報名</a>
+    <small>活動洽詢：<a href="tel:0913837389" style="text-decoration:underline">陳小姐 0913-837-389</a></small>
+  </section>
+</main>
+
+<footer>社團法人法輪大法學會・臺灣自媒體應用科技學會 共同主辦｜測試版頁面</footer>
+
+<div class="modal" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+  <div class="modal-card">
+    <div class="big" id="doneArt" aria-hidden="true"></div>
+    <h2 id="doneTitle">地圖挑戰完成！</h2>
+    <p>5 站都探索完囉！<br>11/22 現場等你來挑戰，完成挑戰・人人有禮。</p>
+    <a class="btn" id="doneCta" href="#">立即免費報名</a>
+    <button class="btn ghost" id="doneClose" type="button" style="width:100%">繼續逛逛</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     ★★★ 設定區：要改文字、位置、報名連結，只改這一區 ★★★
+     只改「引號裡面」的中文或數字，不要刪掉逗號、引號、括號。
+     ============================================================ */
+
+  var CONFIG = {
+    // 「立即報名」按鈕要去的地方（結尾 ad=map 會讓報名資料記錄來源是地圖）
+    registerUrl: 'index.html?ad=map#signup',
+
+    // 報名截止時間（用來算「剩 N 天」）
+    deadline: '2026-11-15T23:59:59+08:00',
+
+    // 之後有 AI 插畫時，把圖放進 images 資料夾，再把檔名寫在這裡。
+    // 例：'images/map-bg.jpg'　　留空 '' 就是用現在程式畫的 Q 版底圖
+    backgroundImage: '',
+
+    // 有插畫時是否還要畫那條小路（插畫本身已有路就保持 false）
+    showRoadOnImage: false
+  };
+
+  // 上方資訊小標籤（最後一個標籤的「剩 N 天」會自動計算）
+  var INFO_CHIPS = [
+    '11/22（日）14:00–16:30',
+    '台南維悅酒店',
+    '國小 3～6 年級',
+    '免費'
+  ];
+
+  // 站點。x、y 是位置（0～100，x 由左到右、y 由上到下）。
+  // art 是站點的小建築插圖，可用：flag 旗子山丘、house 小屋、buzzer 搶答鈴、
+  //   phone 手機放大鏡、stage 舞台、heart 愛心約定、gift 禮物盒
+  // color 是建築底座和說明卡圓圈的顏色；num 是第幾站（起點、終點不用）。
+  var STATIONS = [
+    { id:'start', edge:true, art:'flag', short:'報名出發', name:'報名出發', kicker:'起點',
+      x:20, y:85, color:'#ffe27a',
+      what:'填寫免費報名表，一起來挑戰！家長 30 名＋孩子 30 名，額滿即止。',
+      parent:'報名成功後，主辦單位會於活動前以電話或訊息提醒。',
+      extra:'info', cta:true },
+
+    { id:'s1', num:1, art:'house', short:'報到暖身', name:'報到與親子暖身', kicker:'第 ① 站・13:30–14:00 報到',
+      x:72, y:75, color:'#ffd6ae',
+      what:'親子一起報到、暖身，先認識今天要一起完成的挑戰。',
+      learn:'放鬆心情，準備好一起參與。',
+      parent:'陪孩子一起報到，一起暖身。' },
+
+    { id:'s2', num:2, art:'buzzer', short:'趣味搶答', name:'趣味搶答島', kicker:'第 ② 站・14:00 開始',
+      x:28, y:63, color:'#bfe3ff',
+      what:'用生活情境題勾選、搶答，一關一關累積積分。積分高的拿金獎喔！',
+      learn:'勇敢說出自己的想法。',
+      parent:'和孩子一起回答、一起討論。' },
+
+    { id:'s3', num:3, art:'phone', short:'影片判斷', name:'影片判斷站', kicker:'第 ③ 站・活動進行',
+      x:70, y:50, color:'#ffd3e2',
+      what:'分辨影片帶來的不同影響，練習 3C 節制。',
+      learn:'看得懂、選得好、懂得停。',
+      parent:'一起檢視家裡的 3C 習慣，找到可以共同做到的小改變。' },
+
+    { id:'s4', num:4, art:'stage', short:'神韻舞台', name:'神韻舞台', kicker:'第 ④ 站・活動進行',
+      x:28, y:37, color:'#ddd0ff',
+      what:'從舞台藝術家的日常訓練，認識專注、堅持與自律。',
+      learn:'專注、堅持、時間管理，成就來自每天的累積。',
+      parent:'陪孩子一起欣賞，聊聊看見了什麼。' },
+
+    { id:'s5', num:5, art:'heart', short:'自律約定', name:'自律約定＋領禮物', kicker:'第 ⑤ 站・16:30 結束',
+      x:70, y:23, color:'#fff0a8',
+      what:'完成親子自律約定，領取精美禮物。',
+      learn:'把學到的方法帶回日常生活。',
+      parent:'和孩子一起訂下約定，回家一起做到。' },
+
+    { id:'end', edge:true, finish:true, art:'gift', short:'人人有禮', name:'完成挑戰・人人有禮', kicker:'終點',
+      x:30, y:10, color:'#ffc8d8',
+      what:'完成挑戰，人人有禮！',
+      extra:'prizes', cta:true }
+  ];
+
+  // 能力線：stations 是這條線經過的站（照順序）。bulge 是弧線彎的程度與方向。
+  var LINES = [
+    { id:'judge', icon:'🔍', name:'判斷力', color:'#2f95d8', stations:['s2','s3'], bulge:70,
+      tagline:'從生活情境到影片，練習看得懂、選得好。' },
+    { id:'self', icon:'💪', name:'自律', color:'#ff6b18', stations:['s3','s4','s5'], bulge:-70,
+      tagline:'從 3C 節制到藝術家的訓練，看見堅持的力量。' },
+    { id:'talk', icon:'💬', name:'親子溝通', color:'#2fa56a', stations:['s1','s2','s5'], bulge:-60,
+      tagline:'從暖身、搶答到親子約定，一起說、一起做。' }
+  ];
+
+  var PRIZES = [
+    { img:'images/prize-gold.webp', alt:'神韻藝術品漢風綺麗保溫瓶', title:'🥇 金獎（積分高的拿金獎）',
+      text:'益智型玩具＋神韻藝術品「漢風綺麗保溫瓶」（定價 1060 元）' },
+    { img:'images/prize-silver.webp', alt:'神韻藝術品仙境勝景書籤', title:'🥈 銀獎',
+      text:'益智型玩具＋神韻藝術品「仙境勝景書籤」' }
+  ];
+
+  var ADDRESS = '台南市安平區慶平路539號';
+
+  /* ============================================================
+     以下是程式區，一般不需要修改
+     ============================================================ */
+
+  var $ = function (s) { return document.querySelector(s); };
+  var byId = {}; STATIONS.forEach(function (s) { byId[s.id] = s; });
+  var SPOTS = STATIONS.filter(function (s) { return s.num; });
+  var ORDER = STATIONS.map(function (s) { return s.id; });
+  var KEY = 'map1122_visited_v1';
+  var mapEl = $('#map'), panel = $('#panel'), kid = $('#kid');
+  var nodes = {}, current = null, activeLine = 'all';
+  var desktop = window.matchMedia('(min-width:900px)');
+
+  /* ---- 安全存取（失敗也不影響使用） ---- */
+  function loadVisited() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || '[]');
+      return new Set(v.filter(function (id) { return byId[id] && byId[id].num; }));
+    } catch (e) { return new Set(); }
+  }
+  function saveVisited() { try { localStorage.setItem(KEY, JSON.stringify(Array.from(visited))); } catch (e) {} }
+  var visited = loadVisited();
+
+  /* ============================================================
+     Q 版插畫工具（全部用 SVG 畫，不需要任何圖檔）
+     ============================================================ */
+  var INK = '#5b3a1e', BLUSH = '#ff9fb3', SKIN = '#ffe3cc';
+  function n(v) { return Math.round(v * 10) / 10; }
+  function S(w) { return 'stroke="' + INK + '" stroke-width="' + (w || 2.5) + '" stroke-linejoin="round" stroke-linecap="round"'; }
+
+  // 表情：豆豆眼（或開心的 ^^ 眼）＋腮紅＋微笑
+  function face(cx, cy, s, happy) {
+    s = s || 1;
+    var h = '';
+    if (happy) {
+      h += '<path d="M' + n(cx - 11 * s) + ',' + n(cy + s) + ' q' + n(3.5 * s) + ',' + n(-5 * s) + ' ' + n(7 * s) + ',0 M' +
+        n(cx + 4 * s) + ',' + n(cy + s) + ' q' + n(3.5 * s) + ',' + n(-5 * s) + ' ' + n(7 * s) + ',0" fill="none" ' + S(n(2.3 * s)) + '/>';
+    } else {
+      [-1, 1].forEach(function (d) {
+        h += '<ellipse cx="' + n(cx + d * 8 * s) + '" cy="' + n(cy) + '" rx="' + n(2.6 * s) + '" ry="' + n(3.3 * s) + '" fill="' + INK + '"/>' +
+          '<circle cx="' + n(cx + d * 8 * s + 0.9 * s) + '" cy="' + n(cy - 1.2 * s) + '" r="' + n(s) + '" fill="#fff"/>';
+      });
+    }
+    [-1, 1].forEach(function (d) {
+      h += '<ellipse cx="' + n(cx + d * 14 * s) + '" cy="' + n(cy + 5 * s) + '" rx="' + n(4 * s) + '" ry="' + n(2.5 * s) + '" fill="' + BLUSH + '" opacity=".85"/>';
+    });
+    h += '<path d="M' + n(cx - 3 * s) + ',' + n(cy + 4.5 * s) + ' q' + n(3 * s) + ',' + n(3.5 * s) + ' ' + n(6 * s) + ',0" fill="none" ' + S(n(2 * s)) + '/>';
+    return h;
+  }
+  function star(cx, cy, r, fill) {
+    var p = [];
+    for (var i = 0; i < 10; i++) {
+      var a = Math.PI / 5 * i - Math.PI / 2, rr = i % 2 ? r * 0.48 : r;
+      p.push(n(cx + Math.cos(a) * rr) + ',' + n(cy + Math.sin(a) * rr));
+    }
+    return '<polygon points="' + p.join(' ') + '" fill="' + fill + '" ' + S(1.8) + '/>';
+  }
+  function sparkle(cx, cy, r, fill) {
+    return '<path d="M' + cx + ',' + (cy - r) + ' Q' + cx + ',' + cy + ' ' + (cx + r) + ',' + cy + ' Q' + cx + ',' + cy + ' ' + cx + ',' + (cy + r) +
+      ' Q' + cx + ',' + cy + ' ' + (cx - r) + ',' + cy + ' Q' + cx + ',' + cy + ' ' + cx + ',' + (cy - r) + 'Z" fill="' + (fill || '#fff7b0') + '"/>';
+  }
+  function heart(cx, cy, s, fill) {
+    return '<path transform="translate(' + cx + ' ' + cy + ') scale(' + s + ')" d="M0,7 C-10,0 -9,-8 -4,-8 C-1.5,-8 0,-6 0,-4.5 C0,-6 1.5,-8 4,-8 C9,-8 10,0 0,7 Z" fill="' + fill + '" ' + S(n(2 / s)) + '/>';
+  }
+  function plat(c) {
+    return '<ellipse cx="50" cy="88" rx="38" ry="9.5" fill="' + c + '" ' + S() + '/>' +
+      '<ellipse cx="41" cy="86" rx="15" ry="2.8" fill="#fff" opacity=".55"/>';
+  }
+
+  // 站點小建築（畫布 100×100）
+  var ART = {
+    flag: function (c) {
+      return plat(c) +
+        '<rect x="55" y="12" width="4.5" height="52" rx="2" fill="#c98f4f" ' + S(2) + '/>' +
+        '<circle cx="57.3" cy="11" r="4.2" fill="#ffd84d" ' + S(2) + '/>' +
+        '<path d="M59.5,15 C67,10 75,20 87,15 L87,34 C75,39 67,29 59.5,34 Z" fill="#ff7a45" ' + S() + '/>' +
+        star(73, 24.5, 5.5, '#fff') +
+        '<path d="M14,87 Q50,36 86,87 Z" fill="#8fd88a" ' + S() + '/>' +
+        '<ellipse cx="37" cy="68" rx="7" ry="3.2" fill="#fff" opacity=".45" transform="rotate(-25 37 68)"/>' +
+        face(50, 75, 0.75);
+    },
+    house: function (c) {
+      return plat(c) +
+        '<rect x="62" y="21" width="9" height="17" rx="2" fill="#d9784f" ' + S(2.2) + '/>' +
+        '<rect x="25" y="45" width="50" height="40" rx="7" fill="#fff3dc" ' + S() + '/>' +
+        '<path d="M17,50 Q16,46 20,43 L45,22 Q50,18 55,22 L80,43 Q84,46 83,50 Q81,53 76,52 L24,52 Q19,53 17,50 Z" fill="#ff8a5c" ' + S() + '/>' +
+        '<path d="M30,44 L46,30" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".55"/>' +
+        heart(50, 39, 0.7, '#fff') +
+        '<path d="M43,85 L43,74 Q50,66 57,74 L57,85 Z" fill="#c98f4f" ' + S(2.2) + '/>' +
+        '<circle cx="54.3" cy="79" r="1.3" fill="' + INK + '"/>' +
+        face(50, 58, 0.7);
+    },
+    buzzer: function (c) {
+      return plat(c) +
+        '<path d="M13,40 L21,44 M11,52 L20,52 M13,64 L21,60" fill="none" ' + S(2.5) + '/>' +
+        '<rect x="22" y="58" width="56" height="27" rx="9" fill="#ffd36b" ' + S() + '/>' +
+        '<path d="M30,59 Q30,33 50,33 Q70,33 70,59 Z" fill="#ff6b5c" ' + S() + '/>' +
+        '<ellipse cx="41" cy="43" rx="5.5" ry="3.2" fill="#fff" opacity=".75" transform="rotate(-30 41 43)"/>' +
+        face(50, 69, 0.68) +
+        '<path d="M73,5 H89 Q97,5 97,13 V23 Q97,31 89,31 H78 L70,38 L72,31 Q65,30 65,23 V13 Q65,5 73,5 Z" fill="#fff" ' + S(2.2) + '/>' +
+        '<text x="81" y="26" text-anchor="middle" font-size="20" font-weight="900" fill="#ff6b18">?</text>';
+    },
+    phone: function (c) {
+      return plat(c) +
+        '<rect x="28" y="15" width="42" height="69" rx="10" fill="#7cc7f2" ' + S() + '/>' +
+        '<rect x="33.5" y="23" width="31" height="47" rx="5" fill="#fff" ' + S(2) + '/>' +
+        face(49, 41, 0.75) +
+        '<path d="M45,55 L45,63 L52,59 Z" fill="#ff8a5c" ' + S(1.5) + '/>' +
+        '<rect x="43" y="75" width="12" height="3.5" rx="1.75" fill="#fff" opacity=".9"/>' +
+        '<path d="M78,73 L89,84" fill="none" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>' +
+        '<path d="M78,73 L89,84" fill="none" stroke="#ff8a5c" stroke-width="4.6" stroke-linecap="round"/>' +
+        '<circle cx="71" cy="65" r="11.5" fill="#e8f7ff" fill-opacity=".9" ' + S(3) + '/>' +
+        '<path d="M64,62 Q65.5,57 70.5,56" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>';
+    },
+    stage: function (c) {
+      return plat(c) +
+        '<rect x="27" y="38" width="46" height="34" fill="#fff1c9" ' + S(2) + '/>' +
+        '<path d="M27,38 H45 Q40,52 34,72 H27 Z" fill="#ff5d6c" ' + S(2) + '/>' +
+        '<path d="M73,38 H55 Q60,52 66,72 H73 Z" fill="#ff5d6c" ' + S(2) + '/>' +
+        star(50, 56, 8.5, '#ffd84d') +
+        '<rect x="19" y="36" width="8.5" height="38" rx="2" fill="#e0423a" ' + S(2.2) + '/>' +
+        '<rect x="72.5" y="36" width="8.5" height="38" rx="2" fill="#e0423a" ' + S(2.2) + '/>' +
+        '<rect x="13" y="71" width="74" height="12" rx="4" fill="#c98f4f" ' + S() + '/>' +
+        '<path d="M18,75 H82" stroke="#e0b07a" stroke-width="2" stroke-linecap="round"/>' +
+        '<path d="M5,34 Q16,37 24,29 L34,18 H66 L76,29 Q84,37 95,34 Q89,44 76,42 H24 Q11,44 5,34 Z" fill="#ffc93c" ' + S() + '/>' +
+        '<path d="M40,23 V38 M50,22 V38 M60,23 V38" stroke="#e0a21e" stroke-width="2" stroke-linecap="round"/>' +
+        '<circle cx="50" cy="14" r="4" fill="#ffc93c" ' + S(2) + '/>' +
+        sparkle(14, 20, 5, '#fff') + sparkle(88, 52, 4, '#fff7b0');
+    },
+    heart: function (c) {
+      return plat(c) +
+        '<path d="M50,82 C24,66 16,48 24,36 C31,26 44,27 50,38 C56,27 69,26 76,36 C84,48 76,66 50,82 Z" fill="#ff8fab" ' + S() + '/>' +
+        '<ellipse cx="33" cy="41" rx="5" ry="3" fill="#fff" opacity=".6" transform="rotate(-35 33 41)"/>' +
+        face(50, 53, 0.78) +
+        '<g transform="rotate(35 80 34)">' +
+          '<rect x="75.5" y="12" width="9" height="30" rx="1.5" fill="#ffd84d" ' + S(2) + '/>' +
+          '<path d="M75.5,42 L84.5,42 L80,52 Z" fill="#ffe3c2" ' + S(2) + '/>' +
+          '<path d="M78.4,48.5 L81.6,48.5 L80,52 Z" fill="' + INK + '"/>' +
+          '<rect x="75.5" y="7" width="9" height="6.5" rx="2" fill="#ff9fb3" ' + S(2) + '/>' +
+        '</g>' +
+        heart(17, 24, 0.8, '#ff9fb3') + sparkle(28, 12, 4, '#fff');
+    },
+    gift: function (c) {
+      return plat(c) +
+        '<rect x="23" y="49" width="54" height="36" rx="6" fill="#ff9a62" ' + S() + '/>' +
+        '<rect x="18" y="39" width="64" height="13" rx="4" fill="#ffb27f" ' + S() + '/>' +
+        '<rect x="45" y="39" width="10" height="46" fill="#ffe066" ' + S(2) + '/>' +
+        '<path d="M50,39 C41,22 26,26 35,38 Z" fill="#ffe066" ' + S() + '/>' +
+        '<path d="M50,39 C59,22 74,26 65,38 Z" fill="#ffe066" ' + S() + '/>' +
+        '<circle cx="50" cy="38" r="4.5" fill="#ffd23f" ' + S(2) + '/>' +
+        face(50, 65, 0.72) +
+        star(13, 25, 6, '#ffd84d') + star(88, 20, 5, '#fff1a8') + sparkle(87, 50, 4.5, '#fff');
+    }
+  };
+  function artSvg(st, color) {
+    return '<svg viewBox="0 0 100 100" aria-hidden="true">' + ART[st.art](color || st.color) + '</svg>';
+  }
+
+  // Q 版親子（手牽手）
+  var DUO = '<svg viewBox="0 0 92 86" aria-hidden="true">' +
+    '<ellipse cx="46" cy="82" rx="30" ry="3.5" fill="#000" opacity=".15"/>' +
+    '<rect x="20" y="66" width="6.5" height="13" rx="3" fill="#6d7fa6" ' + S(2) + '/>' +
+    '<rect x="30" y="66" width="6.5" height="13" rx="3" fill="#6d7fa6" ' + S(2) + '/>' +
+    '<rect x="57" y="70" width="5.5" height="10" rx="2.5" fill="#6d7fa6" ' + S(2) + '/>' +
+    '<rect x="65.5" y="70" width="5.5" height="10" rx="2.5" fill="#6d7fa6" ' + S(2) + '/>' +
+    '<path d="M37,56 Q46,64 54,61" fill="none" stroke="' + INK + '" stroke-width="7" stroke-linecap="round"/>' +
+    '<path d="M37,56 Q46,64 54,61" fill="none" stroke="' + SKIN + '" stroke-width="3.6" stroke-linecap="round"/>' +
+    '<path d="M15,70 Q15,47 28,46 Q41,47 41,70 Z" fill="#7ed6a2" ' + S(2.2) + '/>' +
+    '<circle cx="28" cy="12" r="5.5" fill="#4a2d1a" ' + S(2) + '/>' +
+    '<circle cx="28" cy="30" r="15" fill="' + SKIN + '" ' + S(2.2) + '/>' +
+    '<path d="M13,31 Q11,14 28,14 Q45,14 43,31 Q41,23 33,21 Q30,26 22,25 Q16,26 13,31 Z" fill="#4a2d1a" ' + S(2) + '/>' +
+    face(28, 33, 0.6) +
+    '<path d="M72,62 Q80,58 82,49" fill="none" stroke="' + INK + '" stroke-width="6.5" stroke-linecap="round"/>' +
+    '<path d="M72,62 Q80,58 82,49" fill="none" stroke="' + SKIN + '" stroke-width="3.2" stroke-linecap="round"/>' +
+    '<circle cx="82.5" cy="47" r="3.6" fill="' + SKIN + '" ' + S(1.8) + '/>' +
+    '<path d="M53,74 Q53,55 64,54 Q75,55 75,74 Z" fill="#ffb35c" ' + S(2.2) + '/>' +
+    '<circle cx="64" cy="42" r="14" fill="' + SKIN + '" ' + S(2.2) + '/>' +
+    '<path d="M50,42 Q49,27 64,27 Q79,27 78,42 Q75,34 69,33 Q66,37 59,36 Q53,36 50,42 Z" fill="#6b3f22" ' + S(2) + '/>' +
+    '<path d="M64,27 Q65,20 71,21" fill="none" ' + S(2.2) + '/>' +
+    face(64, 45, 0.58) +
+    '</svg>';
+
+  /* ---- 地圖底圖的小物件 ---- */
+  function blob(cs, fill, ow) {
+    var h = '';
+    cs.forEach(function (c) { h += '<circle cx="' + n(c[0]) + '" cy="' + n(c[1]) + '" r="' + n(c[2]) + '" fill="' + fill + '" ' + S(ow || 5) + '/>'; });
+    cs.forEach(function (c) { h += '<circle cx="' + n(c[0]) + '" cy="' + n(c[1]) + '" r="' + n(c[2]) + '" fill="' + fill + '"/>'; });
+    return h;
+  }
+  function tree(x, y, s, withFace, col) {
+    col = col || '#6fcf7f';
+    return '<rect x="' + n(x - 4 * s) + '" y="' + n(y + 8 * s) + '" width="' + n(8 * s) + '" height="' + n(13 * s) + '" rx="' + n(2 * s) + '" fill="#c08a5c" ' + S(2.2) + '/>' +
+      blob([[x - 11 * s, y + 3 * s, 12 * s], [x + 11 * s, y + 3 * s, 12 * s], [x, y - 8 * s, 15 * s]], col) +
+      '<ellipse cx="' + n(x - 7 * s) + '" cy="' + n(y - 13 * s) + '" rx="' + n(5 * s) + '" ry="' + n(3 * s) + '" fill="#fff" opacity=".45"/>' +
+      (withFace ? face(x, y + s, 0.55 * s) : '');
+  }
+  function bush(x, y, s) {
+    return blob([[x - 9 * s, y, 9 * s], [x + 9 * s, y, 9 * s], [x, y - 6 * s, 10 * s]], '#8ddb86', 4.4) +
+      '<ellipse cx="' + n(x - 4 * s) + '" cy="' + n(y - 10 * s) + '" rx="' + n(4 * s) + '" ry="' + n(2.2 * s) + '" fill="#fff" opacity=".45"/>';
+  }
+  function flower(x, y, col) {
+    var h = '';
+    for (var i = 0; i < 5; i++) {
+      var a = Math.PI * 2 / 5 * i - Math.PI / 2;
+      h += '<circle cx="' + n(x + Math.cos(a) * 4.4) + '" cy="' + n(y + Math.sin(a) * 4.4) + '" r="3.5" fill="' + col + '" stroke="' + INK + '" stroke-width="1.2"/>';
+    }
+    return h + '<circle cx="' + x + '" cy="' + y + '" r="2.7" fill="#ffd84d" stroke="' + INK + '" stroke-width="1.2"/>';
+  }
+  function mushroom(x, y, s) {
+    return '<rect x="' + n(x - 5 * s) + '" y="' + n(y - 3 * s) + '" width="' + n(10 * s) + '" height="' + n(13 * s) + '" rx="' + n(4 * s) + '" fill="#fff3dc" ' + S(2) + '/>' +
+      '<path d="M' + n(x - 15 * s) + ',' + n(y) + ' Q' + n(x - 15 * s) + ',' + n(y - 17 * s) + ' ' + x + ',' + n(y - 17 * s) + ' Q' + n(x + 15 * s) + ',' + n(y - 17 * s) + ' ' + n(x + 15 * s) + ',' + n(y) + ' Z" fill="#ff7a6b" ' + S(2.2) + '/>' +
+      '<circle cx="' + n(x - 6 * s) + '" cy="' + n(y - 9 * s) + '" r="' + n(2.8 * s) + '" fill="#fff"/>' +
+      '<circle cx="' + n(x + 5 * s) + '" cy="' + n(y - 12 * s) + '" r="' + n(2.1 * s) + '" fill="#fff"/>' +
+      '<circle cx="' + n(x + 9 * s) + '" cy="' + n(y - 4 * s) + '" r="' + n(1.8 * s) + '" fill="#fff"/>';
+  }
+  function cloud(x, y, s) {
+    return blob([[x - 17 * s, y + 3 * s, 11 * s], [x, y - 5 * s, 16 * s], [x + 17 * s, y + 3 * s, 11 * s]], '#fff', 4.4) +
+      face(x, y + 2 * s, 0.42 * s, true);
+  }
+  function sun(x, y, r) {
+    var h = '';
+    for (var i = 0; i < 10; i++) {
+      var a = Math.PI * 2 / 10 * i;
+      h += '<path d="M' + n(x + Math.cos(a) * (r + 7)) + ',' + n(y + Math.sin(a) * (r + 7)) + ' L' + n(x + Math.cos(a) * (r + 15)) + ',' + n(y + Math.sin(a) * (r + 15)) + '" stroke="#ffb829" stroke-width="5" stroke-linecap="round"/>';
+    }
+    return h + '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#ffd84d" ' + S(2.8) + '/>' + face(x, y + 2, r / 22, true);
+  }
+  function whale(x, y, s) {
+    return '<path d="M' + n(x + 2 * s) + ',' + n(y - 17 * s) + ' Q' + n(x - 3 * s) + ',' + n(y - 27 * s) + ' ' + n(x - 9 * s) + ',' + n(y - 30 * s) +
+        ' M' + n(x + 2 * s) + ',' + n(y - 17 * s) + ' Q' + n(x + 4 * s) + ',' + n(y - 28 * s) + ' ' + n(x + 2 * s) + ',' + n(y - 35 * s) +
+        ' M' + n(x + 2 * s) + ',' + n(y - 17 * s) + ' Q' + n(x + 8 * s) + ',' + n(y - 26 * s) + ' ' + n(x + 15 * s) + ',' + n(y - 29 * s) + '" fill="none" stroke="#5fb8ec" stroke-width="3.2" stroke-linecap="round"/>' +
+      '<path d="M' + n(x + 20 * s) + ',' + n(y - 2 * s) + ' Q' + n(x + 30 * s) + ',' + n(y - 4 * s) + ' ' + n(x + 37 * s) + ',' + n(y - 15 * s) + ' Q' + n(x + 35 * s) + ',' + n(y - 2 * s) + ' ' + n(x + 40 * s) + ',' + n(y + 5 * s) +
+        ' Q' + n(x + 30 * s) + ',' + n(y + 5 * s) + ' ' + n(x + 20 * s) + ',' + n(y + 7 * s) + ' Z" fill="#7cc7f2" ' + S(2.2) + '/>' +
+      '<ellipse cx="' + x + '" cy="' + y + '" rx="' + n(26 * s) + '" ry="' + n(17 * s) + '" fill="#7cc7f2" ' + S(2.4) + '/>' +
+      '<ellipse cx="' + n(x - 12 * s) + '" cy="' + n(y - 9 * s) + '" rx="' + n(6 * s) + '" ry="' + n(3 * s) + '" fill="#fff" opacity=".5"/>' +
+      face(x - 6 * s, y - 1 * s, 0.55 * s) +
+      wave(x - 34 * s, y + 15 * s, 1.1) + wave(x - 6 * s, y + 15 * s, 1.1) + wave(x + 22 * s, y + 15 * s, 1.1);
+  }
+  function wave(x, y, s) {
+    s = s || 1;
+    return '<path d="M' + n(x) + ',' + n(y) + ' q' + n(6 * s) + ',' + n(-6 * s) + ' ' + n(12 * s) + ',0 q' + n(6 * s) + ',' + n(-6 * s) + ' ' + n(12 * s) + ',0" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" opacity=".95"/>';
+  }
+  function tuft(x, y) {
+    return '<path d="M' + x + ',' + y + ' l3,-8 l3,8 l3,-6 l3,6" fill="none" stroke="#5fb36a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+
+  /* ---- 路線計算 ---- */
+  function px(id) { var s = byId[id]; return [s.x * 6, s.y * 8]; }
+  function smooth(pts) {
+    var d = 'M' + pts[0][0] + ',' + pts[0][1];
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      d += ' C' + n(p1[0] + (p2[0] - p0[0]) / 6) + ',' + n(p1[1] + (p2[1] - p0[1]) / 6) + ' ' +
+           n(p2[0] - (p3[0] - p1[0]) / 6) + ',' + n(p2[1] - (p3[1] - p1[1]) / 6) + ' ' + n(p2[0]) + ',' + n(p2[1]);
+    }
+    return d;
+  }
+  function closedSmooth(pts) {
+    var L = pts.length, d = 'M' + pts[0][0] + ',' + pts[0][1];
+    for (var i = 0; i < L; i++) {
+      var p0 = pts[(i - 1 + L) % L], p1 = pts[i], p2 = pts[(i + 1) % L], p3 = pts[(i + 2) % L];
+      d += ' C' + n(p1[0] + (p2[0] - p0[0]) / 6) + ',' + n(p1[1] + (p2[1] - p0[1]) / 6) + ' ' +
+           n(p2[0] - (p3[0] - p1[0]) / 6) + ',' + n(p2[1] - (p3[1] - p1[1]) / 6) + ' ' + p2[0] + ',' + p2[1];
+    }
+    return d + 'Z';
+  }
+  function arc(a, b, bulge) {
+    var A = px(a), B = px(b), mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
+    var dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+    return 'M' + A[0] + ',' + A[1] + ' Q' + n(mx - dy / len * bulge) + ',' + n(my + dx / len * bulge) + ' ' + B[0] + ',' + B[1];
+  }
+  function svgEl(tag, attrs) {
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  /* ---- 上方小標籤 ---- */
+  function daysLeft() { return Math.ceil((new Date(CONFIG.deadline) - new Date()) / 86400000); }
+  (function () {
+    var box = $('#chips');
+    INFO_CHIPS.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; box.appendChild(s); });
+    var d = daysLeft(), hot = document.createElement('span'); hot.className = 'hot';
+    hot.textContent = d > 0 ? '11/15 截止・剩 ' + d + ' 天' : '報名已截止';
+    box.appendChild(hot);
+  })();
+
+  /* ---- 畫底圖：海 + 小島 + 裝飾 ---- */
+  (function () {
+    var ISLAND = [[70,58],[150,26],[250,30],[330,62],[410,92],[500,104],[560,150],[572,240],[556,330],[578,420],[562,520],[574,610],[548,690],[470,740],[380,768],[280,778],[180,770],[90,742],[36,680],[30,590],[44,500],[24,410],[40,320],[26,230],[36,140]];
+    var isl = closedSmooth(ISLAND);
+    var h = '<rect width="600" height="800" fill="#bfe7fb"/>' +
+      '<ellipse cx="300" cy="420" rx="340" ry="430" fill="#d4f1ff" opacity=".7"/>';
+    [[20,700],[24,770],[86,792],[420,794],[580,74],[455,30],[300,10],[8,30],[588,300],[590,520]].forEach(function (w) { h += wave(w[0], w[1]); });
+    h += '<path d="' + isl + '" transform="translate(0 12)" fill="#8ccbe8"/>' +
+      '<path d="' + isl + '" fill="none" stroke="' + INK + '" stroke-width="26" stroke-linejoin="round"/>' +
+      '<path d="' + isl + '" fill="none" stroke="#ffe7b0" stroke-width="20" stroke-linejoin="round"/>' +
+      '<path d="' + isl + '" fill="#a6e08f"/>' +
+      '<path d="' + isl + '" fill="none" stroke="#86c96e" stroke-width="3"/>';
+    [[130,190,70,38],[470,300,80,45],[120,400,60,34],[480,520,72,40],[300,700,90,34],[330,230,70,30]].forEach(function (e) {
+      h += '<ellipse cx="' + e[0] + '" cy="' + e[1] + '" rx="' + e[2] + '" ry="' + e[3] + '" fill="#bbe9a2"/>';
+    });
+    [[70,200],[250,250],[505,385],[88,560],[360,525],[465,705],[300,330],[230,160],[540,600],[60,470]].forEach(function (t) { h += tuft(t[0], t[1]); });
+    [[82,468,'#ffb3c7'],[98,484,'#fff'],[72,494,'#d7c4ff'],[505,560,'#ffb3c7'],[522,576,'#fff'],[330,742,'#ffb3c7'],[348,754,'#fff'],
+     [300,188,'#fff'],[528,412,'#ffb3c7'],[92,300,'#fff'],[255,422,'#d7c4ff'],[238,618,'#ffb3c7'],[530,205,'#d7c4ff'],[400,720,'#fff']].forEach(function (f) { h += flower(f[0], f[1], f[2]); });
+    h += mushroom(150, 428, 0.9) + mushroom(505, 692, 0.8);
+    h += tree(60, 252, 0.75, false, '#5cc174') + tree(48, 336, 0.62, false) + tree(548, 345, 0.7, false, '#5cc174') + tree(552, 562, 0.6, false);
+    h += tree(520, 255, 0.95, true) + tree(527, 470, 0.9, true) + tree(64, 402, 0.85, true) + tree(62, 600, 0.85, true, '#7ad08a');
+    h += bush(300, 758, 0.9) + bush(520, 158, 0.75) + bush(250, 330, 0.7);
+    h += sun(542, 52, 26) + cloud(80, 50, 1) + cloud(385, 38, 0.72) + whale(540, 772, 0.75);
+    h += sparkle(565, 310, 6, '#fff') + sparkle(40, 455, 5, '#fff') + sparkle(250, 92, 6, '#fff7b0');
+    $('#decor').innerHTML = h;
+
+    // 小路（依站點位置自動畫成彎彎的 S 形）
+    var road = $('#road'), base = ORDER.map(px), pts = [base[0]];
+    for (var k = 0; k < base.length - 1; k++) {
+      var A = base[k], B = base[k + 1], dx = B[0] - A[0], dy = B[1] - A[1], len = Math.hypot(dx, dy) || 1;
+      var off = (k % 2 ? -1 : 1) * 46;
+      pts.push([(A[0] + B[0]) / 2 - dy / len * off, (A[1] + B[1]) / 2 + dx / len * off]);
+      pts.push(B);
+    }
+    var d = smooth(pts);
+    road.appendChild(svgEl('path', { d: d, fill: 'none', stroke: INK, 'stroke-width': 48, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+    road.appendChild(svgEl('path', { d: d, fill: 'none', stroke: '#fff1cc', 'stroke-width': 42, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+    road.appendChild(svgEl('path', { d: d, fill: 'none', stroke: '#ffcf73', 'stroke-width': 7, 'stroke-dasharray': '0 19', 'stroke-linecap': 'round' }));
+
+    if (CONFIG.backgroundImage) {
+      var img = $('#bgImg'); img.src = CONFIG.backgroundImage; img.hidden = false;
+      $('#decor').style.display = 'none';
+      if (!CONFIG.showRoadOnImage) road.style.display = 'none';
+    }
+  })();
+
+  /* ---- 能力線（地圖上的弧線 + 上方按鈕） ---- */
+  var segs = [];
+  (function () {
+    var g = $('#segs'), btns = $('#lineBtns');
+    LINES.forEach(function (l) {
+      for (var i = 0; i < l.stations.length - 1; i++) {
+        var p = svgEl('path', { d: arc(l.stations[i], l.stations[i + 1], l.bulge), stroke: l.color, 'stroke-width': 4, class: 'seg' });
+        p.setAttribute('data-line', l.id); g.appendChild(p); segs.push(p);
+      }
+    });
+    function mk(id, label, color) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'line-btn'; b.dataset.line = id; b.style.setProperty('--lc', color);
+      b.textContent = label; b.setAttribute('aria-pressed', 'false'); btns.appendChild(b);
+    }
+    mk('all', '🗺️ 全部', '#8a4b00');
+    LINES.forEach(function (l) { mk(l.id, l.icon + ' ' + l.name, l.color); });
+    btns.addEventListener('click', function (e) {
+      var b = e.target.closest('.line-btn'); if (b) setLine(b.dataset.line);
+    });
+  })();
+
+  function setLine(id) {
+    activeLine = id; mapEl.dataset.line = id;
+    var line = LINES.filter(function (l) { return l.id === id; })[0];
+    document.querySelectorAll('.line-btn').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.line === id)); });
+    segs.forEach(function (s) { s.classList.toggle('on', s.getAttribute('data-line') === id); });
+    Object.keys(nodes).forEach(function (sid) {
+      var st = byId[sid], dim = !!line && !!st.num && line.stations.indexOf(sid) < 0;
+      nodes[sid].classList.toggle('dim', dim);
+    });
+    var note = $('#lineNote');
+    if (!line) {
+      note.textContent = '👆 點地圖上的站點看說明，也可以選一條能力線，看看各站是怎麼串在一起的。';
+    } else {
+      note.textContent = line.icon + ' ' + line.name + '線：' + line.stations.map(function (s) { return '①②③④⑤'[byId[s].num - 1] + ' ' + byId[s].name; }).join(' → ') + '。' + line.tagline;
+    }
+  }
+
+  /* ---- 站點按鈕 ---- */
+  STATIONS.forEach(function (st) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'node' + (st.edge ? ' edge' : '') + (st.finish ? ' finish' : '');
+    b.dataset.id = st.id;
+    b.style.left = st.x + '%'; b.style.top = st.y + '%';
+    b.setAttribute('aria-label', (st.num ? '第 ' + st.num + ' 站：' : '') + st.name);
+    b.innerHTML = artSvg(st).replace('<svg ', '<svg class="art" ') +
+      (st.num ? '<span class="num" aria-hidden="true">' + st.num + '</span>' : '') +
+      '<span class="stamp" aria-hidden="true">✔</span>' +
+      '<span class="lbl">' + esc(st.short) + '</span>';
+    b.addEventListener('click', function () { select(st.id); });
+    mapEl.appendChild(b); nodes[st.id] = b;
+  });
+
+  /* ---- 集章列 ---- */
+  (function () {
+    var box = $('#stamps');
+    SPOTS.forEach(function (s) { var i = document.createElement('span'); i.dataset.id = s.id; box.appendChild(i); });
+  })();
+  function updateProgress() {
+    $('#ptext').textContent = '已探索 ' + visited.size + '/' + SPOTS.length + ' 站';
+    document.querySelectorAll('#stamps span').forEach(function (s) {
+      var st = byId[s.dataset.id], on = visited.has(st.id);
+      if (s.classList.contains('on') !== on || !s.innerHTML) {
+        s.classList.toggle('on', on);
+        if (on) s.innerHTML = artSvg(st); else s.textContent = st.num;
+      }
+    });
+    var nextId = null;
+    for (var i = 0; i < SPOTS.length; i++) { if (!visited.has(SPOTS[i].id)) { nextId = SPOTS[i].id; break; } }
+    if (!nextId) nextId = 'end';
+    Object.keys(nodes).forEach(function (sid) {
+      nodes[sid].classList.toggle('done', visited.has(sid));
+      nodes[sid].classList.toggle('next', sid === nextId && sid !== current);
+    });
+  }
+
+  /* ---- 小朋友移動 ---- */
+  kid.innerHTML = DUO;
+  function moveKid(st) {
+    kid.style.left = st.x + '%'; kid.style.top = st.y + '%';
+    kid.classList.toggle('at-start', st.id === 'start');
+    kid.classList.remove('walk'); void kid.offsetWidth; kid.classList.add('walk');
+  }
+
+  /* ---- 說明卡 ---- */
+  function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  function ctaBtn(label) { return '<a class="btn" href="' + esc(CONFIG.registerUrl) + '">' + label + '</a>'; }
+
+  function renderPanel(st) {
+    var i = ORDER.indexOf(st.id), prev = STATIONS[i - 1], next = STATIONS[i + 1];
+    var tags = LINES.filter(function (l) { return l.stations.indexOf(st.id) > -1; }).map(function (l) {
+      return '<button type="button" class="tag" data-line="' + l.id + '" style="--lc:' + l.color + '">' + l.icon + ' ' + l.name + '線</button>';
+    }).join('');
+    var h = '<div class="grab"></div>' +
+      '<div class="p-head"><div class="p-ico" style="--c:' + st.color + '">' + artSvg(st, '#ffffff') + '</div>' +
+      '<div class="p-title"><div class="p-kicker">' + esc(st.kicker) + '</div><h2>' + esc(st.name) + '</h2></div>' +
+      '<button type="button" class="p-close" data-close aria-label="關閉說明">✕</button></div>';
+    if (tags) h += '<div class="p-tags">' + tags + '</div>';
+    if (st.what) h += '<div class="p-block b-what"><h3>🎮 做什麼</h3><p>' + esc(st.what) + '</p></div>';
+    if (st.learn) h += '<div class="p-block b-learn"><h3>🌱 學到什麼</h3><p>' + esc(st.learn) + '</p></div>';
+    if (st.parent) h += '<div class="p-block b-parent"><h3>👨‍👩‍👧 家長角色</h3><p>' + esc(st.parent) + '</p></div>';
+
+    if (st.extra === 'info') {
+      h += '<div class="p-extra"><ul class="info-list">' +
+        '<li><b>日期</b>2026/11/22（日）</li>' +
+        '<li><b>時間</b>13:30 報到｜14:00–16:30</li>' +
+        '<li><b>地點</b>台南維悅酒店<br><span style="color:#7a6650;font-size:14px">' + esc(ADDRESS) + '</span></li>' +
+        '<li><b>對象</b>國小 3～6 年級孩子與父母</li>' +
+        '<li><b>費用</b>免費參加｜家長 30 名＋孩子 30 名</li>' +
+        '<li><b>截止</b>11/15</li></ul></div>';
+    }
+    if (st.extra === 'prizes') {
+      h += '<div class="p-extra">' + PRIZES.map(function (p) {
+        return '<div class="prize"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '" loading="lazy"><div><strong>' + esc(p.title) + '</strong><span>' + esc(p.text) + '</span></div></div>';
+      }).join('') + '</div>';
+    }
+    if (st.cta) h += '<div class="p-extra">' + ctaBtn('立即免費報名') + '</div>';
+
+    h += '<div class="p-nav">' +
+      '<button type="button" data-go="' + (prev ? prev.id : '') + '"' + (prev ? '' : ' disabled') + '>‹ 上一站' + (prev ? '<br>' + esc(prev.short) : '') + '</button>' +
+      '<button type="button" data-go="' + (next ? next.id : '') + '"' + (next ? '' : ' disabled') + '>下一站 ›' + (next ? '<br>' + esc(next.short) : '') + '</button></div>';
+    panel.innerHTML = h;
+    panel.scrollTop = 0;
+  }
+
+  function renderEmpty() {
+    panel.innerHTML = '<div class="p-empty">' + DUO + '點一下地圖上的站點，<br>就會在這裡看到那一站要做什麼、學什麼。</div>';
+  }
+
+  function openPanel() { panel.classList.add('open'); if (!desktop.matches) document.body.classList.add('sheet-open'); }
+  function closePanel() {
+    panel.classList.remove('open'); document.body.classList.remove('sheet-open');
+    if (current && nodes[current]) nodes[current].classList.remove('sel');
+    current = null; updateProgress();
+    if (desktop.matches) renderEmpty();
+  }
+
+  function revealNode(id) {
+    if (desktop.matches) return;
+    var r = nodes[id].getBoundingClientRect();
+    var top = window.scrollY + r.top - window.innerHeight * 0.2;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  function select(id) {
+    var st = byId[id]; current = id;
+    Object.keys(nodes).forEach(function (k) { nodes[k].classList.toggle('sel', k === id); });
+    moveKid(st);
+    var firstTimeComplete = false;
+    if (st.num && !visited.has(id)) {
+      visited.add(id); saveVisited();
+      firstTimeComplete = visited.size === SPOTS.length;
+    }
+    updateProgress();
+    renderPanel(st); openPanel(); revealNode(id);
+    if (firstTimeComplete) setTimeout(showDone, 1100);
+  }
+
+  panel.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.hasAttribute('data-close')) return closePanel();
+    if (t.dataset.go) return select(t.dataset.go);
+    if (t.classList.contains('tag')) {
+      setLine(activeLine === t.dataset.line ? 'all' : t.dataset.line);
+      // 手機：先收起說明卡，再捲到能力線說明，讓整張地圖露出來看線
+      if (!desktop.matches) {
+        closePanel();
+        document.getElementById('lineNote').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+    }
+  });
+
+  /* ---- 完成慶祝 ---- */
+  $('#doneArt').innerHTML = artSvg(byId.end);
+  function showDone() {
+    $('#done').hidden = false;
+    $('#doneCta').focus();
+    if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var em = ['🎉', '⭐', '🎈', '✨', '🌟', '🎊', '💖'];
+    for (var i = 0; i < 26; i++) {
+      var c = document.createElement('span'); c.className = 'confetti'; c.textContent = em[i % em.length];
+      c.style.left = (Math.random() * 96) + 'vw'; c.style.animationDuration = (2 + Math.random() * 2.2) + 's';
+      c.style.animationDelay = (Math.random() * .6) + 's';
+      document.body.appendChild(c); setTimeout((function (el) { return function () { el.remove(); }; })(c), 5200);
+    }
+  }
+  $('#doneClose').addEventListener('click', function () { $('#done').hidden = true; });
+  $('#done').addEventListener('click', function (e) { if (e.target === this) this.hidden = true; });
+
+  /* ---- 其他 ---- */
+  $('#reset').addEventListener('click', function () {
+    visited.clear(); saveVisited(); closePanel(); updateProgress();
+    moveKid(byId.start); kid.classList.remove('walk');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!$('#done').hidden) $('#done').hidden = true; else if (current) closePanel();
+  });
+  if (desktop.addEventListener) desktop.addEventListener('change', function () {
+    document.body.classList.toggle('sheet-open', !desktop.matches && panel.classList.contains('open'));
+    if (desktop.matches && !current) renderEmpty();
+  });
+
+  $('#ctaBtn').href = CONFIG.registerUrl;
+  $('#doneCta').href = CONFIG.registerUrl;
+
+  /* ---- 開始 ---- */
+  kid.style.left = byId.start.x + '%'; kid.style.top = byId.start.y + '%';
+  kid.classList.add('at-start');
+  renderEmpty();
+  setLine('all');
+  updateProgress();
+})();
+</script>
+</body>
+</html>
