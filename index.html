@@ -1539,6 +1539,160 @@
         padding-top: 22px !important;
       }
     }
+
+    /* ===== 2026-10 新增：親子自律挑戰地圖入口（只新增，不影響其他區塊） ===== */
+    .mapentry-section {
+      padding: 34px 0 8px;
+    }
+
+    .mapentry-card {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      grid-template-areas:
+        "pic head"
+        "pic body";
+      column-gap: 32px;
+      align-items: center;
+      background: linear-gradient(145deg, #fff6df, #e9f8ef);
+      border: 2px solid #f1dfc4;
+      border-radius: 32px;
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mapentry-head {
+      grid-area: head;
+      align-self: end;
+    }
+
+    .mapentry-body {
+      grid-area: body;
+      align-self: start;
+    }
+
+    .mapentry-pic {
+      grid-area: pic;
+      position: relative;
+      display: block;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 4px solid #fff;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease;
+    }
+
+    .mapentry-pic:hover {
+      transform: translateY(-3px);
+    }
+
+    .mapentry-pic img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .mapentry-badge {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 900;
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      box-shadow: 0 8px 18px rgba(255, 107, 24, 0.35);
+      animation: mapentry-hop 1.2s ease-in-out infinite;
+    }
+
+    @keyframes mapentry-hop {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .mapentry-title {
+      margin: 8px 0 0;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.22;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+
+    .mapentry-title .orange {
+      color: var(--orange);
+    }
+
+    .mapentry-lead {
+      margin: 12px 0 0;
+      color: #444;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .mapentry-nb {
+      white-space: nowrap;
+    }
+
+    .mapentry-points {
+      list-style: none;
+      margin: 14px 0 20px;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+      color: #5b4423;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .mapentry-btn {
+      min-width: 230px;
+    }
+
+    @media (max-width: 900px) {
+      .mapentry-section {
+        padding: 26px 0 4px;
+      }
+
+      .mapentry-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "head"
+          "pic"
+          "body";
+        row-gap: 16px;
+        padding: 18px 16px 20px;
+        border-radius: 26px;
+        text-align: center;
+      }
+
+      .mapentry-lead {
+        margin-top: 0;
+      }
+
+      .mapentry-badge {
+        right: 10px;
+        bottom: 10px;
+        font-size: 14px;
+        padding: 5px 12px;
+      }
+
+      .mapentry-points {
+        justify-items: center;
+      }
+
+      .mapentry-btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mapentry-badge {
+        animation: none;
+      }
+    }
   </style>
 </head>
 
@@ -1607,6 +1761,42 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== 2026-10 新增：親子自律挑戰地圖入口（只新增，其他區塊不動） ===== -->
+    <section id="mapentry" class="mapentry-section" aria-label="親子自律挑戰地圖入口">
+      <div class="container">
+        <div class="mapentry-card">
+          <div class="mapentry-head">
+            <span class="section-label">🗺️ 報名前，先帶孩子玩一玩</span>
+            <h2 class="mapentry-title">親子自律<span class="orange">挑戰地圖</span></h2>
+          </div>
+
+          <a class="mapentry-pic" href="map.html" data-map-link aria-label="進入親子自律挑戰地圖">
+            <img src="images/map-preview.webp" width="960" height="768" loading="lazy"
+                 alt="親子自律挑戰地圖：Q 版小島上有 5 個活動站點，親子手牽手沿著小路前進">
+            <span class="mapentry-badge">點我玩 👆</span>
+          </a>
+
+          <div class="mapentry-body">
+            <p class="mapentry-lead"><span class="mapentry-nb">點一點 5 個站點，</span><span class="mapentry-nb">看看 11/22 下午會玩什麼、學什麼，</span><span class="mapentry-nb">集滿 5 個章就完成地圖挑戰！</span></p>
+            <ul class="mapentry-points">
+              <li>📱 手機點一點就能玩</li>
+              <li>👨‍👩‍👧 適合親子一起看</li>
+              <li>🎁 11/22 現場完成挑戰・人人有禮</li>
+            </ul>
+            <a class="btn btn-primary mapentry-btn" href="map.html" data-map-link>進入挑戰地圖 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // 進入地圖時，帶上目前網址的廣告參數（ad、utm…），讓報名的廣告來源不會遺失
+      (function () {
+        if (!location.search) return;
+        var links = document.querySelectorAll('[data-map-link]');
+        for (var i = 0; i < links.length; i++) links[i].href = 'map.html' + location.search;
+      })();
+    </script>
 
     <section id="benefits">
       <div class="container">
