@@ -2138,6 +2138,37 @@
     }
     @media(max-width:390px){.hero-picture{height:192px;}}
 
+  
+    /* 2026-10-28 mobile signup hotfix: the late desktop grid override left
+       an invisible first column after .form-note was hidden. */
+    @media (max-width:900px) {
+      #signup .form-wrap {
+        display:grid;
+        grid-template-columns:minmax(0,1fr)!important;
+        width:100%;
+        max-width:680px;
+        margin:0 auto;
+        gap:0;
+        align-items:stretch;
+      }
+      #signup .form-note {display:none!important;}
+      #signup .form-box {
+        grid-column:1 / -1;
+        width:100%;
+        max-width:100%;
+        min-width:0;
+        margin:0 auto;
+        padding:20px 18px;
+        box-sizing:border-box;
+      }
+      #signup .form-grid {grid-template-columns:minmax(0,1fr);}
+      #signup .field,#signup .field input,#signup .field select,#signup .field textarea {
+        min-width:0;
+        max-width:100%;
+        box-sizing:border-box;
+      }
+    }
+
   </style>
 </head>
 
