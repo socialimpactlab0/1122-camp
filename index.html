@@ -1739,6 +1739,42 @@
       .prize-feature-copy { padding:12px; }
     }
 
+  
+    /* Desktop fix: hero must grow with all text; never clip the proof card. */
+    @media (min-width: 901px) {
+      .hero {
+        height: auto;
+        min-height: 620px;
+        max-height: none;
+        padding: 20px 0 16px;
+        align-items: center;
+      }
+      .hero-content {
+        max-width: 610px;
+        padding: 26px 0;
+      }
+      .hero-title { font-size: clamp(39px, 4.2vw, 60px); }
+      .hero-sub { margin-top: 16px; font-size: 18px; line-height: 1.6; }
+      .hero-actions { margin-top: 18px; }
+      .hero-tags { display: none; }
+      .hero-proof { margin-top: 18px; padding: 14px 17px; }
+      .hero-proof-list { gap: 5px; font-size: 15px; line-height: 1.45; }
+      #signup { padding: 34px 0 54px; }
+      .form-wrap { grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
+      .form-wrap > * { min-width: 0; }
+    }
+    /* Small desktop/laptop screens: a single readable form beats clipped columns. */
+    @media (min-width: 901px) and (max-width: 1099px) {
+      .hero { min-height: 0; }
+      .hero-content { max-width: 590px; }
+      .form-wrap {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 760px;
+        margin-inline: auto;
+      }
+      .form-note { display: none; }
+    }
+
   </style>
 </head>
 
@@ -1753,7 +1789,6 @@
         <a href="#principal">校長推薦</a>
         <a href="#review">活動實拍</a>
         <a href="#schedule">活動流程</a>
-        <a href="#review">活動回顧</a>
         <a href="#host">主辦團隊</a>
         <a href="#signup" class="nav-cta">立即報名</a>
       </nav>
@@ -1807,8 +1842,6 @@
       </div>
     </section>
 
-    <!-- ===== 2026-10 新增：親子自律挑戰地圖入口（只新增，其他區塊不動） ===== -->
-    
 
 <section id="signup" class="signup-section">
       <div class="container form-wrap">
