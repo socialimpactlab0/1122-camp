@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600&display=swap" rel="stylesheet" />
 
   <title>從神韻看見自律之美｜免費親子自律成長活動</title>
-  <meta name="description" content="孩子的自律，不只是少看手機。11/22免費親子成長活動，從藝術、趣味搶答與親子互動中，認識專注、堅持與做出好選擇。台南維悅酒店，國小3～6年級親子參加。" />
+  <meta name="description" content="11/22 台南維悅酒店免費親子活動，孩子的自律，不只是少看手機。透過藝術、趣味搶答與親子互動，認識專注、堅持與做出好選擇。國小3～6年級親子參加。" />
 
 
 
@@ -1782,152 +1782,309 @@
     }
 
   
-    /* 2026-10-28 typography and trust-first redesign (existing GAS/Pixel untouched) */
-    :root {
-      --text: #303831;
-      --muted: #656e68;
-      --orange: #bd7748;
-      --orange-dark: #975930;
-      --cream-2: #fbfaf6;
-      --shadow: 0 12px 32px rgba(70, 69, 53, .09);
-      --shadow-soft: 0 6px 18px rgba(70, 69, 53, .07);
+    
+    /* 2026-10-28 Culture + warmth editorial V2: typography, authentic photography, gentle spacing */
+    :root{
+      --cream:#f9f6ed; --cream-2:#fbf9f3;
+      --text:#312f29; --muted:#6d6b60; --line:#e5e0d2;
+      --orange:#a16c48; --orange-dark:#805639;
+      --yellow:#efdfb8; --green:#6f8b77; --mint:#edf2eb;
+      --shadow:0 18px 48px rgba(59,57,45,.08);
+      --shadow-soft:0 9px 26px rgba(59,57,45,.055);
     }
-    body {
-      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      font-size: 16px;
-      line-height: 1.78;
-      font-weight: 400;
-      letter-spacing: .008em;
+    body{
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      color:var(--text); background:var(--cream-2);
+      font-size:16px; line-height:1.82; font-weight:400;
+      letter-spacing:.009em;
     }
-    .nav { background: rgba(251,250,246,.96); border-bottom-color: #e9e6dd; }
-    .nav-links { font-weight: 500; font-size: 14px; gap: 20px; }
-    .nav-cta { font-weight: 700; box-shadow: none; }
-    .brand-hint, .eyebrow, .section-label, .hero-tags span, .signup-tag { font-weight: 600; letter-spacing: .015em; }
-    .hero-title {
-      font-size: clamp(37px, 4.7vw, 63px);
-      line-height: 1.26;
-      font-weight: 700;
-      letter-spacing: -.026em;
-      color: #29382e;
+    h1,h2,h3{ text-wrap:pretty; }
+    .nav{background:rgba(251,249,243,.95);border-color:#eae6dc;backdrop-filter:blur(12px);}
+    .nav-links{font-weight:500;font-size:14px;gap:19px;}
+    .nav-links a:hover{color:#54705c;}
+    .nav-cta{
+      font-weight:600; background:#4b6856; color:#fff!important;
+      padding:10px 20px;box-shadow:none;
     }
-    .hero-title .orange { color: #ab643d; }
-    .hero-sub { font-size: 18px; line-height: 1.8; font-weight: 400; color: #464e47; }
-    .hero-sub strong { font-weight: 600; color: #945a38; }
-    .hero-proof-title { font-weight: 700; font-size: 15px; color: #725338; }
-    .hero-proof-list { font-weight: 500; line-height: 1.7; }
-    .hero-proof {
-      border-color: #e9e2d4;
-      box-shadow: 0 8px 20px rgba(63,65,54,.08);
-      background: rgba(255,253,248,.95);
+    .nav-cta:hover{background:#385643;color:white!important;}
+    .btn{
+      font-family:"Noto Sans TC",sans-serif;font-size:16px;font-weight:600;
+      letter-spacing:.01em;padding:12px 25px;
     }
-    .section-title {
-      font-size: clamp(25px, 3.1vw, 35px);
-      line-height: 1.48;
-      font-weight: 700;
-      letter-spacing: -.025em;
-      color: #304136;
+    .btn-primary{
+      background:#4d6b57;box-shadow:0 8px 20px rgba(63,94,68,.14);
     }
-    .section-lead { font-weight: 400; font-size: 16px; line-height: 1.85; }
-    .btn {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: .02em;
-      padding: 13px 27px;
+    .btn-primary:hover{box-shadow:0 12px 26px rgba(63,94,68,.23);}
+    .btn-soft{background:#f5f0e3;border:1px solid #ded1ba;color:#755c43;}
+    .btn-green{background:#e8f0e6;border-color:#cedbcd;color:#44614c;}
+    .section-label,.eyebrow,.hero-tags span,.signup-tag{font-weight:600;}
+    .section-label{
+      background:transparent;color:#877452;
+      border-radius:0;border-bottom:1px solid #bca57e;
+      padding:2px 0 5px; margin-bottom:13px;letter-spacing:.13em;
+      font-size:12.5px;
     }
-    .btn-primary {
-      background: linear-gradient(135deg,#bf7850,#a85f3b);
-      box-shadow: 0 7px 20px rgba(145,91,59,.15);
+    .section-title{
+      font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+      font-size:clamp(26px,3.2vw,38px);font-weight:600;
+      letter-spacing:.018em;line-height:1.45;color:#394c3e;
     }
-    .btn-primary:hover { box-shadow: 0 11px 26px rgba(145,91,59,.22); }
-    .btn-soft { background:#f1f3e9; border-color:#d7dfce; color:#44664d; }
-    .principal-section {
-      background: #f4f6ee;
-      padding: 30px 0 34px;
-      border-top: 1px solid #e2e8de;
-      border-bottom: 1px solid #e2e8de;
+    .section-lead{font-size:16px;font-weight:400;line-height:1.92;color:#68675e;}
+    .section-center{max-width:930px;margin-inline:auto;}
+    section{padding:58px 0;}
+    /* Genuine event photography in its own editorial frame, never stretched behind text */
+    .hero{
+      background:linear-gradient(125deg,#f5f0e4 0%,#fbf9f3 57%,#eff3eb 100%);
+      border-bottom:1px solid #e7e3d8;
+      isolation:isolate;overflow:visible;
     }
-    .principal-section .section-label { margin-bottom: 5px; background:#e2ebde; color:#527159; }
-    .principal-section .section-title {
-      font-size: clamp(21px, 2.55vw, 29px);
-      font-weight: 600;
-      color: #385742;
+    .hero::after{display:none!important;}
+    .hero-picture{
+      border-radius:8px 76px 8px 8px;overflow:hidden;
+      box-shadow:0 24px 56px rgba(53,58,44,.16);
+      background:#eae5d6;
     }
-    .principal-card {
-      max-width: 870px;
-      margin: 18px auto 0;
-      grid-template-columns: 142px minmax(0,1fr);
-      gap: 24px;
-      padding: 18px 26px;
-      border: 1px solid #dde5d8;
-      border-left: 4px solid #8ba88b;
-      border-radius: 19px;
-      box-shadow: 0 6px 20px rgba(62,78,59,.06);
-      background: #fffefb;
+    .hero-picture::after{
+      content:"過往親子活動實拍";position:absolute;left:17px;bottom:16px;
+      color:white;background:rgba(32,43,34,.68);border-radius:4px;
+      font:500 12px/1.5 "Noto Sans TC",sans-serif;
+      padding:5px 10px;letter-spacing:.04em;
     }
-    .principal-photo {
-      width: 142px;
-      height: 153px;
-      aspect-ratio: auto;
-      object-fit: cover;
-      object-position: center 22%;
-      border-radius: 12px;
-      box-shadow: none;
+    .hero-bg-img{
+      height:100%;width:100%;object-fit:cover;object-position:center 38%;
+      filter:saturate(.89) contrast(.99);
     }
-    .principal-quote {
-      color: #3a483b;
-      font-family: "Noto Serif TC", "PMingLiU", serif;
-      font-size: clamp(17px,1.65vw,20px);
-      line-height: 1.8;
-      font-weight: 500;
-      letter-spacing: .006em;
+    .hero-content{position:relative;z-index:2;}
+    .eyebrow{
+      background:transparent;border:0;box-shadow:none;border-radius:0;
+      padding:0;color:#6d7c63;font-size:13px;letter-spacing:.08em;
+      margin-bottom:13px;
     }
-    .principal-credit { color: #587661; font-size: 15px; font-weight: 600; margin-top: 12px; }
-    .signup-section { background:#fbfaf6; }
-    #signup { padding-top: 35px; }
-    .form-note {
-      background: linear-gradient(145deg,#b9825b,#aa6f4e);
-      box-shadow: 0 9px 23px rgba(90,66,51,.10);
-      border-radius: 24px;
+    .eyebrow-dot{width:7px;height:7px;background:#a0a97b;box-shadow:none;}
+    .hero-title{
+      font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+      font-size:clamp(38px,4.2vw,60px);
+      line-height:1.35;letter-spacing:.01em;font-weight:600;
+      color:#344b3c;
     }
-    .form-note h2 { font-size: 30px; font-weight: 700; }
-    .form-note p { font-weight: 400; line-height:1.8; }
-    .signup-tag { font-size: 13px; }
-    .form-box { border-color:#e8e6dd; border-radius:24px; box-shadow:0 9px 25px rgba(66,69,56,.075); }
-    .form-box-title { font-size: 26px; font-weight: 700; color: #304136; }
-    .form-box-subtitle, .signup-push p { font-weight:400; }
-    .signup-push strong { font-weight: 600; }
-    label { font-weight: 600; color:#3e4840; font-size:15px; }
-    input, select, textarea { font-family: inherit; }
-    .section-center { max-width: 900px; margin-inline:auto; }
-    @media (max-width: 900px) {
-      .hero-title { font-size: clamp(29px, 7vw, 36px); line-height:1.29; }
-      .hero-sub { font-size:15px; line-height:1.73; }
-      .hero-proof-title { font-size:14px; }
-      .hero-proof-list { font-size:13.5px; font-weight:500; }
-      .principal-section { padding:21px 0 24px; }
-      .principal-section .section-label { font-size:12px; padding:5px 11px; }
-      .principal-section .section-title { font-size:20px; line-height:1.5; padding-inline:4px; }
-      .principal-card {
-        grid-template-columns: 90px minmax(0,1fr);
-        gap: 13px;
-        padding: 14px 13px;
-        margin-top: 12px;
-        border-left-width:3px;
-        border-radius: 16px;
+    .hero-title .orange{color:#ae7551;}
+    .hero-sub{margin-top:17px;color:#565a52;font-size:17px;line-height:1.9;font-weight:400;}
+    .hero-sub strong{color:#586d57;font-weight:600;}
+    .hero-actions{margin-top:22px;gap:12px;}
+    .hero-tags{display:none!important;}
+    .hero-proof{
+      margin-top:24px;max-width:580px;
+      background:rgba(255,253,248,.72);border:1px solid #e7e0d3;
+      box-shadow:none;border-radius:12px;padding:16px 20px;
+    }
+    .hero-proof-title{font-weight:600;font-size:14px;color:#8a775f;margin-bottom:8px;}
+    .hero-proof-list{font-size:14px;line-height:1.7;font-weight:400;gap:5px;color:#4c514a;}
+    .hero-proof-list li::before{color:#78937c;}
+    /* Endorsement: simple, calm, credible rather than a promotional banner */
+    .principal-section{
+      background:#f4f5ee;border-top:0;border-bottom:1px solid #e1e7dc;
+      padding:38px 0 41px;
+    }
+    .principal-section .section-label{color:#667d68;border-bottom-color:#9fae9a;}
+    .principal-section .section-title{font-size:clamp(23px,2.55vw,30px);}
+    .principal-card{
+      max-width:890px;grid-template-columns:148px minmax(0,1fr);
+      gap:28px;align-items:center;
+      background:#fffefb;border:1px solid #dfe5d9;
+      border-left:0;border-radius:12px;padding:20px 26px;
+      margin:20px auto 0;box-shadow:0 10px 35px rgba(65,79,62,.055);
+    }
+    .principal-photo{
+      width:148px;height:158px;aspect-ratio:auto;object-fit:cover;
+      object-position:center 20%;border-radius:6px;box-shadow:none;
+    }
+    .principal-quote{
+      font-family:"Noto Serif TC","PMingLiU",serif;
+      font-size:clamp(17px,1.65vw,21px);
+      line-height:1.9;font-weight:500;letter-spacing:.01em;color:#3d4d40;
+    }
+    .principal-credit{font-size:14px;font-weight:600;color:#68836d;margin-top:13px;}
+    /* Registration: visually lead users into the form without competing blocks */
+    .signup-section{background:#fbf9f3;}
+    #signup{padding:42px 0 60px;scroll-margin-top:80px;}
+    .form-wrap{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:24px;}
+    .form-wrap>*{min-width:0;}
+    .form-note{
+      position:sticky;top:84px;border-radius:12px;
+      background:linear-gradient(160deg,#5d7965,#3f5d4a);
+      color:#fff;padding:28px;box-shadow:var(--shadow-soft);
+    }
+    .form-note h2{
+      font-family:"Noto Serif TC","PMingLiU",serif;
+      font-size:29px;font-weight:600;letter-spacing:.02em;line-height:1.4;
+    }
+    .form-note p{font-weight:400;opacity:.93;line-height:1.85;}
+    .signup-tag{font-size:12px;font-weight:500;border-color:rgba(255,255,255,.26);}
+    .form-note .small{font-size:14px;line-height:1.85;}
+    .form-box{
+      border-radius:12px;border-color:#e4e0d6;background:#fffefb;
+      padding:28px 30px;box-shadow:0 14px 38px rgba(60,60,47,.08);
+    }
+    .form-box-title{
+      font-family:"Noto Serif TC","PMingLiU",serif;
+      font-size:27px;font-weight:600;color:#3b5442;
+    }
+    .form-box-subtitle{font-size:14px;line-height:1.75;color:#77736b;}
+    .signup-push{
+      border-radius:9px;background:#f5f7f2;border-color:#dce6d9;
+      padding:15px 18px;margin-bottom:18px;
+    }
+    .signup-push strong{font-weight:600;font-size:15px;color:#46644d;}
+    .signup-push p{font-weight:400;font-size:14px;}
+    label{font-size:14px;font-weight:500;color:#4b5148;}
+    input,select,textarea{font-family:inherit;border-radius:8px;}
+    .submit-row .btn-primary{min-height:48px;}
+    /* Fewer chunky cards; magazine-like, generous editorial rhythm */
+    #schedule{background:#fffefb;}
+    #schedule .flow{max-width:730px;margin-top:28px;}
+    .flow::before{background:#d9dfd4;opacity:1;width:2px;}
+    .flow-item{margin:17px 0;}
+    .flow-content{
+      background:#fffefb;border:1px solid #e1e6dd;
+      box-shadow:none;border-radius:10px;padding:15px 18px;font-weight:400;
+    }
+    .flow-time{color:#7d927e;font-size:13px;font-weight:600;}
+    .flow-title{color:#374539;font-size:17px;font-weight:500;}
+    .flow-node{
+      background:#e7efe5;color:#53735d;border:3px solid #fffefb;
+      box-shadow:none;font-size:17px;font-weight:600;
+    }
+    #faq{background:#f7f5ee;}
+    .faq-box{border:none;background:transparent;box-shadow:none;padding:0;max-width:860px;margin:auto;}
+    .faq{gap:9px;}
+    .faq details{background:#fffefb;}
+    details{background:#fffefb;border:1px solid #e5e1d7;border-radius:9px;box-shadow:none;padding:16px 19px;}
+    summary{font-weight:500;color:#3c4d3f;line-height:1.7;}
+    #review{background:#fffefb;}
+    #review .section-lead{max-width:780px;}
+    .gallery{gap:14px;margin-top:25px;}
+    .gallery img{border-radius:8px;box-shadow:0 12px 25px rgba(48,56,46,.08);}
+    .prize-section{background:#f7f6f0;border-color:#e6e7db;}
+    .prize-showcase{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px;}
+    .prize-feature,.prize-feature.gold-feature,.prize-feature.silver-feature{
+      grid-template-columns:133px minmax(0,1fr);border:1px solid #e7e3da;
+      border-radius:10px;background:#fffefb;box-shadow:none;
+    }
+    .prize-feature-media{min-height:132px;}
+    .prize-feature-media img{height:100%;width:100%;object-fit:contain;}
+    .prize-feature-copy{padding:14px 16px;display:flex;align-items:center;}
+    .prize-feature-copy p{font-size:14px;line-height:1.7;margin:0;font-weight:400;}
+    .prize-feature-copy strong{color:#755f43;}
+    #mapentry{background:#fbf9f3;}
+    .map-mini{border-radius:10px;box-shadow:none;background:#eef1e8;border:1px solid #d9e3d7;}
+    .map-mini h2{font-family:"Noto Serif TC","PMingLiU",serif;font-weight:600;color:#405c49;}
+    #host{background:#fffefb;}
+    .host-card{background:#f8f7f1;border:1px solid #e8e3d9;border-radius:9px;padding:15px 18px;}
+    .host-card small{font-weight:500;color:#796e58;}
+    .host-card strong,.host-card li{font-weight:500;color:#38453b;}
+    footer{background:#334b3b;font-size:13px;color:#f1eadb;}
+    /* Desktop / laptop: image and story side-by-side, no cropped text */
+    @media (min-width:901px){
+      .hero{
+        display:block;height:auto!important;min-height:0!important;max-height:none!important;
+        padding:46px 0 48px!important;align-items:stretch;
       }
-      .principal-photo { width:90px;height:115px;border-radius:9px; }
-      .principal-quote { font-size: 14px; line-height: 1.7; }
-      .principal-credit { font-size: 12.5px; margin-top:7px; }
-      #signup { padding-top:24px; }
-      .form-box-title { font-size:24px; }
-      .btn { font-size:16px; }
-      .mobile-cta .signup { background:linear-gradient(135deg,#bf7850,#a85f3b); }
+      .hero>.container{
+        display:flex;align-items:center;position:relative;z-index:2;
+        min-height:535px;
+      }
+      .hero-content{
+        width:51%;max-width:570px;
+        padding:15px 0!important;
+      }
+      .hero-picture{
+        position:absolute;inset:48px max(20px,calc((100vw - 1110px)/2)) 48px auto;
+        width:min(43%,515px);height:auto;z-index:1;
+      }
+      .hero-sub{max-width:540px;}
+      .hero-proof{max-width:550px;}
+      .form-wrap{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);}
     }
-    @media (max-width: 390px) {
-      .principal-card { grid-template-columns:76px minmax(0,1fr); gap:10px; padding:12px 10px; }
-      .principal-photo { width:76px;height:100px; }
-      .principal-quote { font-size:13px; }
-      .principal-credit { font-size:12px; }
+    @media (min-width:901px) and (max-width:1110px){
+      .hero-title{font-size:clamp(34px,4vw,47px);}
+      .hero-sub{font-size:16px;}
+      .hero-picture{width:43%;right:18px;}
+      .hero-content{max-width:53%;width:53%;}
+      .form-wrap{max-width:970px;margin-inline:auto;}
+    }
+    /* Mobile: photographic introduction first, then short headline and the endorsement */
+    @media (max-width:900px){
+      section{padding:39px 0;}
+      .hero{
+        display:flex!important;flex-direction:column!important;align-items:stretch!important;
+        height:auto!important;min-height:0!important;max-height:none!important;
+        padding:0 0 20px!important;overflow:visible;
+      }
+      .hero-picture{
+        position:relative!important;inset:auto!important;display:block!important;
+        flex:0 0 auto;width:100%;height:215px;
+        border-radius:0 0 24px 24px;box-shadow:none;
+      }
+      .hero-picture::after{left:12px;bottom:12px;font-size:11px;}
+      .hero-bg-img{object-position:center 38%!important;}
+      .hero>.container{
+        order:1;display:block!important;width:min(1120px,calc(100% - 36px));
+        min-height:0!important;max-width:none;
+      }
+      .hero-content{
+        width:100%!important;max-width:none!important;
+        padding:22px 0 0!important;
+      }
+      .eyebrow{margin-bottom:7px;font-size:12px;}
+      .hero-title{font-size:clamp(29px,7vw,38px);line-height:1.39;letter-spacing:0;}
+      .hero-sub{font-size:15px;line-height:1.78;margin-top:8px;}
+      .hero-actions{margin-top:16px!important;gap:8px;}
+      .hero-actions .btn{padding:11px 18px;}
+      .hero-proof{padding:13px 15px;margin-top:16px;border-radius:9px;}
+      .hero-proof-title{font-size:13px;}
+      .hero-proof-list{font-size:13px;line-height:1.65;}
+      .principal-section{padding:25px 0 28px;}
+      .principal-section .section-label{font-size:12px;}
+      .principal-section .section-title{font-size:clamp(20px,5vw,25px);}
+      .principal-card{
+        grid-template-columns:94px minmax(0,1fr);
+        padding:13px;gap:14px;margin-top:13px;border-radius:10px;
+      }
+      .principal-photo{width:94px;height:116px;border-radius:5px;}
+      .principal-quote{font-size:14px;line-height:1.72;font-weight:500;}
+      .principal-credit{font-size:12px;margin-top:7px;}
+      #signup{padding:24px 0 40px;}
+      #signup .form-note{display:none;}
+      #signup .form-box{border-radius:10px;padding:21px 18px;}
+      .form-box-title{font-size:24px;}
+      .form-box-subtitle{margin-bottom:14px;}
+      #signup .signup-push{padding:13px;}
+      .section-title{font-size:clamp(23px,6vw,30px);}
+      .section-lead{font-size:15px;}
+      .flow-content{border-radius:9px;padding:12px 14px;}
+      .flow-title{font-size:15px;}
+      .flow-time{font-size:12px;}
+      .flow-node{width:44px;height:44px;font-size:14px;border-width:2px;}
+      .faq-box{padding:0;}
+      .gallery{gap:12px;}
+      .gallery img{border-radius:8px;}
+      .prize-showcase{grid-template-columns:1fr;}
+      .prize-feature,.prize-feature.gold-feature,.prize-feature.silver-feature{
+        grid-template-columns:104px minmax(0,1fr);
+      }
+      .prize-feature-media{min-height:104px;border:0;border-right:1px solid #e7e3da;}
+      .prize-feature-copy{padding:11px;}
+      .prize-feature-copy p{font-size:13px;}
+      .map-mini{border-radius:10px;padding:17px;}
+      .map-mini h2{font-size:21px;}
+      .mobile-cta{background:rgba(251,249,243,.97);border-top-color:#e6e2d7;}
+      .mobile-cta .signup{background:#4d6b57;}
+    }
+    @media (max-width:390px){
+      .hero-picture{height:190px;}
+      .principal-card{grid-template-columns:78px minmax(0,1fr);gap:11px;padding:10px;}
+      .principal-photo{width:78px;height:103px;}
+      .principal-quote{font-size:13px;}
     }
 
   </style>
@@ -1962,7 +2119,7 @@
         <div class="hero-content">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            過往親子活動實拍｜免費親子成長活動
+            11/22 親子文化體驗 · 免費參加
           </div>
 
           <h1 class="hero-title">
