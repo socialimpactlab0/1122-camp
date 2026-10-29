@@ -2329,6 +2329,23 @@
       #mapentry .map-quick-button { grid-column: 1 / -1; width: 100%; min-height: 48px; text-align: center; box-sizing: border-box; padding: 12px 14px; font-size:15px; }
     }
 
+  
+    /* 2026-10-29 First-screen clarity: place first, then time and audience */
+    .hero-proof { margin-top: 14px; padding: 14px 18px; }
+    .hero-proof-list { gap: 7px; }
+    .hero-proof-list .hero-location {
+      color: #355941;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+    .hero-proof-list .hero-location::before { content: none; }
+    @media (max-width:900px) {
+      .hero-proof { margin-top: 11px; padding: 11px 14px; }
+      .hero-proof-list { gap: 5px; font-size: 13px; line-height: 1.6; }
+      .hero-proof-list .hero-location { font-size: 15px; }
+    }
+
   </style>
 </head>
 
@@ -2386,11 +2403,10 @@
           </div>
 
           <div class="hero-proof">
-            <p class="hero-proof-title">一起參與、一起思考，讓成長變得有趣</p>
             <ul class="hero-proof-list">
-              <li>11/22（日）13:30報到，14:00–16:30</li>
-              <li>國小3～6年級，需父母陪同，免費參加</li>
-              <li>趣味搶答、影片判斷與親子互動・人人有禮</li>
+              <li class="hero-location">📍 台南維悅酒店</li>
+              <li>11/22（日）13:30 報到・14:00–16:30</li>
+              <li>國小 3～6 年級，需父母陪同・免費參加</li>
             </ul>
           </div>
         </div>
