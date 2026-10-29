@@ -2283,25 +2283,26 @@
   
     /* 2026-10-29 early map preview between principal recommendation and sign-up */
     #mapentry.mapentry-early {
-      padding: 16px 0 18px;
+      padding: 22px 0 26px;
       background: #fbf9f3;
       scroll-margin-top: 70px;
     }
     #mapentry .map-quick {
       display: grid;
-      grid-template-columns: 132px minmax(0, 1fr) auto;
+      grid-template-columns: 190px minmax(0, 1fr) auto;
       align-items: center;
-      gap: 20px;
-      padding: 14px 19px;
+      gap: 28px;
+      padding: 24px 28px;
       background: #f2f6ed;
       border: 1px solid #dce8d7;
-      border-radius: 17px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(60,83,58,.06);
     }
     #mapentry .map-quick-preview {
       display: block;
       overflow: hidden;
-      border-radius: 12px;
-      height: 108px;
+      border-radius: 14px;
+      height: 148px;
       box-shadow: 0 3px 10px rgba(59,87,61,.10);
       background:#d8eacb;
     }
@@ -2313,18 +2314,19 @@
       object-position: center 47%;
     }
     #mapentry .map-quick-content { min-width: 0; }
-    #mapentry .map-quick-kicker { display: block; color: #7c8b65; font-size: 12px; font-weight: 700; letter-spacing: .05em; }
-    #mapentry .map-quick h2 { margin: 3px 0 6px; font-size: clamp(18px, 2vw, 24px); line-height: 1.35; color: #355542; font-family: "Noto Sans TC", sans-serif; font-weight: 700; }
-    #mapentry .map-quick p { margin: 0; font-size: 14px; line-height: 1.65; color: #596258; }
-    #mapentry .map-quick-button { white-space: nowrap; flex-shrink: 0; font-size: 15px; padding: 13px 18px; }
+    #mapentry .map-quick-kicker { display: block; color: #7c8b65; font-size: 13px; font-weight: 700; letter-spacing: .05em; }
+    #mapentry .map-quick h2 { margin: 3px 0 6px; font-size: clamp(23px, 2.2vw, 29px); line-height: 1.35; color: #355542; font-family: "Noto Sans TC", sans-serif; font-weight: 700; }
+    #mapentry .map-quick p { margin: 0; font-size: 16px; line-height: 1.65; color: #596258; }
+    #mapentry .map-quick-button { white-space: nowrap; flex-shrink: 0; font-size: 16px; padding: 17px 22px; background:#517b5b; color:#fff; border-color:#517b5b; box-shadow:0 5px 14px rgba(56,90,65,.13); }
+    #mapentry .map-quick-button:hover {background:#3f6549; border-color:#3f6549;}
     @media (max-width: 900px) {
-      #mapentry.mapentry-early { padding: 10px 0 12px; }
-      #mapentry .map-quick { grid-template-columns: 89px minmax(0, 1fr); column-gap: 12px; row-gap: 12px; padding: 13px; border-radius: 15px; }
-      #mapentry .map-quick-preview { width:89px; height:93px; border-radius: 10px; }
-      #mapentry .map-quick-kicker { font-size: 11px; }
-      #mapentry .map-quick h2 { font-size: 18px; line-height:1.35; margin: 2px 0 5px; }
-      #mapentry .map-quick p { font-size: 13px; line-height: 1.5; }
-      #mapentry .map-quick-button { grid-column: 1 / -1; width: 100%; min-height: 44px; text-align: center; box-sizing: border-box; padding: 10px 14px; }
+      #mapentry.mapentry-early { padding: 14px 0 18px; }
+      #mapentry .map-quick { grid-template-columns: 112px minmax(0, 1fr); column-gap: 14px; row-gap: 14px; padding: 15px; border-radius: 16px; }
+      #mapentry .map-quick-preview { width:112px; height:116px; border-radius: 11px; }
+      #mapentry .map-quick-kicker { font-size: 12px; }
+      #mapentry .map-quick h2 { font-size: 19px; line-height:1.35; margin: 4px 0 7px; }
+      #mapentry .map-quick p { font-size: 14px; line-height: 1.5; }
+      #mapentry .map-quick-button { grid-column: 1 / -1; width: 100%; min-height: 48px; text-align: center; box-sizing: border-box; padding: 12px 14px; font-size:15px; }
     }
 
   </style>
