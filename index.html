@@ -2228,6 +2228,52 @@
       .hero-concept-step{max-width:69px;flex-basis:69px;}
     }
 
+  
+    /* 2026-10-29 first-screen: authentic activity photo, concise copy, CTA */
+    .hero-picture.hero-photo-real{
+      overflow:hidden;
+      background:#f2eee3;
+      border:0;
+      border-radius:22px 48px 22px 22px;
+      box-shadow:0 13px 34px rgba(55,66,54,.12);
+    }
+    .hero-photo-real::after {
+      content:"11/22（日）台南・免費";
+      display:block!important;
+      position:absolute;
+      left:18px;bottom:17px;
+      background:rgba(46,77,52,.88);
+      color:#fff;
+      font:600 15px/1.4 "Noto Sans TC",sans-serif;
+      letter-spacing:.02em;padding:9px 14px;border-radius:10px;
+    }
+    .hero-photo-caption {
+      display:block;position:absolute;right:12px;top:12px;
+      background:rgba(255,253,246,.92);
+      color:#53614e;border-radius:6px;padding:4px 7px;
+      font:500 11px/1.5 "Noto Sans TC",sans-serif;
+    }
+    .hero-photo-real .hero-bg-img{object-fit:cover;object-position:center 42%;filter:saturate(.96);}
+    @media(min-width:901px){
+      .hero-picture.hero-photo-real { min-height:405px;max-height:550px; }
+      .hero-photo-real .hero-bg-img { object-position:56% center; }
+    }
+    @media(max-width:900px) {
+      .hero-picture.hero-photo-real {
+        position:relative!important;
+        height:216px!important;min-height:216px!important;
+        width:100%;border-radius:0 0 24px 24px;
+        box-shadow:none;
+      }
+      .hero-photo-real .hero-bg-img { object-position:center 47%!important; }
+      .hero-photo-real::after {font-size:13px;padding:7px 10px;left:11px;bottom:10px;}
+      .hero-photo-caption{font-size:10px;right:10px;top:10px;}
+      .hero-content .hero-sub {margin-bottom:12px;}
+    }
+    @media(max-width:390px) {
+      .hero-picture.hero-photo-real{height:192px!important;min-height:192px!important;}
+    }
+
   </style>
 </head>
 
@@ -2251,21 +2297,17 @@
   <main>
 
     <section class="hero">
-      <div class="hero-picture hero-concept" role="img" aria-label="親子一起看、一起想、一起玩的活動概念圖">
-        <div class="hero-concept-header">親子一起探索 · 快樂成長</div>
-        <div class="hero-concept-steps">
-          <span class="hero-concept-step step-watch"><strong>看</strong><small>藝術欣賞</small></span>
-          <span class="hero-concept-step step-think"><strong>想</strong><small>趣味挑戰</small></span>
-          <span class="hero-concept-step step-play"><strong>玩</strong><small>親子互動</small></span>
-        </div>
-        <div class="hero-concept-footer">11.22 <span>週日相約台南</span></div>
-      </div>
+      <picture class="hero-picture hero-photo-real">
+        <source media="(max-width: 900px)" srcset="images/review-1.jpg">
+        <img class="hero-bg-img" src="images/review-1.jpg" alt="過往親子活動實拍：家長陪孩子一起畫畫，參與者大多配戴口罩" loading="eager" decoding="async" fetchpriority="high">
+        <span class="hero-photo-caption">過往親子活動實拍</span>
+      </picture>
 
       <div class="container">
         <div class="hero-content">
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            11/22 親子文化體驗 · 免費參加
+            一起看・一起想・一起玩
           </div>
 
           <h1 class="hero-title">
@@ -2273,10 +2315,9 @@
           </h1>
 
           <p class="hero-sub">
-            一起看、一起想、一起玩！透過<strong>趣味搶答、影片挑戰與親子互動</strong>，陪孩子在參與中練習專注與好選擇。<br>11/22（日）台南免費親子成長活動。
+            透過<strong>趣味搶答、影片挑戰與親子互動</strong>，陪孩子在參與中練習專注與好選擇。
           </p>
 
-          <div class="hero-fun-tags" aria-label="活動特色"><span>趣味搶答</span><span>影片挑戰</span><span>親子互動</span></div>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#signup">立即免費報名</a>
             <a class="btn btn-soft" href="#schedule">了解活動怎麼玩</a>
@@ -2784,7 +2825,7 @@
     formStarted=true;
     storageSet(sessionStorage,'camp1122_form_started','1');
     track('form_start');
-    if(typeof fbq==='function')fbq('track','Lead',{content_name:'1122親子自律成長活動'});
+    // form_start 保留 GAS 追蹤；Meta Lead 僅於後端確認報名成功後送出。
   }
   function onFormEdit() {
     if(formStatus.classList.contains('ok')) clearStatus();
@@ -2828,9 +2869,15 @@
       if(result.ok) {
         const sentKey='camp1122_meta_complete_'+token;
         if(storageGet(sessionStorage,sentKey)!=='1') {
-          if(typeof fbq==='function') fbq('track','CompleteRegistration',{
-            content_name:'1122親子自律成長活動',ad_source:adSource,status:'success'
-          },{eventID:token});
+          if(typeof fbq==='function') {
+            // 只在 GAS 查詢確認報名成功後送出 Lead；同一筆 token 避免重複。
+            fbq('track','Lead',{
+              content_name:'1122親子自律成長活動',ad_source:adSource,status:'success'
+            },{eventID:token+'-lead'});
+            fbq('track','CompleteRegistration',{
+              content_name:'1122親子自律成長活動',ad_source:adSource,status:'success'
+            },{eventID:token});
+          }
           storageSet(sessionStorage,sentKey,'1');
         }
         status('報名成功！您的報名編號：'+result.serial,'ok');
