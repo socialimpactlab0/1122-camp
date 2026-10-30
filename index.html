@@ -2346,7 +2346,15 @@
       .hero-proof-list .hero-location { font-size: 15px; }
     }
 
-  </style>
+  
+    /* Hand-selected 1122 illustration: warmer family-facing visual composition */
+    .hero-picture.hero-photo-real .hero-bg-img { object-position:62% 50%; }
+    .hero-illustration-ready .hero-bg-img { object-position:66% 50%!important; }
+    @media(max-width:900px){
+      .hero-illustration-ready .hero-bg-img {object-position:65% 47%!important;}
+    }
+
+</style>
 </head>
 
 <body>
@@ -2371,8 +2379,8 @@
     <section class="hero">
       <picture class="hero-picture hero-photo-real">
         <source media="(max-width: 900px)" srcset="images/review-1.jpg">
-        <img class="hero-bg-img" src="images/review-1.jpg" alt="過往親子活動實拍：家長陪孩子一起畫畫，參與者大多配戴口罩" loading="eager" decoding="async" fetchpriority="high">
-        <span class="hero-photo-caption">過往親子活動實拍</span>
+        <img class="hero-bg-img" src="images/review-1.jpg" alt="親子互動插畫：媽媽陪孩子一起畫畫與學習" loading="eager" decoding="async" fetchpriority="high">
+        <span class="hero-photo-caption">親子互動主視覺插畫</span>
       </picture>
 
       <div class="container">
@@ -2966,6 +2974,28 @@
       submitBtn.textContent='送出報名';
     }
   });
+  </script>
+<script>
+  /* The illustration is stored as versioned base64 chunks in this same repository.
+     Load the illustration without depending on an expiring third-party image URL. */
+  (function(){
+    var picture=document.querySelector('.hero-picture');
+    if(!picture)return;
+    var photo=picture.querySelector('img');
+    var mobile=picture.querySelector('source');
+    var pieces=[1,2,3,4,5,6,7].map(function(n){
+      return fetch('images/hero-art-p'+n+'.txt').then(function(r){
+        if(!r.ok)throw new Error('Hero asset '+n+' unavailable');
+        return r.text();
+      });
+    });
+    Promise.all(pieces).then(function(parts){
+      var data='data:image/png;base64,'+parts.join('');
+      if(mobile)mobile.srcset=data;
+      photo.src=data;
+      picture.classList.add('hero-illustration-ready');
+    }).catch(function(err){console.warn('Hero illustration unavailable',err);});
+  })();
   </script>
 </body>
 </html>
