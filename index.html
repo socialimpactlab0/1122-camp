@@ -2365,7 +2365,11 @@
     @media (max-width:900px) {
       .hero-enhanced-scene .hero-bg-img {object-position:50% 43%!important;}
     }
-</style>
+  /* 首頁主圖：使用過往親子活動照片，保留原頁面排版 */
+    .hero-picture.hero-photo-real::after { content: none !important; }
+    .hero-picture.hero-photo-real .hero-bg-img { object-position: center 38%; filter: none; }
+    @media (max-width: 900px) { .hero-picture.hero-photo-real .hero-bg-img { object-position: center 26% !important; } }
+  </style>
 </head>
 
 <body>
@@ -2388,10 +2392,9 @@
   <main>
 
     <section class="hero">
-      <picture class="hero-picture hero-photo-real hero-enhanced-scene">
-        <source media="(max-width: 900px)" srcset="images/hero-family-crowd-final.svg">
-        <img class="hero-bg-img" src="images/hero-family-crowd-final.svg" alt="親子活動熱鬧互動情境示意，依活動影像概念以 AI 重新製作，非原始實拍" loading="eager" decoding="async" fetchpriority="high">
-        <span class="hero-photo-caption">活動情境示意・AI 重製</span>
+      <picture class="hero-picture hero-photo-real">
+        <img class="hero-bg-img" src="images/1122-hero-photo.jpg?v=20261031" alt="過往親子活動中，家長與孩子一同參與互動的照片" loading="eager" decoding="async" fetchpriority="high">
+        <span class="hero-photo-caption">過往親子活動實拍</span>
       </picture>
 
       <div class="container">
