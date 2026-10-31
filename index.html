@@ -2989,27 +2989,6 @@
     }
   });
   </script>
-<script>
-  /* The illustration is stored as versioned base64 chunks in this same repository.
-     Load the illustration without depending on an expiring third-party image URL. */
-  (function(){
-    var picture=document.querySelector('.hero-picture');
-    if(!picture)return;
-    var photo=picture.querySelector('img');
-    var mobile=picture.querySelector('source');
-    var pieces=[1,2,3,4,5,6,7].map(function(n){
-      return fetch('images/hero-art-p'+n+'.txt').then(function(r){
-        if(!r.ok)throw new Error('Hero asset '+n+' unavailable');
-        return r.text();
-      });
-    });
-    Promise.all(pieces).then(function(parts){
-      var data='data:image/png;base64,'+parts.join('');
-      if(mobile)mobile.srcset=data;
-      photo.src=data;
-      picture.classList.add('hero-illustration-ready');
-    }).catch(function(err){console.warn('Hero illustration unavailable',err);});
-  })();
-  </script>
+
 </body>
 </html>
