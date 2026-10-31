@@ -2354,6 +2354,17 @@
       .hero-illustration-ready .hero-bg-img {object-position:65% 47%!important;}
     }
 
+
+    /* Approved crowd illustration: emphasize activity and keep mobile faces in frame */
+    .hero-picture.hero-enhanced-scene::after {content:"活動情境示意";display:block!important;}
+    .hero-enhanced-scene .hero-bg-img {object-fit:cover;object-position:52% 43%!important;filter:none;}
+    @media (min-width:901px) {
+      .hero-picture.hero-enhanced-scene {overflow:hidden;}
+      .hero-enhanced-scene .hero-bg-img {object-position:50% 35%!important;}
+    }
+    @media (max-width:900px) {
+      .hero-enhanced-scene .hero-bg-img {object-position:50% 43%!important;}
+    }
 </style>
 </head>
 
@@ -2377,10 +2388,10 @@
   <main>
 
     <section class="hero">
-      <picture class="hero-picture hero-photo-real">
-        <source media="(max-width: 900px)" srcset="images/review-1.jpg">
-        <img class="hero-bg-img" src="images/review-1.jpg" alt="親子互動插畫：媽媽陪孩子一起畫畫與學習" loading="eager" decoding="async" fetchpriority="high">
-        <span class="hero-photo-caption">親子互動主視覺插畫</span>
+      <picture class="hero-picture hero-photo-real hero-enhanced-scene">
+        <source media="(max-width: 900px)" srcset="images/hero-family-crowd-final.svg">
+        <img class="hero-bg-img" src="images/hero-family-crowd-final.svg" alt="親子活動熱鬧互動情境示意，依活動影像概念以 AI 重新製作，非原始實拍" loading="eager" decoding="async" fetchpriority="high">
+        <span class="hero-photo-caption">活動情境示意・AI 重製</span>
       </picture>
 
       <div class="container">
