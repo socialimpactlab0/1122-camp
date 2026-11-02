@@ -2381,6 +2381,32 @@
       .hero-takeaways { font-size: 15px; line-height: 1.7; }
       .hero-art-link { font-size: 14px; }
     }
+    /* 50 組親子額滿後的電話洽詢公告（不顯示內部容量數字） */
+    #signupFullNotice[hidden], #signupOpenForm[hidden], #signupFullSuccess[hidden] {display:none!important;}
+    .signup-full-card {
+      max-width:860px; margin:0 auto; padding:38px 42px;
+      background:#fffdf8; border:1px solid #e4ddce;
+      border-radius:22px; box-shadow:0 10px 32px rgba(45,63,49,.07);
+      text-align:center;
+    }
+    .signup-full-card h2 {
+      font-family:"Noto Serif TC","Songti TC",serif;
+      font-size:clamp(25px,3.5vw,34px);color:#3b6048;line-height:1.4;margin:0 0 20px;
+    }
+    .signup-full-card p {margin:12px auto;color:#4c5049;line-height:1.9;max-width:700px;}
+    .signup-full-card .signup-full-call {margin:15px 0 10px;display:inline-flex;}
+    .signup-full-card .signup-full-note {
+      border-top:1px solid #e6e2d8;margin-top:27px;padding-top:18px;
+      text-align:left;font-size:14px;color:#77756e;
+    }
+    .signup-full-card .signup-full-success {
+      color:#235e40;background:#e9f4ec;border:1px solid #c7e2ce;
+      padding:10px 14px;border-radius:12px;font-weight:700;margin:0 auto 20px;
+    }
+    @media(max-width:700px) {
+      .signup-full-card {padding:27px 20px;border-radius:18px;}
+      .signup-full-card .signup-full-call {width:100%;font-size:15px;padding:12px 10px;}
+    }
   </style>
 </head>
 
@@ -2503,7 +2529,19 @@
 </script>
 
     <section id="signup" class="signup-section">
-      <div class="container form-wrap">
+      <div class="container signup-full-announcement" id="signupFullNotice" hidden aria-live="polite">
+        <div class="signup-full-card">
+          <p class="signup-full-success" id="signupFullSuccess" role="status" hidden></p>
+          <h2>🎉 感謝家長熱烈響應！</h2>
+          <p><strong>本次親子活動報名踴躍，線上報名已暫停受理。</strong></p>
+          <p>為維護活動品質及每位親子的參與體驗，目前改採電話洽詢方式。</p>
+          <p><strong>若您仍希望帶孩子參加，歡迎來電詢問是否尚有可安排的名額。</strong></p>
+          <a class="btn btn-primary signup-full-call" href="tel:0913837389">撥打 0913-837-389 洽詢陳小姐</a>
+          <p>感謝您的支持與理解，期待與您和孩子相見！</p>
+          <p class="signup-full-note"><strong>溫馨提醒：</strong>主辦單位得視實際報名情況、場地及活動需求，保留調整參加名額與活動內容之權利；如有重要異動，將適時通知已報名的家長。</p>
+        </div>
+      </div>
+      <div class="container form-wrap" id="signupOpenForm">
         <div class="form-note">
           <h2>立即報名</h2>
           <p>
@@ -2954,15 +2992,101 @@
       try {
         const result=await lookup(token,5500);
         if(result&&result.ok&&result.found)return {ok:true,serial:result.serial};
-        if(result&&result.ok&&result.final)return {ok:false,final:true,message:result.message};
+        if(result&&result.ok&&result.final)return {ok:false,final:true,status:result.status,message:result.message};
       } catch (_) {}
     }
     return {ok:false,unknown:true,message:'目前無法確認是否報名成功。請先聯繫主辦單位，勿重複送出。'};
   }
 
+
+  // GAS 唯讀查詢是否達到 50 組，沒有回傳姓名、電話、實際總數或上限。
+  const signupOpenForm = document.getElementById('signupOpenForm');
+  const signupFullNotice = document.getElementById('signupFullNotice');
+  const signupFullSuccess = document.getElementById('signupFullSuccess');
+  let isRegistrationFull = false;
+  let isRegistrationSubmitting = false;
+
+  function showFullNotice(successSerial) {
+    isRegistrationFull = true;
+    signupOpenForm.hidden = true;
+    signupFullNotice.hidden = false;
+    if(successSerial) {
+      signupFullSuccess.textContent = '您已報名成功！報名編號：' + successSerial + '。活動前會再通知。';
+      signupFullSuccess.hidden = false;
+    }
+    document.querySelectorAll('a[href="#signup"]').forEach(a=>{
+      if(!a.dataset.openSignupText)a.dataset.openSignupText=a.textContent;
+      a.textContent='名額洽詢';
+    });
+    document.querySelectorAll('.mobile-cta .phone').forEach(a=>{
+      if(!a.dataset.openPhoneText)a.dataset.openPhoneText=a.textContent;
+      a.textContent='電話洽詢';
+    });
+  }
+
+  function showOpenForm() {
+    if(!isRegistrationFull)return;
+    isRegistrationFull=false;
+    signupOpenForm.hidden=false;
+    signupFullNotice.hidden=true;
+    signupFullSuccess.hidden=true;
+    document.querySelectorAll('a[data-open-signup-text]').forEach(a=>{
+      a.textContent=a.dataset.openSignupText;
+    });
+    document.querySelectorAll('a[data-open-phone-text]').forEach(a=>{
+      a.textContent=a.dataset.openPhoneText;
+    });
+  }
+
+  // 與現有 checkRegistration 一樣採 JSONP，避免跨來源限制；逾時不會阻斷頁面。
+  function fetchRegistrationStatus() {
+    return new Promise((resolve,reject)=>{
+      const callback='campStatus_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+      const script=document.createElement('script');
+      let done=false;
+      let timer;
+      function finish(error,result) {
+        if(done)return;
+        done=true;
+        clearTimeout(timer);
+        delete window[callback];
+        script.remove();
+        if(error)reject(error);else resolve(result);
+      }
+      window[callback]=result=>finish(null,result);
+      script.onerror=()=>finish(new Error('查詢名額失敗'));
+      script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({
+        action:'registrationStatus',callback,cacheBust:Date.now().toString()
+      });
+      timer=setTimeout(()=>finish(new Error('查詢名額逾時')),6500);
+      document.body.appendChild(script);
+    });
+  }
+
+  async function refreshRegistrationStatus(successSerial) {
+    try {
+      const result=await fetchRegistrationStatus();
+      if(!result||result.ok!==true||typeof result.full!=='boolean')return;
+      if(result.full) {
+        if(!isRegistrationSubmitting||successSerial)showFullNotice(successSerial);
+      } else if(!isRegistrationSubmitting) {
+        showOpenForm();
+      }
+    } catch(_) {
+      // 如果 GAS 尚未部署此唯讀功能，仍由 GAS register 的容量檢查把關。
+    }
+  }
+  refreshRegistrationStatus();
+  setInterval(()=>{if(!isRegistrationSubmitting)refreshRegistrationStatus();},60000);
+  window.addEventListener('focus',()=>{if(!isRegistrationSubmitting)refreshRegistrationStatus();});
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden&&!isRegistrationSubmitting)refreshRegistrationStatus();
+  });
+
   form.addEventListener('submit',async e=>{
     e.preventDefault();
-    if(submitBtn.disabled)return;
+    if(submitBtn.disabled||isRegistrationFull)return;
+    isRegistrationSubmitting=true;
     const data=Object.fromEntries(new FormData(form).entries());
     const token=ensureId(sessionStorage,'camp1122_pending_record_id');
     const payload=Object.assign({},base,{
@@ -2997,11 +3121,14 @@
         status('報名成功！您的報名編號：'+result.serial,'ok');
         form.reset();
         storageRemove(sessionStorage,'camp1122_pending_record_id');
+        refreshRegistrationStatus(result.serial);
       } else {
         status(result.message||'報名未成功。','err');
+        if(result.status==='full')showFullNotice();
         if(result.final) storageRemove(sessionStorage,'camp1122_pending_record_id');
       }
     } finally {
+      isRegistrationSubmitting=false;
       submitBtn.disabled=false;
       submitBtn.textContent='送出報名';
     }
