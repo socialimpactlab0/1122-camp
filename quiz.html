@@ -73,6 +73,23 @@
     .primary{display:flex;justify-content:center;align-items:center;gap:9px;text-align:center;border:0;border-radius:40px;padding:15px 20px;font-weight:800;color:#fff;background:var(--green);box-shadow:0 9px 24px rgba(57,100,71,.19);width:100%}
     .primary:hover,.primary:focus-visible{background:#294b36;outline:2px solid #a9c5af;outline-offset:2px}
     .secondary{margin-top:13px;display:block;text-align:center;background:none;border:0;color:#55735d;font-weight:700;width:100%;padding:10px}
+    .intro-card h2{margin:17px 0 8px;font-size:clamp(24px,3.5vw,31px)}
+    .intro-lead{color:var(--muted);margin:0 0 20px}
+    .intro-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .intro-choice{text-align:left;display:flex;flex-direction:column;gap:8px;border:1.5px solid #d5e4d6;border-radius:19px;background:#f5faf4;padding:23px 20px;color:var(--green);transition:.15s ease;cursor:pointer}
+    .intro-choice:hover,.intro-choice:focus-visible{border-color:#659474;outline:2px solid #d6e7d8;transform:translateY(-1px)}
+    .intro-choice strong{font-size:20px;font-family:"Noto Serif TC",serif}
+    .intro-choice span:not(.choice-icon):not(.choice-action){font-size:13px;color:#637667;line-height:1.7}
+    .choice-icon{font-size:27px}
+    .choice-action{margin-top:3px;font-size:13px;font-weight:800}
+    .intro-info{background:#faf7ee;border-color:#e9ddc8;color:#87673e}
+    .intro-disclosure{margin:20px 0 0;color:#7a867b;font-size:12px;line-height:1.9}
+    .outline-action{display:block;padding:14px 18px;border:1.5px solid #a7bbaa;border-radius:40px;text-align:center;margin-top:12px;color:#486f51;font-weight:800}
+    .outline-action:hover,.outline-action:focus-visible{background:#edf5ec}
+    .save-message{font-size:13px!important;color:#577665!important;margin:10px 0 14px!important}
+    .save-message.warn{color:#9b6133!important}
+    .save-retry{margin-top:0!important;border:1px solid #d6ded2!important;border-radius:12px}
+    .result-actions{display:grid;gap:2px}
     .privacy{font-size:12px;line-height:1.85;color:#7c887d;max-width:720px;margin:19px auto 0;text-align:center}
     [hidden]{display:none!important}
     @media(max-width:700px){
@@ -89,6 +106,10 @@
       .card{margin:16px auto 0;padding:23px 20px 22px;border-radius:18px}
       .option{font-size:15px;padding:15px 12px}
       #questionTitle{font-size:25px}
+      .intro-choices{grid-template-columns:1fr;gap:10px}
+      .intro-choice{padding:16px 17px;gap:4px}
+      .intro-choice strong{font-size:18px}
+      .intro-card h2{font-size:26px}
       .privacy{font-size:11px}
     }
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
@@ -107,7 +128,27 @@
       </div>
       <div class="mastphoto"><img src="images/1122-hero-photo.jpg" alt="過往親子活動實拍：家長和孩子共同互動"><span class="photolabel">過往親子活動實拍</span></div>
     </section>
-    <section class="card" aria-label="親子互動三題">
+    <section class="card intro-card" id="introPanel" aria-label="選擇參與方式">
+      <span class="eyebrow">歡迎來到親子自律成長活動</span>
+      <h2>您想先從哪裡開始？</h2>
+      <p class="intro-lead">先用 3 題小問答，了解自己最想和孩子練習的方向；或先看看活動內容，再決定是否參加。</p>
+      <div class="intro-choices">
+        <button class="intro-choice intro-answer" id="startQuizBtn" type="button">
+          <span class="choice-icon" aria-hidden="true">❓</span>
+          <strong>先回答 3 題</strong>
+          <span>約 30 秒，找出親子自律練習方向</span>
+          <span class="choice-action">開始互動問答 ›</span>
+        </button>
+        <a class="intro-choice intro-info" id="introEventLink" href="./">
+          <span class="choice-icon" aria-hidden="true">📖</span>
+          <strong>先了解活動</strong>
+          <span>看看活動內容、流程及獎品</span>
+          <span class="choice-action">查看活動介紹 ›</span>
+        </a>
+      </div>
+      <p class="intro-disclosure">完成三題後，答案會以匿名識別碼儲存，用於活動安排與成效分析；若之後報名，將與該筆報名資料關聯。答案不會傳送至 Meta Pixel。</p>
+    </section>
+    <section class="card" id="quizCard" aria-label="親子互動三題" hidden>
       <div id="quizPanel">
         <div class="progress-top"><span id="progressName">第 1 題，共 3 題</span><span id="progressValue">1 / 3</span></div>
         <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
@@ -117,7 +158,7 @@
         <div class="options" id="options"></div>
         <div class="footerline">
           <button class="back" type="button" id="backBtn">← 上一題</button>
-          <span class="smallnote">答案只用於本頁顯示結果</span>
+          <span class="smallnote">完成後將儲存答案，用於活動改善</span>
         </div>
       </div>
       <div class="result" id="resultPanel" aria-hidden="true" aria-live="polite">
@@ -132,15 +173,22 @@
           <p>國小 3～6 年級親子｜趣味搶答・影片挑戰・親子互動</p>
           <p>目前名額請依活動官網公告為準；線上報名暫停時仍可電話洽詢。</p>
         </div>
-        <a class="primary" id="eventLink" href="./">查看活動與報名／電話洽詢 ›</a>
+        <p class="save-message" id="saveMessage" role="status" aria-live="polite">正在確認問答資料是否已儲存…</p>
+        <button class="secondary save-retry" id="saveRetryBtn" type="button" hidden>重新同步問答資料</button>
+        <div class="result-actions" id="resultActions">
+          <a class="primary" id="directSignupLink" href="./#signup">直接報名／查看名額 ›</a>
+          <a class="outline-action" id="eventLink" href="./">先了解活動內容 ›</a>
+        </div>
+        <a class="primary" id="afterSignupLink" href="./" hidden>返回活動網站 ›</a>
         <button class="secondary" type="button" id="restartBtn">重新體驗 3 題</button>
       </div>
     </section>
-    <p class="privacy">本互動問答不是心理測驗或能力評量，不收集姓名、電話及答題內容。為評估廣告成效，網站會使用與活動官網相同的 Meta Pixel 記錄頁面瀏覽及問答開始、完成等互動事件，但不傳送答案。</p>
+    <p class="privacy">本互動問答不是心理測驗或能力評量。問答答案及匿名識別碼將寫入活動的 Google Sheet，用於了解親子需求與活動成效；若後續報名，系統將以識別碼連結問答與報名資料。網站使用 Meta Pixel 記錄頁面及問答互動事件，不傳送實際答案。報名成功不因尚未回答問答而失效。</p>
   </main>
   <script>
     (function(){
       'use strict';
+      const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
       const questions=[
         {title:'孩子目前最讓您煩惱的是什麼？',options:['經常捨不得放下手機或平板','寫功課容易拖延，常需要提醒','想培養更主動的生活與學習習慣']},
         {title:'當孩子不願意配合時，您通常怎麼做？',options:['多提醒幾次，希望孩子快點行動','先約定時間或規則，再一起執行','試著聽孩子的想法，再討論怎麼做']},
@@ -151,53 +199,151 @@
         {title:'一起練習「專注與堅持」',summary:'寫功課容易拖延，是許多家庭會遇到的情況。把任務變小、讓孩子參與安排，可能更容易開始。',tip:'可以和孩子試試：先專心做一件小事，完成後再一起檢視，讓進步看得見。'},
         {title:'一起練習「主動與好選擇」',summary:'自律不是要求孩子一直聽話，而是陪孩子慢慢學會想清楚、做決定並為選擇負責。',tip:'生活中碰到選擇時，可以先問孩子：「你覺得怎麼做比較好？為什麼？」'}
       ];
-      const qs=document.getElementById('questionTitle');
-      const options=document.getElementById('options');
-      const quiz=document.getElementById('quizPanel');
-      const result=document.getElementById('resultPanel');
-      const back=document.getElementById('backBtn');
-      const restart=document.getElementById('restartBtn');
-      const progress=document.getElementById('progressFill');
-      const progressName=document.getElementById('progressName');
-      const progressValue=document.getElementById('progressValue');
-      let answers=[],started=false,complete=false;
+
+      const byId=id=>document.getElementById(id);
+      const intro=byId('introPanel'),card=byId('quizCard'),quiz=byId('quizPanel'),result=byId('resultPanel');
+      const qs=byId('questionTitle'),options=byId('options'),back=byId('backBtn'),restart=byId('restartBtn');
+      const progress=byId('progressFill'),progressName=byId('progressName'),progressValue=byId('progressValue');
+      const saveMessage=byId('saveMessage'),saveRetry=byId('saveRetryBtn');
+      const query=new URLSearchParams(window.location.search);
+      const afterSignup=query.get('after_signup')==='1';
+      let started=false,complete=false,saving=false,answers=[];
+      const get=(store,key)=>{try{return store.getItem(key)}catch(_){return null}};
+      const set=(store,key,val)=>{try{store.setItem(key,val)}catch(_){}};
+      const remove=(store,key)=>{try{store.removeItem(key)}catch(_){}};
+      const uuid=()=>{
+        if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+        const bytes=new Uint8Array(20);
+        crypto.getRandomValues(bytes);
+        return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+      };
+      function ensureId(store,key){
+        let id=get(store,key);
+        if(!id){id=uuid();set(store,key,id)}
+        return id;
+      }
+      const visitorId=ensureId(localStorage,'camp1122_visitor_id');
+      const sessionId=ensureId(sessionStorage,'camp1122_session_id');
+      let quizId=ensureId(localStorage,'camp1122_last_quiz_id');
+      const rawAnswers=get(localStorage,'camp1122_quiz_answers');
+      try {
+        const saved=rawAnswers?JSON.parse(rawAnswers):[];
+        if(Array.isArray(saved)&&saved.length<=3&&saved.every(x=>[0,1,2].includes(x)))answers=saved;
+      }catch(_){}
+      const utm={};
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(k=>{
+        utm[k]=query.get(k)||get(localStorage,'camp1122_'+k)||'';
+        if(query.has(k))set(localStorage,'camp1122_'+k,query.get(k));
+      });
+      const adSource=query.get('ad')||utm.utm_content||utm.utm_campaign||utm.utm_source||'direct';
 
       function pixel(name){
         try{if(typeof window.fbq==='function')window.fbq('trackCustom',name)}catch(_){}
       }
-      function eventUrl(){
+      function eventUrl(hash){
         const url=new URL('./',window.location.href);
-        const source=new URLSearchParams(window.location.search);
-        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ad'].forEach(function(k){
-          if(source.has(k))url.searchParams.set(k,source.get(k));
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ad'].forEach(k=>{
+          const v=query.get(k)||get(localStorage,'camp1122_'+k);
+          if(v)url.searchParams.set(k,v);
         });
         if(!url.searchParams.has('utm_source'))url.searchParams.set('utm_source','quiz');
         url.searchParams.set('from_quiz','1');
+        if(hash)url.hash=hash;
         return url.href;
       }
-      document.getElementById('eventLink').href=eventUrl();
-      document.getElementById('topEventLink').href=eventUrl();
-      document.getElementById('eventLink').addEventListener('click',function(){pixel('ParentQuizEventClick')});
+      byId('introEventLink').href=eventUrl('');
+      byId('eventLink').href=eventUrl('');
+      byId('directSignupLink').href=eventUrl('signup');
+      byId('topEventLink').href=eventUrl('');
+      byId('afterSignupLink').href=eventUrl('');
+      ['introEventLink','eventLink','directSignupLink','afterSignupLink'].forEach(id=>{
+        byId(id).addEventListener('click',()=>{
+          pixel(id==='introEventLink'?'ParentQuizInfoFirst':'ParentQuizEventClick');
+        });
+      });
+
+      function jsonpCheck(timeoutMs){
+        return new Promise((resolve,reject)=>{
+          const cb='campQuizCheck_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+          const script=document.createElement('script');
+          let done=false,timer;
+          function finish(error,val){
+            if(done)return;done=true;clearTimeout(timer);
+            delete window[cb];script.remove();
+            if(error)reject(error);else resolve(val);
+          }
+          window[cb]=val=>finish(null,val);
+          script.onerror=()=>finish(new Error('問答查詢失敗'));
+          script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({action:'checkQuiz',quizId:quizId,callback:cb,nonce:Date.now()});
+          timer=setTimeout(()=>finish(new Error('問答查詢逾時')),timeoutMs||6500);
+          document.body.appendChild(script);
+        });
+      }
+      async function saveQuiz(){
+        if(answers.length!==3||saving)return;
+        if(get(localStorage,'camp1122_quiz_saved')===quizId&&!afterSignup){
+          saveMessage.textContent='三題答案已儲存，感謝您的協助！';
+          saveMessage.className='save-message';saveRetry.hidden=true;
+          return;
+        }
+        saving=true;
+        saveMessage.textContent='正在儲存與確認三題答案…';
+        saveMessage.className='save-message';saveRetry.hidden=true;
+        const params=Object.assign({},utm,{
+          action:'saveQuiz',quizId:quizId,visitor_id:visitorId,session_id:sessionId,
+          answer1:String(answers[0]),answer2:String(answers[1]),answer3:String(answers[2]),
+          adSource:adSource,pageUrl:location.href,
+          registrationToken:afterSignup?(get(sessionStorage,'camp1122_last_registered_token')||''):''
+        });
+        try{
+          const controller=new AbortController();
+          const timer=setTimeout(()=>controller.abort(),15000);
+          try{await fetch(GAS_WEB_APP_URL,{
+            method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',
+            body:new URLSearchParams(params),signal:controller.signal
+          })}finally{clearTimeout(timer)}
+          let verified=false;
+          for(let i=0;i<4;i++){
+            await new Promise(resolve=>setTimeout(resolve,i===0?700:1400));
+            try{
+              const res=await jsonpCheck(5000);
+              if(res&&res.ok&&res.found){verified=true;break}
+            }catch(_){}
+          }
+          if(verified){
+            set(localStorage,'camp1122_quiz_saved',quizId);
+            saveMessage.textContent='三題答案已成功儲存，感謝您的協助！';
+            saveMessage.className='save-message';saveRetry.hidden=true;
+          }else throw new Error('目前無法確認是否已寫入試算表');
+        }catch(_){
+          saveMessage.textContent='問答已完成，但目前無法確認是否儲存成功。答案暫存在這台裝置，可按「重新同步」。';
+          saveMessage.className='save-message warn';saveRetry.hidden=false;
+        }finally{saving=false}
+      }
+      function openQuiz(){
+        intro.hidden=true;card.hidden=false;render();
+        card.scrollIntoView({block:'start',behavior:'smooth'});
+      }
+      byId('startQuizBtn').addEventListener('click',()=>{pixel('ParentQuizChooseQuiz');openQuiz()});
       function render(){
         if(answers.length===questions.length){showResult();return}
-        const n=answers.length;
-        const q=questions[n];
+        const n=answers.length,q=questions[n];
         quiz.hidden=false;result.setAttribute('aria-hidden','true');
         qs.textContent=q.title;
         progressName.textContent='第 '+(n+1)+' 題，共 3 題';
         progressValue.textContent=(n+1)+' / 3';
         progress.style.width=((n+1)/questions.length*100)+'%';
         options.replaceChildren();
-        q.options.forEach(function(value,i){
-          const b=document.createElement('button');
-          b.type='button';b.className='option';
-          const l=document.createElement('span');l.className='letter';l.textContent=['A','B','C'][i];
+        q.options.forEach((value,i)=>{
+          const b=document.createElement('button');b.type='button';b.className='option';
+          const letter=document.createElement('span');letter.className='letter';letter.textContent=['A','B','C'][i];
           const t=document.createElement('span');t.textContent=value;
-          const ar=document.createElement('span');ar.className='arrow';ar.textContent='›';
-          b.append(l,t,ar);
-          b.addEventListener('click',function(){
+          const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='›';
+          b.append(letter,t,arrow);
+          b.addEventListener('click',()=>{
             if(!started){started=true;pixel('ParentQuizStart')}
             answers.push(i);
+            set(localStorage,'camp1122_quiz_answers',JSON.stringify(answers));
             render();
           });
           options.appendChild(b);
@@ -206,19 +352,35 @@
       }
       function showResult(){
         quiz.hidden=true;result.setAttribute('aria-hidden','false');
-        const o=outcomes[answers[0]];
-        document.getElementById('resultTitle').textContent=o.title;
-        document.getElementById('resultSummary').textContent=o.summary;
-        document.getElementById('resultTip').textContent=o.tip;
+        // 第三題決定最想培養的能力，第一題與第二題也納入結果說明。
+        const o=outcomes[answers[2]];
+        const pain=questions[0].options[answers[0]];
+        const approach=questions[1].options[answers[1]];
+        byId('resultTitle').textContent=o.title;
+        byId('resultSummary').textContent='您提到的困擾是「'+pain+'」；平常的做法是「'+approach+'」。'+o.summary;
+        byId('resultTip').textContent=o.tip;
+        byId('resultActions').hidden=afterSignup;
+        byId('afterSignupLink').hidden=!afterSignup;
+        if(afterSignup)byId('afterSignupLink').textContent='感謝完成問答・返回活動網站 ›';
         if(!complete){complete=true;pixel('ParentQuizComplete')}
+        saveQuiz();
         result.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
       }
-      back.addEventListener('click',function(){if(answers.length){answers.pop();render()}});
-      restart.addEventListener('click',function(){
-        answers=[];started=false;complete=false;render();
+      back.addEventListener('click',()=>{
+        if(answers.length){answers.pop();set(localStorage,'camp1122_quiz_answers',JSON.stringify(answers));render()}
+      });
+      restart.addEventListener('click',()=>{
+        answers=[];started=false;complete=false;quizId=uuid();
+        set(localStorage,'camp1122_last_quiz_id',quizId);
+        remove(localStorage,'camp1122_quiz_answers');
+        remove(localStorage,'camp1122_quiz_saved');
+        saveRetry.hidden=true;
+        render();
         quiz.scrollIntoView({block:'start',behavior:'smooth'});
       });
-      render();
+      saveRetry.addEventListener('click',saveQuiz);
+      if(afterSignup){openQuiz()}
+      // 一般 FB 點擊首先由家長選擇問答或活動；不強迫作答。
     })();
   </script>
 </body>
