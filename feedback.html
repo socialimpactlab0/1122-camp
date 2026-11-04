@@ -113,11 +113,11 @@
       <p>不必寫長篇問卷，動動手指、選一選，就能把今天的心情分享給我們。</p>
       <div class="deco" aria-hidden="true"><span>🌼</span><span>😄</span><span>💛</span><span>🌱</span><span>✨</span></div>
     </section>
-    <div class="preview-bar" id="previewBar" hidden>設計預覽模式｜可完整闖關，但不會寫入 Google Sheet</div>
+    <div class="preview-bar" id="previewBar" hidden>測試期間｜現在可以填答並寫入測試資料，11/20 將自動清除測試答案</div>
     <section class="panel locked" id="lockedPanel" hidden aria-label="問卷開放日期">
       <div class="calendar" aria-hidden="true">🗓️</div>
-      <h2>活動結束後，歡迎來分享！</h2>
-      <p>這份心情闖關問卷預計在 11/22 活動後開放，讓我們一起回顧當天的美好時光。</p>
+      <h2>測試已結束，正式問卷即將開放！</h2>
+      <p>11/20 起已停止測試並清除測試資料。11/22（日）16:30 活動結束後，歡迎家長與孩子回來分享真實感受。</p>
       <p class="small">主辦單位：社團法人法輪大法學會・臺灣自媒體應用科技學會</p>
     </section>
     <section class="panel" id="choosePanel" hidden aria-label="選擇家長或孩子">
@@ -161,11 +161,22 @@
   <script>
   (function(){
     'use strict';
-    // 正式啟用前維持 false，避免活動前誤收測試資料。
-    // GAS 部署完成、資料測試通過後，再將此值改成 true。
-    const SURVEY_LIVE=false;
+    // 使用臺灣時間決定：11/19 前可測試入表、11/20～11/22 16:30 關閉、活動結束正式開放。
+    // GAS 後端也須部署相同日期規則，以防變更裝置時間繞過限制。
+    function taipeiNowText(){
+      const parts=new Intl.DateTimeFormat('en-US',{
+        timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',
+        hour:'2-digit',minute:'2-digit',hourCycle:'h23'
+      }).formatToParts(new Date());
+      const m={};parts.forEach(p=>{if(p.type!=='literal')m[p.type]=p.value});
+      return m.year+'-'+m.month+'-'+m.day+' '+m.hour+':'+m.minute;
+    }
+    const taipeiNow=taipeiNowText();
+    const SURVEY_PHASE=taipeiNow<'2026-11-20 00:00'?'test':
+      (taipeiNow<'2026-11-22 16:30'?'closed':'live');
+    const SURVEY_LIVE=SURVEY_PHASE!=='closed';
     const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
-    const preview=new URLSearchParams(location.search).get('preview')==='1';
+    const preview=SURVEY_PHASE==='test'&&new URLSearchParams(location.search).get('preview')==='1';
     const $=id=>document.getElementById(id);
     const panels=['lockedPanel','choosePanel','questionPanel','commentPanel','finishPanel'];
     const q={
@@ -194,7 +205,12 @@
     }
     const sameDeviceFamily=familyId();
     function show(id){panels.forEach(p=>$(p).hidden=p!==id);window.scrollTo({top:0,behavior:'instant'});}
-    if(!SURVEY_LIVE && !preview){show('lockedPanel')}else{show('choosePanel');$('previewBar').hidden=!preview;}
+    if(!SURVEY_LIVE){show('lockedPanel')}
+    else {
+      show('choosePanel');
+      $('previewBar').hidden=SURVEY_PHASE!=='test';
+      if(preview)$('previewBar').textContent='純畫面預覽｜此次不會寫入 Google Sheet；請使用不含 ?preview=1 的正式網址做資料寫入測試。';
+    }
     function begin(nextRole){
       role=nextRole;answers=[];step=0;surveyId=makeId();saving=false;answerLock=false;
       $('commentField').value='';$('retrySubmit').hidden=true;
