@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fff9f0">
   <title>11/22 親子活動｜心情闖關回饋小遊戲</title>
-  <meta name="description" content="用一分鐘分享參加 11/22 親子活動後的心情！家長 4 關、孩子 2 關，選一選就完成。">
+  <meta name="description" content="用一分鐘分享參加 11/22 親子活動後的心情！家長 5 關、孩子 3 關，選一選就完成。">
   <meta name="robots" content="noindex,nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,19 +127,19 @@
       <div class="role-grid">
         <button type="button" class="role" id="parentButton">
           <span class="role-emoji" aria-hidden="true">👨‍👩‍👧</span>
-          <strong>我是家長</strong><small>4 關＋自由留言</small>
+          <strong>我是家長</strong><small>5 關＋選填留言</small>
           <span class="go">開始分享 ›</span>
         </button>
         <button type="button" class="role" id="childButton">
           <span class="role-emoji" aria-hidden="true">🧒</span>
-          <strong>我是孩子</strong><small>2 關・輕鬆點選</small>
+          <strong>我是孩子</strong><small>3 關・輕鬆點選</small>
           <span class="go">來玩囉 ›</span>
         </button>
       </div>
       <p class="hint">🌿 <strong>安心填答：</strong>不需要姓名或電話，沒有標準答案。答案僅用於了解本次活動的參與感受與改善方向；自由留言請勿填寫個人資料。</p>
     </section>
     <section class="panel" id="questionPanel" hidden aria-live="polite" aria-label="逐題互動回饋">
-      <div class="quest-head"><span class="section-kicker" id="roleLabel">家長回饋</span><span class="status-tag" id="stepLabel">第 1 / 4 關</span></div>
+      <div class="quest-head"><span class="section-kicker" id="roleLabel">家長回饋</span><span class="status-tag" id="stepLabel">第 1 / 5 關</span></div>
       <div class="q-progress" aria-label="答題進度"><div id="progressFill"></div></div>
       <div class="quest-title"><span class="section-kicker" id="stepIntro">第 1 關 · 說說心情</span><h2 id="questionTitle"></h2></div>
       <p class="quest-sub">點選最符合你的感受，就能自動進入下一關。</p>
@@ -173,14 +173,17 @@
         {kicker:'今天的整體感受',title:'今天這場活動，你喜歡嗎？',options:[['😍','非常喜歡'],['😊','很不錯'],['😐','普通'],['🙁','有待改善']]},
         {kicker:'最喜歡的環節',title:'哪一個環節，讓你印象最深刻？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','神韻藝術分享']]},
         {kicker:'今天帶走的收穫',title:'今天你覺得最大的收穫是？',options:[['🌱','學習自律'],['💬','親子溝通'],['🎯','專注與堅持'],['💖','美好的親子時光']]},
-        {kicker:'一起認識美好的藝術',title:'活動後，您想進一步了解神韻嗎？',options:[['✨','很有興趣'],['🌷','想再了解看看'],['🙂','目前還沒有'],['🤔','還不確定']]}
+        {kicker:'一起認識美好的藝術',title:'活動後，您想進一步了解神韻嗎？',options:[['✨','很有興趣'],['🌷','想再了解看看'],['🙂','目前還沒有'],['🤔','還不確定']]},
+        {kicker:'還能更好的地方',title:'您覺得今天的活動哪方面可以再改進？',options:[['🕒','流程與時間安排'],['🙋','更多親子互動機會'],['🧩','內容說明更清楚'],['👍','目前都很滿意']]}
       ],
       child:[
         {kicker:'今天開不開心',title:'今天的活動，你覺得好玩嗎？',options:[['😄','很好玩'],['🙂','還不錯'],['😐','普通'],['🙁','不太好玩']]},
-        {kicker:'你最喜歡的活動',title:'今天你最喜歡玩哪一個？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','藝術欣賞']]}
+        {kicker:'你最喜歡的活動',title:'今天你最喜歡玩哪一個？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','藝術欣賞']]},
+        {kicker:'帶回家的小小願望',title:'今天學到的事，你最想回家試試哪一項？',options:[['📵','少玩一點手機'],['🎯','專心做好一件事'],['💬','和爸媽多聊聊'],['🌈','還沒想好']]}
       ]
     };
     let role='', answers=[], step=0, surveyId='', saving=false, answerLock=false;
+    const completedRoles=new Set();
     function makeId(){
       if(crypto&&crypto.randomUUID)return crypto.randomUUID();
       const a=new Uint8Array(16);crypto.getRandomValues(a);
@@ -236,18 +239,41 @@
       step=q.parent.length-1;answers=answers.slice(0,step);renderQuestion();show('questionPanel');
     });
     $('parentSubmit').addEventListener('click',complete);
-    $('anotherRole').addEventListener('click',()=>show('choosePanel'));
+    $('anotherRole').addEventListener('click',()=>{
+      const next=completedRoles.has('parent')?'child':'parent';
+      if(!completedRoles.has(next))begin(next);
+    });
     $('retrySubmit').addEventListener('click',saveFeedback);
+    function updateCompletionScreen(){
+      if(completedRoles.has('parent')&&completedRoles.has('child')){
+        $('finishEmoji').textContent='🎊';
+        $('finishTitle').textContent='親子心情闖關全部完成！';
+        $('finishText').textContent='謝謝家長和孩子一起分享真實感受！這次問卷已全部完成，祝你們有個美好的一天。';
+        $('anotherRole').hidden=true;
+        return;
+      }
+      $('finishEmoji').textContent=role==='parent'?'💛':'🏆';
+      $('finishTitle').textContent=role==='parent'?'家長分享完成！':'孩子闖關成功！';
+      $('finishText').textContent=role==='parent'
+        ?'感謝您的回饋！接下來可以讓孩子用 3 道趣味題目分享今天的心情。'
+        :'謝謝你分享今天的心情！接下來請家長也分享一下。';
+      $('anotherRole').textContent=role==='parent'?'🧒 接著換孩子分享':'👨‍👩‍👧 接著換家長分享';
+      $('anotherRole').hidden=false;
+    }
     function complete(){
       if(answers.length!==q[role].length)return;
-      $('finishEmoji').textContent=role==='parent'?'💛':'🏆';
-      $('finishTitle').textContent=role==='parent'?'感謝你的用心分享！':'闖關成功！你好棒！';
-      $('finishText').textContent=role==='parent'?'你的每一句回饋，都能幫助我們把下一場親子活動辦得更好。':'謝謝你告訴我們今天的心情！希望下次還能一起玩。';
-      $('anotherRole').textContent=role==='parent'?'🧒 換孩子來分享':'👨‍👩‍👧 換家長來分享';
+      $('anotherRole').hidden=true; // 正式版必須先確認儲存，再換人作答。
       $('saveConfirm').className='confirm';$('retrySubmit').hidden=true;
       if(preview){
+        completedRoles.add(role);
         $('saveConfirm').textContent='設計預覽完成！這次回答不會送出或存入 Google Sheet。';
-      }else{saveFeedback();}
+        updateCompletionScreen();
+      }else{
+        $('finishEmoji').textContent='⏳';
+        $('finishTitle').textContent='正在儲存您的分享';
+        $('finishText').textContent='問卷完成後即可讓下一位家人繼續作答。';
+        saveFeedback();
+      }
       show('finishPanel');
     }
     function jsonpFeedbackCheck(id){
@@ -270,8 +296,9 @@
       const data={
         action:'saveFeedback',surveyId,familyId:sameDeviceFamily,role,
         answer1:String(answers[0]),answer2:String(answers[1]),
-        answer3:role==='parent'?String(answers[2]):'',
+        answer3:String(answers[2]),
         answer4:role==='parent'?String(answers[3]):'',
+        answer5:role==='parent'?String(answers[4]):'',
         comment:role==='parent'?$('commentField').value.trim().slice(0,300):'',
         pageUrl:location.origin+location.pathname,
         utm_source:u.get('utm_source')||'on_site_qr'
@@ -288,6 +315,8 @@
         if(!verified)throw new Error('資料尚無法確認');
         $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！';
         $('saveConfirm').className='confirm';
+        completedRoles.add(role);
+        updateCompletionScreen();
       }catch(_){
         $('saveConfirm').textContent='問卷已完成，但目前無法確認儲存成功。請點「重新確認儲存」，避免漏掉這份回饋。';
         $('saveConfirm').className='confirm warn';$('retrySubmit').hidden=false;
