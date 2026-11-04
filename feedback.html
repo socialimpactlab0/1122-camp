@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff9f0">
+  <title>11/22 親子活動｜心情闖關回饋小遊戲</title>
+  <meta name="description" content="用一分鐘分享參加 11/22 親子活動後的心情！家長 4 關、孩子 2 關，選一選就完成。">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#27332d;--muted:#617166;--jade:#326c51;--mint:#ecf8ed;--peach:#fff0dc;
+      --orange:#e98245;--edge:#e8e8d9;--card:#fffefd;--bg:#fff9ef;--shadow:0 18px 54px rgba(84,98,56,.11);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:"Noto Sans TC",sans-serif;margin:0;color:var(--ink);background:radial-gradient(ellipse at 3% 1%,#ffe9d2 0,transparent 35%),radial-gradient(ellipse at 92% 22%,#e4f4df 0,transparent 36%),linear-gradient(#fffbf3,#f9f7ed);min-height:100vh;line-height:1.7}
+    button,textarea,a{font:inherit}
+    button{cursor:pointer}
+    [hidden]{display:none!important}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(860px,calc(100% - 30px));margin:auto}
+    header{display:flex;justify-content:space-between;align-items:center;padding:22px 0 13px;gap:10px}
+    .brand{font-family:"Noto Serif TC",serif;font-weight:700;color:#43654d;font-size:16px;letter-spacing:.05em}
+    .event-date{font-size:12px;color:#786b55;border:1px solid #e7d9be;background:#fffbf5;border-radius:99px;padding:6px 12px;white-space:nowrap}
+    .hero{text-align:center;position:relative;padding:10px 7px 20px}
+    .bubble{display:inline-flex;align-items:center;gap:7px;background:#f1f7e8;border:1px solid #deebd3;border-radius:100px;color:#59774e;padding:6px 15px;font-size:13px;font-weight:800}
+    .hero h1{font-family:"Noto Serif TC",serif;margin:13px 0 8px;font-size:clamp(30px,5vw,48px);font-weight:700;letter-spacing:.01em;line-height:1.37;color:#385943}
+    .hero h1 span{color:#e47d42}
+    .hero p{color:var(--muted);margin:0 auto;max-width:590px;font-size:15px}
+    .deco{display:flex;justify-content:center;align-items:center;gap:12px;font-size:33px;margin:14px 0 4px}
+    .deco span:nth-child(2){transform:rotate(-10deg);font-size:38px}
+    .deco span:nth-child(4){transform:rotate(9deg)}
+    .panel{background:var(--card);border:1px solid #e9e7d8;border-radius:26px;box-shadow:var(--shadow);padding:29px 32px;margin:9px 0 18px}
+    .section-kicker{display:inline-block;color:#bc814d;font-size:12px;font-weight:900;letter-spacing:.12em}
+    h2{font-family:"Noto Serif TC",serif;font-size:clamp(24px,3.4vw,31px);color:#385943;line-height:1.45;margin:10px 0}
+    .small{font-size:13px;color:var(--muted)}
+    .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:21px 0}
+    .role{border:2px solid #e1e8d9;background:#f7fbf5;border-radius:21px;padding:24px 15px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--jade);transition:transform .18s,border-color .18s,background .18s}
+    .role:nth-child(2){background:#fff8ed;border-color:#f1e3cc;color:#a36e37}
+    .role:hover,.role:focus-visible{transform:translateY(-2px);border-color:#7ba88d;outline:2px solid #e1f0e1}
+    .role-emoji{font-size:47px;line-height:1.3}
+    .role strong{font-size:22px;font-family:"Noto Serif TC",serif}
+    .role small{font-size:13px;color:var(--muted)}
+    .role .go{font-size:13px;font-weight:900;margin-top:8px}
+    .hint{border-top:1px solid #eeede2;padding-top:15px;color:#788174;font-size:12px;line-height:1.85}
+    .status-tag{display:inline-flex;border-radius:18px;padding:5px 11px;background:#f6e9d8;color:#9a6938;font-weight:800;font-size:12px}
+    .quest-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .q-progress{background:#edf1e5;height:9px;border-radius:99px;overflow:hidden}
+    .q-progress div{height:100%;background:linear-gradient(90deg,#a6cf98,#5a9a77);border-radius:99px;width:0;transition:width .3s ease}
+    .quest-title{text-align:center;margin:23px 0 4px}
+    .quest-title h2{max-width:670px;margin:8px auto 7px}
+    .quest-sub{font-size:13px;color:#788477;text-align:center;margin:0 0 20px}
+    .option-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .option{border-radius:18px;border:1.7px solid #e7e7d8;background:#fff;padding:17px 11px;min-height:122px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;color:var(--ink);transition:transform .15s,box-shadow .15s,border-color .15s}
+    .option:hover,.option:focus-visible{transform:translateY(-2px);border-color:#8dbba0;box-shadow:0 5px 20px #ddeadd99;outline:none}
+    .option:disabled{cursor:default}
+    .option.active{border-color:#55977a;background:#ebf8ed}
+    .option .emoji{font-size:37px;line-height:1.2}
+    .option .answer{font-size:15px;font-weight:800;text-align:center;line-height:1.5}
+    .control{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px}
+    .linkbtn{border:0;background:transparent;color:#658370;font-size:13px;font-weight:800;padding:8px;min-height:38px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:7px;border:0;border-radius:100px;background:#367657;color:white;font-weight:900;padding:13px 24px;min-height:49px;box-shadow:0 10px 23px rgba(47,110,72,.18)}
+    .btn:hover,.btn:focus-visible{background:#2b5d46;outline:2px solid #9ac5a7;outline-offset:2px}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .ghost{background:#fffefa;border:1px solid #d7e5d7;color:#426b4f;box-shadow:none}
+    .ghost:hover{background:#eaf3eb}
+    .wide{width:100%}
+    .comment{margin-top:20px}
+    .comment textarea{width:100%;border-radius:15px;border:1.5px solid #dce5da;background:#fff;min-height:100px;resize:vertical;padding:13px 15px;outline-color:#649b76;font-size:16px}
+    .comment label{font-weight:800;display:block;margin-bottom:6px}
+    .comment small{font-size:12px;color:#788477}
+    .finish{text-align:center;max-width:620px;margin:0 auto}
+    .finish-badge{width:93px;height:93px;border-radius:50%;background:#ebf7eb;border:2px solid #d4e9d4;display:grid;place-items:center;font-size:47px;margin:10px auto 14px;box-shadow:0 7px 22px #d8ebd966}
+    .finish p{color:#62736a;margin:13px auto 20px}
+    .finish .confirm{padding:12px 14px;border-radius:14px;background:#f1f8ef;color:#407359;font-size:14px;line-height:1.65;margin:16px 0}
+    .finish .confirm.warn{background:#fff4e4;color:#946a37}
+    .finish-actions{display:grid;gap:10px;margin-top:15px}
+    .preview-bar{background:#fff1d9;border:1px solid #edd7ad;color:#885d25;padding:9px 13px;border-radius:12px;font-size:13px;text-align:center;margin:3px auto 15px;font-weight:700}
+    .locked{text-align:center;max-width:600px;margin:auto}
+    .locked h2{font-size:30px}
+    .locked .calendar{font-size:60px}
+    footer{margin:22px auto 40px;color:#849087;font-size:11px;text-align:center;line-height:1.85}
+    @media(max-width:560px){
+      .wrap{width:min(100% - 24px,860px)}
+      header{padding:15px 0 6px}
+      .brand{font-size:13px}.event-date{font-size:10px;padding:5px 9px}
+      .hero{padding:10px 2px 8px}.hero h1{font-size:33px}.hero p{font-size:13px}
+      .deco{font-size:24px;margin:8px 0 0}
+      .panel{padding:23px 19px 22px;border-radius:21px;margin-top:12px}
+      .role-grid{gap:10px}.role{padding:18px 7px;gap:4px;border-radius:16px}
+      .role strong{font-size:18px}.role-emoji{font-size:39px}.role small{font-size:11px}
+      .option-grid{gap:10px}.option{padding:15px 6px;min-height:112px;border-radius:15px}
+      .option .emoji{font-size:31px}.option .answer{font-size:14px}
+      h2{font-size:25px}.quest-title{margin-top:20px}
+      .control{margin-top:13px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <span class="brand">🌿 從神韻看見自律之美</span>
+      <span class="event-date">11/22 台南親子活動</span>
+    </header>
+    <section class="hero">
+      <span class="bubble">🎉 活動後的心情小遊戲</span>
+      <h1>今天的美好，<span>想聽你說！</span></h1>
+      <p>不必寫長篇問卷，動動手指、選一選，就能把今天的心情分享給我們。</p>
+      <div class="deco" aria-hidden="true"><span>🌼</span><span>😄</span><span>💛</span><span>🌱</span><span>✨</span></div>
+    </section>
+    <div class="preview-bar" id="previewBar" hidden>設計預覽模式｜可完整闖關，但不會寫入 Google Sheet</div>
+    <section class="panel locked" id="lockedPanel" hidden aria-label="問卷開放日期">
+      <div class="calendar" aria-hidden="true">🗓️</div>
+      <h2>活動結束後，歡迎來分享！</h2>
+      <p>這份心情闖關問卷預計在 11/22 活動後開放，讓我們一起回顧當天的美好時光。</p>
+      <p class="small">主辦單位：社團法人法輪大法學會・臺灣自媒體應用科技學會</p>
+    </section>
+    <section class="panel" id="choosePanel" hidden aria-label="選擇家長或孩子">
+      <span class="section-kicker">START · 選擇你的身分</span>
+      <h2>今天換誰來分享心情呢？</h2>
+      <p class="small">家長與孩子都可以填，同一支手機也能輪流玩！</p>
+      <div class="role-grid">
+        <button type="button" class="role" id="parentButton">
+          <span class="role-emoji" aria-hidden="true">👨‍👩‍👧</span>
+          <strong>我是家長</strong><small>4 關＋自由留言</small>
+          <span class="go">開始分享 ›</span>
+        </button>
+        <button type="button" class="role" id="childButton">
+          <span class="role-emoji" aria-hidden="true">🧒</span>
+          <strong>我是孩子</strong><small>2 關・輕鬆點選</small>
+          <span class="go">來玩囉 ›</span>
+        </button>
+      </div>
+      <p class="hint">🌿 <strong>安心填答：</strong>不需要姓名或電話，沒有標準答案。答案僅用於了解本次活動的參與感受與改善方向；自由留言請勿填寫個人資料。</p>
+    </section>
+    <section class="panel" id="questionPanel" hidden aria-live="polite" aria-label="逐題互動回饋">
+      <div class="quest-head"><span class="section-kicker" id="roleLabel">家長回饋</span><span class="status-tag" id="stepLabel">第 1 / 4 關</span></div>
+      <div class="q-progress" aria-label="答題進度"><div id="progressFill"></div></div>
+      <div class="quest-title"><span class="section-kicker" id="stepIntro">第 1 關 · 說說心情</span><h2 id="questionTitle"></h2></div>
+      <p class="quest-sub">點選最符合你的感受，就能自動進入下一關。</p>
+      <div class="option-grid" id="choices"></div>
+      <div class="control"><button type="button" class="linkbtn" id="backButton">← 上一關</button><span class="small" id="remainingLabel">輕鬆點選，沒有標準答案</span></div>
+    </section>
+    <section class="panel" id="commentPanel" hidden aria-label="選填文字建議">
+      <span class="section-kicker">BONUS · 可自由跳過</span>
+      <h2>最後，還有一句話想告訴我們嗎？</h2>
+      <p class="small">可以分享你最喜歡的地方，或下次希望改進的事。這題不填也沒關係！</p>
+      <div class="comment"><label for="commentField">我的小建議（選填）</label><textarea id="commentField" maxlength="300" placeholder="例如：希望下次能有更多親子一起挑戰的小遊戲⋯⋯"></textarea><small>最多 300 字，請勿填寫姓名、電話等個資。</small></div>
+      <div class="finish-actions"><button class="btn wide" type="button" id="parentSubmit">🎉 完成闖關，送出感受</button><button type="button" class="linkbtn" id="commentBack">← 返回上一關</button></div>
+    </section>
+    <section class="panel" id="finishPanel" hidden aria-label="回饋完成">
+      <div class="finish"><div class="finish-badge" id="finishEmoji" aria-hidden="true">🎉</div><span class="section-kicker">MISSION COMPLETE</span><h2 id="finishTitle">謝謝你，今天的心情收到了！</h2><p id="finishText">你的分享，將幫助下一場親子活動更加精彩。</p><div class="confirm" id="saveConfirm" role="status" aria-live="polite"></div><div class="finish-actions"><button type="button" class="btn wide" id="anotherRole">👨‍👩‍👧 換家人來分享</button><button type="button" class="btn ghost wide" id="retrySubmit" hidden>重新確認儲存</button></div></div>
+    </section>
+    <footer>11/22「從神韻看見自律之美」親子活動 · 感謝每一位參與者的分享</footer>
+  </div>
+  <script>
+  (function(){
+    'use strict';
+    // 正式啟用前維持 false，避免活動前誤收測試資料。
+    // GAS 部署完成、資料測試通過後，再將此值改成 true。
+    const SURVEY_LIVE=false;
+    const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
+    const preview=new URLSearchParams(location.search).get('preview')==='1';
+    const $=id=>document.getElementById(id);
+    const panels=['lockedPanel','choosePanel','questionPanel','commentPanel','finishPanel'];
+    const q={
+      parent:[
+        {kicker:'今天的整體感受',title:'今天這場活動，你喜歡嗎？',options:[['😍','非常喜歡'],['😊','很不錯'],['😐','普通'],['🙁','有待改善']]},
+        {kicker:'最喜歡的環節',title:'哪一個環節，讓你印象最深刻？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','神韻藝術分享']]},
+        {kicker:'今天帶走的收穫',title:'今天你覺得最大的收穫是？',options:[['🌱','學習自律'],['💬','親子溝通'],['🎯','專注與堅持'],['💖','美好的親子時光']]},
+        {kicker:'一起認識美好的藝術',title:'活動後，您想進一步了解神韻嗎？',options:[['✨','很有興趣'],['🌷','想再了解看看'],['🙂','目前還沒有'],['🤔','還不確定']]}
+      ],
+      child:[
+        {kicker:'今天開不開心',title:'今天的活動，你覺得好玩嗎？',options:[['😄','很好玩'],['🙂','還不錯'],['😐','普通'],['🙁','不太好玩']]},
+        {kicker:'你最喜歡的活動',title:'今天你最喜歡玩哪一個？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','藝術欣賞']]}
+      ]
+    };
+    let role='', answers=[], step=0, surveyId='', saving=false, answerLock=false;
+    function makeId(){
+      if(crypto&&crypto.randomUUID)return crypto.randomUUID();
+      const a=new Uint8Array(16);crypto.getRandomValues(a);
+      return Array.from(a,x=>x.toString(16).padStart(2,'0')).join('');
+    }
+    function familyId(){
+      try{let s=localStorage.getItem('1122_feedback_family_id');if(!s){s=makeId();localStorage.setItem('1122_feedback_family_id',s)}return s}catch(_){return makeId()}
+    }
+    const sameDeviceFamily=familyId();
+    function show(id){panels.forEach(p=>$(p).hidden=p!==id);window.scrollTo({top:0,behavior:'instant'});}
+    if(!SURVEY_LIVE && !preview){show('lockedPanel')}else{show('choosePanel');$('previewBar').hidden=!preview;}
+    function begin(nextRole){
+      role=nextRole;answers=[];step=0;surveyId=makeId();saving=false;answerLock=false;
+      $('commentField').value='';$('retrySubmit').hidden=true;
+      renderQuestion();show('questionPanel');
+    }
+    $('parentButton').addEventListener('click',()=>begin('parent'));
+    $('childButton').addEventListener('click',()=>begin('child'));
+    function renderQuestion(){
+      const list=q[role], item=list[step];
+      $('roleLabel').textContent=role==='parent'?'👨‍👩‍👧 家長心情闖關':'🧒 孩子心情闖關';
+      $('stepLabel').textContent='第 '+(step+1)+' / '+list.length+' 關';
+      $('stepIntro').textContent='第 '+(step+1)+' 關 · '+item.kicker;
+      $('questionTitle').textContent=item.title;
+      $('progressFill').style.width=((step+1)/list.length*100)+'%';
+      $('remainingLabel').textContent='還有 '+(list.length-step-1)+' 關';
+      $('backButton').hidden=step===0;
+      const container=$('choices');container.replaceChildren();
+      item.options.forEach(([emoji,text],index)=>{
+        const b=document.createElement('button');b.type='button';b.className='option';
+        const e=document.createElement('span');e.className='emoji';e.textContent=emoji;
+        const t=document.createElement('span');t.className='answer';t.textContent=text;
+        b.append(e,t);
+        b.addEventListener('click',()=>{
+          if(answerLock)return;answerLock=true;
+          answers[step]=index;b.classList.add('active');
+          container.querySelectorAll('button').forEach(btn=>btn.disabled=true);
+          setTimeout(()=>{
+            step++;
+            answerLock=false;
+            if(step===list.length){
+              if(role==='parent')show('commentPanel');else complete();
+            }else{renderQuestion();show('questionPanel');}
+          },190);
+        });
+        container.appendChild(b);
+      });
+    }
+    $('backButton').addEventListener('click',()=>{
+      if(answerLock||step===0)return;step--;answers=answers.slice(0,step);renderQuestion();
+    });
+    $('commentBack').addEventListener('click',()=>{
+      step=q.parent.length-1;answers=answers.slice(0,step);renderQuestion();show('questionPanel');
+    });
+    $('parentSubmit').addEventListener('click',complete);
+    $('anotherRole').addEventListener('click',()=>show('choosePanel'));
+    $('retrySubmit').addEventListener('click',saveFeedback);
+    function complete(){
+      if(answers.length!==q[role].length)return;
+      $('finishEmoji').textContent=role==='parent'?'💛':'🏆';
+      $('finishTitle').textContent=role==='parent'?'感謝你的用心分享！':'闖關成功！你好棒！';
+      $('finishText').textContent=role==='parent'?'你的每一句回饋，都能幫助我們把下一場親子活動辦得更好。':'謝謝你告訴我們今天的心情！希望下次還能一起玩。';
+      $('anotherRole').textContent=role==='parent'?'🧒 換孩子來分享':'👨‍👩‍👧 換家長來分享';
+      $('saveConfirm').className='confirm';$('retrySubmit').hidden=true;
+      if(preview){
+        $('saveConfirm').textContent='設計預覽完成！這次回答不會送出或存入 Google Sheet。';
+      }else{saveFeedback();}
+      show('finishPanel');
+    }
+    function jsonpFeedbackCheck(id){
+      return new Promise((resolve,reject)=>{
+        const cb='fbCheck_'+Date.now()+'_'+Math.floor(Math.random()*1000000);
+        const script=document.createElement('script');let done=false,timer;
+        function finish(error,data){if(done)return;done=true;clearTimeout(timer);delete window[cb];script.remove();error?reject(error):resolve(data);}
+        window[cb]=data=>finish(null,data);
+        script.onerror=()=>finish(new Error('查詢連線失敗'));
+        const query=new URLSearchParams({action:'checkFeedback',surveyId:id,callback:cb,nonce:Date.now().toString()});
+        script.src=GAS_WEB_APP_URL+'?'+query;
+        timer=setTimeout(()=>finish(new Error('確認逾時')),6500);document.body.appendChild(script);
+      });
+    }
+    async function saveFeedback(){
+      if(preview||!SURVEY_LIVE||saving)return;
+      saving=true;$('retrySubmit').hidden=true;
+      $('saveConfirm').className='confirm';$('saveConfirm').textContent='感謝填答！正在確認問卷資料是否已儲存…';
+      const u=new URLSearchParams(location.search);
+      const data={
+        action:'saveFeedback',surveyId,familyId:sameDeviceFamily,role,
+        answer1:String(answers[0]),answer2:String(answers[1]),
+        answer3:role==='parent'?String(answers[2]):'',
+        answer4:role==='parent'?String(answers[3]):'',
+        comment:role==='parent'?$('commentField').value.trim().slice(0,300):'',
+        pageUrl:location.origin+location.pathname,
+        utm_source:u.get('utm_source')||'on_site_qr'
+      };
+      try{
+        const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),16000);
+        try{await fetch(GAS_WEB_APP_URL,{method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',body:new URLSearchParams(data),signal:ac.signal})}
+        finally{clearTimeout(timer)}
+        let verified=false;
+        for(let i=0;i<4;i++){
+          await new Promise(resolve=>setTimeout(resolve,i===0?750:1300));
+          try{const r=await jsonpFeedbackCheck(surveyId);if(r&&r.ok&&r.found){verified=true;break}}catch(_){}
+        }
+        if(!verified)throw new Error('資料尚無法確認');
+        $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！';
+        $('saveConfirm').className='confirm';
+      }catch(_){
+        $('saveConfirm').textContent='問卷已完成，但目前無法確認儲存成功。請點「重新確認儲存」，避免漏掉這份回饋。';
+        $('saveConfirm').className='confirm warn';$('retrySubmit').hidden=false;
+      }finally{saving=false}
+    }
+  })();
+  </script>
+</body>
+</html>
