@@ -2381,6 +2381,17 @@
       .hero-takeaways { font-size: 15px; line-height: 1.7; }
       .hero-art-link { font-size: 14px; }
     }
+    /* 報名成功時，如三題未完成，顯示補填提醒 */
+    .quiz-signup-reminder {
+      display:block; margin:16px auto; max-width:620px;
+      padding:17px 19px; border:1px solid #d6e4d0;
+      border-radius:15px; background:#f0f7ed; color:#32563e; line-height:1.75;
+    }
+    .quiz-signup-reminder[hidden]{display:none!important;}
+    .quiz-signup-reminder strong{display:block;margin-bottom:6px;}
+    .quiz-signup-reminder p{margin:7px 0 12px; font-size:14px;}
+    .quiz-signup-reminder .btn {display:inline-flex;text-align:center;justify-content:center;}
+    @media(max-width:700px){.quiz-signup-reminder .btn {width:100%;}}
     /* 50 組親子額滿後的電話洽詢公告（不顯示內部容量數字） */
     #signupFullNotice[hidden], #signupOpenForm[hidden], #signupFullSuccess[hidden] {display:none!important;}
     .signup-full-card {
@@ -2532,6 +2543,11 @@
       <div class="container signup-full-announcement" id="signupFullNotice" hidden aria-live="polite">
         <div class="signup-full-card">
           <p class="signup-full-success" id="signupFullSuccess" role="status" hidden></p>
+          <div class="quiz-signup-reminder" id="signupFullQuizReminder" hidden>
+            <strong>報名成功！還差 3 題親子問答。</strong>
+            <p>請協助完成 3 題簡單選擇題，讓活動內容更貼近家長與孩子的需要。問答不影響已完成的報名。</p>
+            <a class="btn btn-primary" href="quiz.html?after_signup=1" data-quiz-followup>完成親子問答</a>
+          </div>
           <h2>🎉 感謝家長熱烈響應！</h2>
           <p><strong>本次親子活動報名踴躍，線上報名已暫停受理。</strong></p>
           <p>為維護活動品質及每位親子的參與體驗，目前改採電話洽詢方式。</p>
@@ -2615,6 +2631,11 @@
           <div class="submit-row">
             <button class="btn btn-primary" type="submit" id="submitBtn">送出報名</button>
             <span class="status" id="formStatus" role="status" aria-live="polite" hidden></span>
+            <div class="quiz-signup-reminder" id="signupQuizReminder" hidden>
+              <strong>您已報名成功！還有 3 題親子問答待完成。</strong>
+              <p>只需約 30 秒，幫助我們了解您與孩子的期待。問答不影響報名資格。</p>
+              <a class="btn btn-primary" href="quiz.html?after_signup=1" data-quiz-followup>現在完成親子問答</a>
+            </div>
           </div>
         </form>
       </div>
@@ -2881,6 +2902,8 @@
   const submitBtn = document.getElementById('submitBtn');
   const formStatus = document.getElementById('formStatus');
   const adSourceInput = document.getElementById('adSource');
+  const signupQuizReminder = document.getElementById('signupQuizReminder');
+  const signupFullQuizReminder = document.getElementById('signupFullQuizReminder');
 
   // Do not display a prior registration message before the current submission.
   function clearStatus() {
@@ -2908,6 +2931,24 @@
     return value;
   }
   const visitorId=ensureId(localStorage,'camp1122_visitor_id');
+  function savedQuizId() {
+    const id=storageGet(localStorage,'camp1122_last_quiz_id');
+    return id && storageGet(localStorage,'camp1122_quiz_saved')===id ? id : '';
+  }
+  function showQuizReminder() {
+    const show=!savedQuizId();
+    signupQuizReminder.hidden=!show;
+    signupFullQuizReminder.hidden=!show;
+    document.querySelectorAll('[data-quiz-followup]').forEach(a=>{
+      const qp=new URLSearchParams(location.search);
+      const u=new URL('quiz.html',location.href);
+      for(const k of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ad']){
+        if(qp.has(k))u.searchParams.set(k,qp.get(k));
+      }
+      u.searchParams.set('after_signup','1');
+      a.href=u.href;
+    });
+  }
   const sessionId=ensureId(sessionStorage,'camp1122_session_id');
   const query=new URLSearchParams(location.search);
   const utm={};
@@ -3095,7 +3136,8 @@
       phone:(data.phone||'').trim(),
       childName:(data.childName||'').trim(),
       grade:data.grade||'',school:(data.school||'').trim() || '未提供',
-      note:(data.note||'').trim()
+      note:(data.note||'').trim(),
+      quizId:savedQuizId()
     });
     submitBtn.disabled=true;
     submitBtn.textContent='送出中...';
@@ -3119,6 +3161,8 @@
           storageSet(sessionStorage,sentKey,'1');
         }
         status('報名成功！您的報名編號：'+result.serial,'ok');
+        storageSet(sessionStorage,'camp1122_last_registered_token',token);
+        showQuizReminder();
         form.reset();
         storageRemove(sessionStorage,'camp1122_pending_record_id');
         refreshRegistrationStatus(result.serial);
