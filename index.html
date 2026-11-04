@@ -2544,7 +2544,7 @@
         <div class="signup-full-card">
           <p class="signup-full-success" id="signupFullSuccess" role="status" hidden></p>
           <div class="quiz-signup-reminder" id="signupFullQuizReminder" hidden>
-            <strong>報名成功！還差 3 題親子問答。</strong>
+            <strong id="signupFullQuizMessage">報名成功！還差 3 題親子問答。</strong>
             <p>請協助完成 3 題簡單選擇題，讓活動內容更貼近家長與孩子的需要。問答不影響已完成的報名。</p>
             <a class="btn btn-primary" href="quiz.html?after_signup=1" data-quiz-followup>完成親子問答</a>
           </div>
@@ -2632,7 +2632,7 @@
             <button class="btn btn-primary" type="submit" id="submitBtn">送出報名</button>
             <span class="status" id="formStatus" role="status" aria-live="polite" hidden></span>
             <div class="quiz-signup-reminder" id="signupQuizReminder" hidden>
-              <strong>您已報名成功！還有 3 題親子問答待完成。</strong>
+              <strong id="signupQuizMessage">您已報名成功！還有 3 題親子問答待完成。</strong>
               <p>只需約 30 秒，幫助我們了解您與孩子的期待。問答不影響報名資格。</p>
               <a class="btn btn-primary" href="quiz.html?after_signup=1" data-quiz-followup>現在完成親子問答</a>
             </div>
@@ -2939,7 +2939,20 @@
     const show=!savedQuizId();
     signupQuizReminder.hidden=!show;
     signupFullQuizReminder.hidden=!show;
+    let completed=0;
+    try {
+      const arr=JSON.parse(storageGet(localStorage,'camp1122_quiz_answers')||'[]');
+      if(Array.isArray(arr)) completed=Math.max(0,Math.min(3,arr.length));
+    }catch(_){}
+    const title=completed===3
+      ? '您已完成 3 題，請確認問答資料已儲存。'
+      : completed>0
+        ? '您已報名成功！還有 '+(3-completed)+' 題親子問答待完成。'
+        : '您已報名成功！還有 3 題親子問答待完成。';
+    document.getElementById('signupQuizMessage').textContent=title;
+    document.getElementById('signupFullQuizMessage').textContent=title;
     document.querySelectorAll('[data-quiz-followup]').forEach(a=>{
+      a.textContent=completed===3?'確認問答資料':completed>0?'繼續完成親子問答':'完成親子問答';
       const qp=new URLSearchParams(location.search);
       const u=new URL('quiz.html',location.href);
       for(const k of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ad']){
