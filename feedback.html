@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fff9f0">
-  <title>11/22 親子活動｜心情闖關回饋小遊戲</title>
-  <meta name="description" content="用一分鐘分享參加 11/22 親子活動後的心情！家長 5 關、孩子 3 關，選一選就完成。">
+  <title>11/22 親子成長冒險地圖｜活動回饋小遊戲</title>
+  <meta name="description" content="家長挑戰 5 站、孩子挑戰 3 站，沿著親子成長冒險地圖集章，完成後解鎖專屬親子回憶卡。">
   <meta name="robots" content="noindex,nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +112,77 @@
       h2{font-size:25px}.quest-title{margin-top:20px}
       .control{margin-top:13px}
     }
+
+    /* 親子成長冒險：與互動式地圖一致的暖色 Q 版設計 */
+    :root{--ink:#503720;--muted:#756450;--jade:#8a532e;--edge:#efdbb8;--card:#fffef9;--shadow:0 13px 30px rgba(132,84,33,.13)}
+    body{background:#fff8ec radial-gradient(circle,rgba(255,186,110,.14) 3px,transparent 4px) 0 0/38px 38px}
+    .brand,.hero h1,h2{color:#5b3a1e}
+    .hero h1{text-shadow:0 4px 0 #ffe6c5}.hero h1 span{color:#f16a22}
+    .hero p{max-width:665px}
+    .bubble{background:#fff2d6;border:2px solid #f0d2a1;color:#865321}
+    .panel{border:2px solid #f0dfc7;box-shadow:0 7px 0 rgba(229,191,132,.14),var(--shadow)}
+    .role{background:#fff9e6;border:2px solid #e5c69e;box-shadow:0 5px 0 #e9d5b8;color:#6f4a24}
+    .role:nth-child(2){background:#eef9ee;border-color:#b9d9b4;color:#3c6b4e;box-shadow:0 5px 0 #cfe6c9}
+    .role:hover,.role:focus-visible{border-color:#ff9b5d;background:#fff5e4;transform:translateY(-2px)}
+    .status-tag{background:#fff0ce;color:#8f5624}
+    .q-progress{background:#f6e8c9}.q-progress div{background:linear-gradient(90deg,#ffb24c,#f16a22)}
+    .option{border:2px solid #edddc1;background:#fffdf8;box-shadow:0 4px 0 #f0e1c8}
+    .option:hover,.option:focus-visible{border-color:#f5a25c;box-shadow:0 4px 0 #f6caa4}
+    .option.active{background:#fff0c9;border-color:#ff8a39}
+    .btn{background:#f16a22;color:#fff;box-shadow:0 5px 0 #c94e14}
+    .btn:hover,.btn:focus-visible{background:#db5c19;box-shadow:0 4px 0 #ae410d}
+    .ghost{background:#fffdf8;color:#6e512d;border:2px solid #e2cba6;box-shadow:none}
+    .ghost:hover{background:#fff0d5}
+    .journey-hint{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:7px;margin:15px auto 6px;font-size:13px;font-weight:800;color:#79502c}
+    .journey-hint>span:nth-child(2),.journey-hint>span:nth-child(4){color:#b88b57}
+    .journey-hint>span:nth-child(2n+1){background:#fff6e4;border:1px solid #ecd8b4;border-radius:999px;padding:6px 10px}
+    .adventure-map{position:relative;margin:16px 0 15px;padding:13px 14px 12px;background:linear-gradient(145deg,#e8f6dc,#fff7d6 65%,#e6f3fc);border:2px solid #e6c99a;border-radius:22px;overflow:hidden}
+    .adventure-map::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;background:radial-gradient(circle at 7% 80%,#b5d88b 0 14px,transparent 15px),radial-gradient(circle at 95% 15%,#a5d1ed 0 12px,transparent 13px),radial-gradient(circle at 50% 98%,#e8c47c 0 12px,transparent 13px)}
+    .adventure-map-head{position:relative;display:flex;justify-content:space-between;gap:10px;align-items:center;font-weight:900;font-size:14px;color:#754723}
+    .trail-counter{font-size:12px;color:#92603b;background:#fffdf5;border-radius:999px;border:1px solid #ead2a3;padding:4px 10px;white-space:nowrap}
+    .adventure-trail{--station-count:5;display:grid;grid-template-columns:repeat(var(--station-count),minmax(0,1fr));position:relative;gap:4px;margin:13px 0 8px}
+    .adventure-trail::before{content:'';position:absolute;top:32px;left:9%;right:9%;height:0;border-top:5px dashed #d9b476;opacity:.8;z-index:0}
+    .trail-stop{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:start;gap:5px;border:0;background:transparent;color:#6e5031;font-weight:900;font-size:12px;padding:0 0 5px;min-width:0}
+    .trail-stop:not(:disabled){cursor:pointer}
+    .trail-stop:disabled{cursor:default}
+    .trail-stop:not(:disabled):focus-visible .trail-art{outline:3px solid #f37931;outline-offset:3px}
+    .trail-art{position:relative;width:clamp(48px,9vw,65px);height:clamp(48px,9vw,65px);display:grid;place-items:center;border-radius:50%;border:3px solid #92724c;background:#fffaf0;box-shadow:0 3px 0 #d9b788;transition:transform .22s,border-color .22s,background .22s}
+    .trail-art svg{display:block;width:100%;height:100%;pointer-events:none}
+    .trail-stop.complete .trail-art{border-color:#5e9c59;background:#dbf0d1;box-shadow:0 3px 0 #87b881}
+    .trail-stop.current .trail-art{border-color:#f16a22;background:#fff2d4;box-shadow:0 4px 0 #f4b170;transform:translateY(-3px) scale(1.06)}
+    .trail-stop.future .trail-art{opacity:.67;filter:saturate(.65)}
+    .trail-stop .trail-label{font-size:11px;white-space:nowrap}
+    .trail-stop.complete .trail-label{color:#3e7c49}
+    .trail-stop.current .trail-label{color:#c65a1c}
+    .trail-stamp{position:absolute;right:-7px;top:-8px;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;font-weight:900;font-size:14px;background:#39a45a;color:#fff;border:2px solid #fff;box-shadow:0 2px 0 rgba(0,0,0,.11);animation:stamp-pop .28s ease both}
+    .trail-stop.current .trail-stamp{background:#f4772b}
+    .trail-hint{position:relative;margin:0;text-align:center;font-size:12px;color:#8d6d46;line-height:1.55}
+    @keyframes stamp-pop{from{transform:scale(.4) rotate(-12deg);opacity:.25}to{transform:scale(1) rotate(0);opacity:1}}
+    .memory-card{margin:20px 0 16px;text-align:left;background:#fffef7;border:3px solid #e9c18f;border-radius:24px;overflow:hidden;box-shadow:0 8px 0 rgba(223,183,126,.18);animation:stamp-pop .35s ease both}
+    .memory-top{display:flex;align-items:center;flex-direction:column;text-align:center;gap:5px;padding:20px 12px 18px;color:#5b3a1e;background:radial-gradient(circle at 10% 15%,#ffdf92 0 12px,transparent 13px),radial-gradient(circle at 91% 80%,#b8e0ad 0 16px,transparent 17px),linear-gradient(130deg,#ffedc8,#fff7e7 62%,#e7f5e0)}
+    .memory-top span{font-size:13px;font-weight:900;letter-spacing:.06em;color:#ae662d}
+    .memory-top strong{font-family:"Noto Serif TC",serif;font-size:clamp(23px,5vw,29px)}
+    .memory-top small{font-size:12px;color:#8d765e}
+    .memory-grid{padding:17px;display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .memory-item{background:#fff9ee;border:1.7px solid #f0dfc5;border-radius:16px;padding:12px 10px;min-width:0}
+    .memory-item:nth-child(even){background:#f0f8ed;border-color:#d8e9d2}
+    .memory-item-label{font-size:12px;color:#936636;font-weight:800;margin:0 0 5px}
+    .memory-item-answer{font-size:15px;font-weight:900;line-height:1.5;color:#51381f;overflow-wrap:anywhere}
+    .memory-foot{border-top:1px dashed #e5caa6;padding:13px 15px 17px;text-align:center;font-size:12px;line-height:1.65;color:#8e7455;background:#fffbf2}
+    @media(max-width:560px){
+      .journey-hint{gap:4px;font-size:11px}
+      .journey-hint>span:nth-child(2n+1){padding:4px 6px}
+      .adventure-map{padding:12px 8px}
+      .adventure-map-head{font-size:12px}
+      .adventure-trail{gap:1px}
+      .trail-art{width:clamp(42px,14vw,60px);height:clamp(42px,14vw,60px)}
+      .trail-stop .trail-label{font-size:10px}
+      .adventure-trail::before{top:26px}
+      .memory-grid{padding:12px;gap:8px}
+      .memory-item{padding:10px 8px}
+      .memory-item-answer{font-size:13px}
+    }
+    @media(prefers-reduced-motion:reduce){.trail-stamp,.memory-card{animation:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -122,9 +193,9 @@
       <span class="event-date">11/22 台南親子活動</span>
     </header>
     <section class="hero">
-      <span class="bubble">🎉 活動後的心情小遊戲</span>
-      <h1>今天的美好，<span>想聽你說！</span></h1>
-      <p>不必寫長篇問卷，動動手指、選一選，就能把今天的心情分享給我們。</p>
+      <span class="bubble">🗺️ 11/22 親子成長冒險</span>
+      <h1>今天的美好，<span>一起收藏！</span></h1>
+      <p>跟著地圖完成親子心情闖關，每答完一題就集一個章。家長 5 站＋孩子 3 站，最後解鎖你們的親子回憶卡！</p>
       <div class="deco map-art-strip" aria-hidden="true">
         <span data-map-art="house"></span>
         <span data-map-art="buzzer"></span>
@@ -142,8 +213,11 @@
     </section>
     <section class="panel" id="choosePanel" hidden aria-label="選擇家長或孩子">
       <span class="section-kicker">START · 選擇你的身分</span>
-      <h2>今天換誰來分享心情呢？</h2>
-      <p class="small">家長與孩子都可以填，同一支手機也能輪流玩！</p>
+      <h2>今天換誰來開始冒險？</h2>
+      <p class="small">家長完成 5 站、孩子完成 3 站，集滿 8 個印章，就能解鎖親子回憶卡。同一支手機也能輪流玩！</p>
+      <div class="journey-hint" aria-label="親子冒險旅程">
+        <span>🧭 家長 5 站</span><span aria-hidden="true">➜</span><span>🎈 孩子 3 站</span><span aria-hidden="true">➜</span><span>🎁 親子回憶卡</span>
+      </div>
       <div class="role-grid">
         <button type="button" class="role" id="parentButton">
           <span class="role-emoji map-role-art" data-map-art="duo" aria-hidden="true"></span>
@@ -160,9 +234,14 @@
     </section>
     <section class="panel" id="questionPanel" hidden aria-live="polite" aria-label="逐題互動回饋">
       <div class="quest-head"><span class="section-kicker" id="roleLabel">家長回饋</span><span class="status-tag" id="stepLabel">第 1 / 5 關</span></div>
+      <div class="adventure-map" id="adventureMap" aria-label="親子成長冒險地圖">
+        <div class="adventure-map-head"><span>🗺️ 我的集章地圖</span><span class="trail-counter" id="trailCount">已集 0 / 5 章</span></div>
+        <div class="adventure-trail" id="adventureTrail" aria-label="各站集章進度"></div>
+        <p class="trail-hint" id="trailHint">跟著地圖前進，每回答一題就能集章！</p>
+      </div>
       <div class="q-progress" aria-label="答題進度"><div id="progressFill"></div></div>
       <div class="quest-title"><span class="section-kicker" id="stepIntro">第 1 關 · 說說心情</span><h2 id="questionTitle"></h2></div>
-      <p class="quest-sub">點選最符合你的感受，就能自動進入下一關。</p>
+      <p class="quest-sub">選擇最符合真實感受的答案，解鎖下一站。沒有標準答案！</p>
       <div class="option-grid" id="choices"></div>
       <div class="control"><button type="button" class="linkbtn" id="backButton">← 上一關</button><span class="small" id="remainingLabel">輕鬆點選，沒有標準答案</span></div>
     </section>
@@ -174,7 +253,13 @@
       <div class="finish-actions"><button class="btn wide" type="button" id="parentSubmit">🎉 完成闖關，送出感受</button><button type="button" class="linkbtn" id="commentBack">← 返回上一關</button></div>
     </section>
     <section class="panel" id="finishPanel" hidden aria-label="回饋完成">
-      <div class="finish"><div class="finish-badge" id="finishEmoji" data-map-art="gift" aria-hidden="true"></div><span class="section-kicker">MISSION COMPLETE</span><h2 id="finishTitle">謝謝你，今天的心情收到了！</h2><p id="finishText">你的分享，將幫助下一場親子活動更加精彩。</p><div class="confirm" id="saveConfirm" role="status" aria-live="polite"></div><div class="finish-actions"><button type="button" class="btn wide" id="anotherRole">👨‍👩‍👧 換家人來分享</button><button type="button" class="btn ghost wide" id="retrySubmit" hidden>重新確認儲存</button></div></div>
+      <div class="finish"><div class="finish-badge" id="finishEmoji" data-map-art="gift" aria-hidden="true"></div><span class="section-kicker">ADVENTURE COMPLETE · 集章成功</span><h2 id="finishTitle">謝謝你，今天的心情收到了！</h2><p id="finishText">你的分享，將幫助下一場親子活動更加精彩。</p><div class="confirm" id="saveConfirm" role="status" aria-live="polite"></div>
+      <section id="memoryCard" class="memory-card" hidden aria-label="我們家的親子回憶卡">
+        <div class="memory-top"><span>🌟 11/22 親子成長回憶</span><strong>我們家的冒險紀錄</strong><small>家長與孩子的真實心情，值得好好收藏</small></div>
+        <div class="memory-grid" id="memoryGrid"></div>
+        <div class="memory-foot">💌 這張卡片如實整理剛才的回答，沒有好壞之分。歡迎截圖留作紀念！</div>
+      </section>
+      <div class="finish-actions"><button type="button" class="btn wide" id="anotherRole">👨‍👩‍👧 換家人來分享</button><button type="button" class="btn ghost wide" id="retrySubmit" hidden>重新確認儲存</button></div></div>
     </section>
     <footer>11/22「從神韻看見自律之美」親子活動 · 感謝每一位參與者的分享</footer>
   </div>
@@ -387,6 +472,8 @@
     };
     let role='', answers=[], step=0, surveyId='', saving=false, answerLock=false;
     const completedRoles=new Set();
+    // 回憶卡只顯示當次經過預覽完成或正式儲存確認的答案，不保存個人資料。
+    const roleResponses={};
     function makeId(){
       if(crypto&&crypto.randomUUID)return crypto.randomUUID();
       const a=new Uint8Array(16);crypto.getRandomValues(a);
@@ -415,6 +502,36 @@
     }
     $('parentButton').addEventListener('click',()=>begin('parent'));
     $('childButton').addEventListener('click',()=>begin('child'));
+    function renderAdventureTrail(){
+      const route=role==='parent'?['house','buzzer','phone','stage','heart']:['buzzer','stage','heart'];
+      const total=q[role].length;
+      const list=$('adventureTrail');
+      list.style.setProperty('--station-count',String(total));
+      list.replaceChildren();
+      for(let i=0;i<total;i++){
+        const stop=document.createElement('button');
+        stop.type='button';
+        stop.className='trail-stop '+(i<step?'complete':i===step?'current':'future');
+        stop.disabled=i>=step;
+        stop.setAttribute('aria-label','第 '+(i+1)+' 站：'+(i<step?'已完成':i===step?'目前關卡':'尚未解鎖'));
+        if(i===step)stop.setAttribute('aria-current','step');
+        const icon=document.createElement('span');icon.className='trail-art';
+        const art=document.createElement('span');art.dataset.mapArt=route[i];art.style.cssText='width:100%;height:100%;display:block';
+        icon.appendChild(art);
+        if(i<step){const stamp=document.createElement('span');stamp.className='trail-stamp';stamp.textContent='✓';icon.appendChild(stamp)}
+        else if(i===step){const marker=document.createElement('span');marker.className='trail-stamp';marker.textContent='★';icon.appendChild(marker)}
+        const label=document.createElement('span');label.className='trail-label';label.textContent='第 '+(i+1)+' 站';
+        stop.append(icon,label);
+        if(i<step)stop.addEventListener('click',()=>{
+          if(answerLock||saving)return;
+          step=i;answers=answers.slice(0,i);renderQuestion();window.scrollTo({top:0,behavior:'smooth'});
+        });
+        list.appendChild(stop);
+      }
+      window.paint1122SurveyArt(list);
+      $('trailCount').textContent='已集 '+step+' / '+total+' 章';
+      $('trailHint').textContent=step?'太棒了，已拿到 '+step+' 枚印章！繼續前往下一站。':'選擇下方的答案，就能拿到第 1 枚印章。';
+    }
     function renderQuestion(){
       const list=q[role], item=list[step];
       $('roleLabel').textContent=role==='parent'?'👨‍👩‍👧 家長心情闖關':'🧒 孩子心情闖關';
@@ -424,6 +541,7 @@
       $('progressFill').style.width=((step+1)/list.length*100)+'%';
       $('remainingLabel').textContent='還有 '+(list.length-step-1)+' 關';
       $('backButton').hidden=step===0;
+      renderAdventureTrail();
       const container=$('choices');container.replaceChildren();
       item.options.forEach(([emoji,text],index)=>{
         const b=document.createElement('button');b.type='button';b.className='option';
@@ -457,14 +575,40 @@
       if(!completedRoles.has(next))begin(next);
     });
     $('retrySubmit').addEventListener('click',saveFeedback);
+    function renderMemoryCard(){
+      const parent=roleResponses.parent,child=roleResponses.child;
+      if(!parent||!child)return;
+      const choices=[
+        ['💛 家長今天的感受','parent',0],
+        ['🌈 孩子今天的感受','child',0],
+        ['🌼 家長最喜歡的環節','parent',1],
+        ['🎈 孩子最喜歡的活動','child',1],
+        ['🌱 家長帶回家的收穫','parent',2],
+        ['🎯 孩子想在家試試','child',2]
+      ];
+      const grid=$('memoryGrid');grid.replaceChildren();
+      choices.forEach(([label,r,index])=>{
+        const opts=q[r][index].options;
+        const selected=roleResponses[r][index];
+        const choice=opts[selected];
+        if(!choice)return;
+        const item=document.createElement('div');item.className='memory-item';
+        const l=document.createElement('div');l.className='memory-item-label';l.textContent=label;
+        const v=document.createElement('div');v.className='memory-item-answer';v.textContent=choice[0]+' '+choice[1];
+        item.append(l,v);grid.appendChild(item);
+      });
+      $('memoryCard').hidden=false;
+    }
     function updateCompletionScreen(){
       if(completedRoles.has('parent')&&completedRoles.has('child')){
         setFinishMapArt('gift');
         $('finishTitle').textContent='親子心情闖關全部完成！';
-        $('finishText').textContent='謝謝家長和孩子一起分享真實感受！這次問卷已全部完成，祝你們有個美好的一天。';
+        $('finishText').textContent='8 個站點全部完成！這張專屬回憶卡記錄你們今天的真實心情。';
+        renderMemoryCard();
         $('anotherRole').hidden=true;
         return;
       }
+      $('memoryCard').hidden=true;
       setFinishMapArt(role==='parent'?'heart':'buzzer');
       $('finishTitle').textContent=role==='parent'?'家長分享完成！':'孩子闖關成功！';
       $('finishText').textContent=role==='parent'
@@ -478,6 +622,7 @@
       $('anotherRole').hidden=true; // 正式版必須先確認儲存，再換人作答。
       $('saveConfirm').className='confirm';$('retrySubmit').hidden=true;
       if(preview){
+        roleResponses[role]=answers.slice();
         completedRoles.add(role);
         $('saveConfirm').textContent='設計預覽完成！這次回答不會送出或存入 Google Sheet。';
         updateCompletionScreen();
@@ -528,6 +673,7 @@
         if(!verified)throw new Error('資料尚無法確認');
         $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！';
         $('saveConfirm').className='confirm';
+        roleResponses[role]=answers.slice();
         completedRoles.add(role);
         updateCompletionScreen();
       }catch(_){
