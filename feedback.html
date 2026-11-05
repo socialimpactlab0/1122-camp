@@ -530,7 +530,7 @@
       }
       window.paint1122SurveyArt(list);
       $('trailCount').textContent='已集 '+step+' / '+total+' 章';
-      $('trailHint').textContent=step?'太棒了，已拿到 '+step+' 枚印章！繼續前往下一站。':'選擇下方的答案，就能拿到第 1 枚印章。';
+      $('trailHint').textContent=step?'已拿到 '+step+' 枚印章！繼續前往下一站；點已完成的站點也能修改答案。':'選擇下方的答案，就能拿到第 1 枚印章。';
     }
     function renderQuestion(){
       const list=q[role], item=list[step];
@@ -538,7 +538,7 @@
       $('stepLabel').textContent='第 '+(step+1)+' / '+list.length+' 關';
       $('stepIntro').textContent='第 '+(step+1)+' 關 · '+item.kicker;
       $('questionTitle').textContent=item.title;
-      $('progressFill').style.width=((step+1)/list.length*100)+'%';
+      $('progressFill').style.width=(step/list.length*100)+'%';
       $('remainingLabel').textContent='還有 '+(list.length-step-1)+' 關';
       $('backButton').hidden=step===0;
       renderAdventureTrail();
