@@ -634,7 +634,7 @@
       }
       show('finishPanel');
     }
-    function jsonpFeedbackCheck(id){
+    function jsonpFeedbackCheck(id,timeoutMs=6000){
       return new Promise((resolve,reject)=>{
         const cb='fbCheck_'+Date.now()+'_'+Math.floor(Math.random()*1000000);
         const script=document.createElement('script');let done=false,timer;
@@ -643,7 +643,7 @@
         script.onerror=()=>finish(new Error('查詢連線失敗'));
         const query=new URLSearchParams({action:'checkFeedback',surveyId:id,callback:cb,nonce:Date.now().toString()});
         script.src=GAS_WEB_APP_URL+'?'+query;
-        timer=setTimeout(()=>finish(new Error('確認逾時')),6500);document.body.appendChild(script);
+        timer=setTimeout(()=>finish(new Error('確認逾時')),timeoutMs);document.body.appendChild(script);
       });
     }
     async function saveFeedback(){
@@ -674,13 +674,15 @@
           body:new URLSearchParams(data),signal:ac.signal
         }).catch(err=>{postError=err}).finally(()=>clearTimeout(timer));
         let verified=false;
-        const startedAt=Date.now();
-        const waits=[500,650,900,1050,1250,1450];
-        for(let i=0;i<waits.length&&Date.now()-startedAt<18000;i++){
-          await new Promise(resolve=>setTimeout(resolve,waits[i]));
+        const startedAt=Date.now(),deadline=startedAt+16000;
+        const waits=[450,500,700,900,1100,1300,1500];
+        for(let i=0;i<waits.length&&Date.now()<deadline;i++){
+          await new Promise(resolve=>setTimeout(resolve,Math.min(waits[i],Math.max(0,deadline-Date.now()))));
           if(i===2)$('saveConfirm').textContent='資料已送出，正在向 Google Sheet 確認寫入結果…';
+          const remaining=deadline-Date.now();
+          if(remaining<400)break;
           try{
-            const r=await jsonpFeedbackCheck(submittedId);
+            const r=await jsonpFeedbackCheck(submittedId,Math.min(5500,remaining));
             if(r&&r.ok&&r.found){verified=true;break}
             if(r&&r.status==='closed')break;
           }catch(_){}
