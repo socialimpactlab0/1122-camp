@@ -649,7 +649,7 @@
     async function saveFeedback(){
       if(preview||!SURVEY_LIVE||saving)return;
       saving=true;$('retrySubmit').hidden=true;
-      $('saveConfirm').className='confirm';$('saveConfirm').textContent='感謝填答！正在確認問卷資料是否已儲存…';
+      $('saveConfirm').className='confirm';$('saveConfirm').textContent='正在傳送您的回饋並確認存檔…';
       const u=new URLSearchParams(location.search);
       const data={
         action:'saveFeedback',surveyId,familyId:sameDeviceFamily,role,
@@ -662,18 +662,36 @@
         utm_source:u.get('utm_source')||'on_site_qr'
       };
       try{
-        const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),16000);
-        try{await fetch(GAS_WEB_APP_URL,{method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',body:new URLSearchParams(data),signal:ac.signal})}
-        finally{clearTimeout(timer)}
+        // 速度優化：送出與 Google Sheet 存檔查詢「同時進行」，不再串接等待。
+        // POST 使用 no-cors，不能由回應判定成功；仍須查到同一 surveyId 才顯示成功。
+        const submittedId=surveyId,submittedRole=role,submittedAnswers=answers.slice();
+        const ac=new AbortController();
+        const timer=setTimeout(()=>ac.abort(),17000);
+        let postError=null;
+        // 立即啟動 POST，不阻塞後面的查詢；錯誤會保留供重試，不會誤報成功。
+        fetch(GAS_WEB_APP_URL,{
+          method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',
+          body:new URLSearchParams(data),signal:ac.signal
+        }).catch(err=>{postError=err}).finally(()=>clearTimeout(timer));
         let verified=false;
-        for(let i=0;i<4;i++){
-          await new Promise(resolve=>setTimeout(resolve,i===0?750:1300));
-          try{const r=await jsonpFeedbackCheck(surveyId);if(r&&r.ok&&r.found){verified=true;break}}catch(_){}
+        const startedAt=Date.now();
+        const waits=[500,650,900,1050,1250,1450];
+        for(let i=0;i<waits.length&&Date.now()-startedAt<18000;i++){
+          await new Promise(resolve=>setTimeout(resolve,waits[i]));
+          if(i===2)$('saveConfirm').textContent='資料已送出，正在向 Google Sheet 確認寫入結果…';
+          try{
+            const r=await jsonpFeedbackCheck(submittedId);
+            if(r&&r.ok&&r.found){verified=true;break}
+            if(r&&r.status==='closed')break;
+          }catch(_){}
+          // 已發生傳輸錯誤，仍做確認，以防已送達但前端網路回應遺失。
         }
-        if(!verified)throw new Error('資料尚無法確認');
+        if(!verified)throw new Error(postError?'傳送或確認發生連線問題':'資料尚無法確認');
+        // 僅在查到同一份資料後，才會進入已完成／換家人的流程。
+        if(submittedId!==surveyId||submittedRole!==role)throw new Error('送出期間問卷已變更');
+        roleResponses[submittedRole]=submittedAnswers;
         $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！';
         $('saveConfirm').className='confirm';
-        roleResponses[role]=answers.slice();
         completedRoles.add(role);
         updateCompletionScreen();
       }catch(_){
