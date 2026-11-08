@@ -646,6 +646,21 @@
         timer=setTimeout(()=>finish(new Error('確認逾時')),timeoutMs);document.body.appendChild(script);
       });
     }
+    // [v2] 直接讀取 GAS 回應：存檔成功時「一趟」就確認，不必再輪詢 checkFeedback。
+    // 表單格式（URLSearchParams）屬於簡單請求，不會觸發 CORS 預檢；GAS 網頁應用程式的回應允許跨網域讀取。
+    // 讀不到回應（逾時、斷線、瀏覽器擋下）時回傳 null，交給 saveFeedback 用 surveyId 查詢確認，不會誤報成功。
+    async function postFeedback(data,timeoutMs){
+      const ac=new AbortController();
+      const timer=setTimeout(()=>ac.abort(),Math.max(1000,timeoutMs));
+      try{
+        const res=await fetch(GAS_WEB_APP_URL,{
+          method:'POST',credentials:'omit',referrerPolicy:'no-referrer',
+          body:new URLSearchParams(data),signal:ac.signal
+        });
+        return await res.json();
+      }catch(_){return null}
+      finally{clearTimeout(timer)}
+    }
     async function saveFeedback(){
       if(preview||!SURVEY_LIVE||saving)return;
       saving=true;$('retrySubmit').hidden=true;
@@ -661,44 +676,77 @@
         pageUrl:location.origin+location.pathname,
         utm_source:u.get('utm_source')||'on_site_qr'
       };
+      const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
       try{
-        // 速度優化：送出與 Google Sheet 存檔查詢「同時進行」，不再串接等待。
-        // POST 使用 no-cors，不能由回應判定成功；仍須查到同一 surveyId 才顯示成功。
         const submittedId=surveyId,submittedRole=role,submittedAnswers=answers.slice();
-        const ac=new AbortController();
-        const timer=setTimeout(()=>ac.abort(),17000);
-        let postError=null;
-        // 立即啟動 POST，不阻塞後面的查詢；錯誤會保留供重試，不會誤報成功。
-        fetch(GAS_WEB_APP_URL,{
-          method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',
-          body:new URLSearchParams(data),signal:ac.signal
-        }).catch(err=>{postError=err}).finally(()=>clearTimeout(timer));
-        let verified=false;
-        const startedAt=Date.now(),deadline=startedAt+16000;
-        const waits=[450,500,700,900,1100,1300,1500];
-        for(let i=0;i<waits.length&&Date.now()<deadline;i++){
-          await new Promise(resolve=>setTimeout(resolve,Math.min(waits[i],Math.max(0,deadline-Date.now()))));
-          if(i===2)$('saveConfirm').textContent='資料已送出，正在向 Google Sheet 確認寫入結果…';
-          const remaining=deadline-Date.now();
-          if(remaining<400)break;
-          try{
-            const r=await jsonpFeedbackCheck(submittedId,Math.min(5500,remaining));
-            if(r&&r.ok&&r.found){verified=true;break}
-            if(r&&r.status==='closed')break;
-          }catch(_){}
-          // 已發生傳輸錯誤，仍做確認，以防已送達但前端網路回應遺失。
-        }
-        if(!verified)throw new Error(postError?'傳送或確認發生連線問題':'資料尚無法確認');
-        // 僅在查到同一份資料後，才會進入已完成／換家人的流程。
+        const startedAt=Date.now(),deadline=startedAt+20000;
+        const st={done:false};
+        let wakeCheck=()=>{};
+        const checkWake=new Promise(resolve=>{wakeCheck=resolve});
+        const say=text=>{if(!st.done)$('saveConfirm').textContent=text};
+        // [v2] A) 送出並直接讀取結果。busy＝確定尚未存檔，稍候重送；結果不明時先交給 B 查詢，仍未確認才重送。
+        //      最多送 3 次，每次都用同一個 surveyId；後端依 surveyId 查重，重送不會重複存檔。
+        const posting=(async()=>{
+          for(let attempt=1;attempt<=3&&!st.done;attempt++){
+            const remaining=deadline-Date.now();
+            if(remaining<1500)break;
+            const r=await postFeedback(data,Math.min(15000,remaining));
+            if(st.done)break;
+            if(r&&r.ok&&r.saved)return 'post';
+            if(r&&r.ok===false&&(r.status==='invalid'||r.status==='closed'))return {final:r.message||'目前無法送出問卷。'};
+            if(r&&r.status==='busy'){
+              say('目前同時送出的人較多，正在自動重試…');
+              await sleep(700+Math.floor(Math.random()*900));
+              continue;
+            }
+            say('資料已送出，正在向 Google Sheet 確認寫入結果…');
+            wakeCheck();
+            await sleep(3000);
+          }
+          return false;
+        })();
+        // [v2] B) 安全網（沿用原版做法）：POST 超過 2 秒仍沒回應、或結果不明時，才開始用 surveyId 查 Sheet。
+        //      POST 很快回來時完全不查詢，減少 16:30 尖峰時的 GAS 執行次數。
+        const checking=(async()=>{
+          await Promise.race([sleep(2000),checkWake]);
+          for(const wait of [0,700,900,1100,1300,1500,1500,1500]){
+            if(st.done||deadline-Date.now()<600)break;
+            if(wait)await sleep(wait);
+            if(st.done)break;
+            try{
+              const c=await jsonpFeedbackCheck(submittedId,Math.min(5500,Math.max(500,deadline-Date.now())));
+              if(c&&c.ok&&c.found)return 'check';
+              if(c&&c.status==='closed')return {final:'問卷目前未開放填答。'};
+            }catch(_){}
+          }
+          return false;
+        })();
+        // A、B 誰先確認就用誰；兩者都沒確認才顯示「重新確認儲存」。
+        const outcome=await new Promise(resolve=>{
+          let pending=2;
+          [posting,checking].forEach(task=>task.then(v=>{if(v)resolve(v);else if(--pending===0)resolve(false)},()=>{if(--pending===0)resolve(false)}));
+        });
+        st.done=true;
+        if(outcome&&outcome.final)throw Object.assign(new Error(outcome.final),{final:true});
+        if(!outcome)throw new Error('資料尚無法確認');
+        // 僅在確認同一份資料已存檔後，才會進入已完成／換家人的流程。
         if(submittedId!==surveyId||submittedRole!==role)throw new Error('送出期間問卷已變更');
         roleResponses[submittedRole]=submittedAnswers;
-        $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！';
+        const seconds=((Date.now()-startedAt)/1000).toFixed(1);
+        $('saveConfirm').textContent='✅ 已收到你的回饋，資料成功儲存。感謝參與！'+
+          // 測試期間顯示確認秒數與方式，方便用手機比較新舊版；11/22 正式期不顯示。
+          (SURVEY_PHASE==='test'?'（測試：'+seconds+' 秒確認'+(outcome==='check'?'，經查詢確認':'')+'）':'');
         $('saveConfirm').className='confirm';
         completedRoles.add(role);
         updateCompletionScreen();
-      }catch(_){
-        $('saveConfirm').textContent='問卷已完成，但目前無法確認儲存成功。請點「重新確認儲存」，避免漏掉這份回饋。';
-        $('saveConfirm').className='confirm warn';$('retrySubmit').hidden=false;
+      }catch(err){
+        if(err&&err.final){
+          $('saveConfirm').textContent=err.message;
+          $('saveConfirm').className='confirm warn';
+        }else{
+          $('saveConfirm').textContent='問卷已完成，但目前無法確認儲存成功。請點「重新確認儲存」，避免漏掉這份回饋。';
+          $('saveConfirm').className='confirm warn';$('retrySubmit').hidden=false;
+        }
       }finally{saving=false}
     }
   })();
