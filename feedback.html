@@ -182,6 +182,14 @@
       .memory-item{padding:10px 8px}
       .memory-item-answer{font-size:13px}
     }
+    .future-contact{margin:15px 0 18px;padding:18px;border:2px solid #eacda7;border-radius:19px;background:linear-gradient(125deg,#fff8ea,#eff9eb)}
+    .future-contact-title{font-size:17px;color:#69481f;margin-bottom:4px}
+    .future-contact>label:not(.contact-consent){display:block;margin:12px 0 5px;font-weight:850;font-size:13px}
+    .future-contact>input{display:block;width:100%;padding:12px 13px;border:1.7px solid #dec6a5;border-radius:12px;font-size:16px;background:white}
+    .contact-consent{display:flex;align-items:flex-start;gap:10px;margin:14px 0 10px;font-size:13px;line-height:1.7}
+    .contact-consent>input{width:21px;height:21px;flex-shrink:0;margin:1px 0;accent-color:#46805d}
+    .contact-error{padding:8px 10px;color:#a12f23;border-radius:10px;background:#fff0e8;font-weight:800;font-size:13px}
+    @media(max-width:560px){.future-contact{padding:14px}.adventure-trail[data-stations="6"] .trail-art{width:clamp(32px,10vw,50px);height:clamp(32px,10vw,50px)}.adventure-trail[data-stations="6"] .trail-label{font-size:9px}}
     @media(prefers-reduced-motion:reduce){.trail-stamp,.memory-card{animation:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
   </style>
@@ -195,7 +203,7 @@
     <section class="hero">
       <span class="bubble">🗺️ 11/22 親子成長冒險</span>
       <h1>今天的美好，<span>一起收藏！</span></h1>
-      <p>跟著地圖完成親子心情闖關，每答完一題就集一個章。家長 5 站＋孩子 3 站，最後解鎖你們的親子回憶卡！</p>
+      <p>跟著地圖完成親子心情闖關，每答完一題就集一個章。家長 6 站＋孩子 3 站，最後解鎖你們的親子回憶卡！</p>
       <div class="deco map-art-strip" aria-hidden="true">
         <span data-map-art="house"></span>
         <span data-map-art="buzzer"></span>
@@ -214,14 +222,14 @@
     <section class="panel" id="choosePanel" hidden aria-label="選擇家長或孩子">
       <span class="section-kicker">START · 選擇你的身分</span>
       <h2>今天換誰來開始冒險？</h2>
-      <p class="small">家長完成 5 站、孩子完成 3 站，集滿 8 個印章，就能解鎖親子回憶卡。同一支手機也能輪流玩！</p>
+      <p class="small">家長完成 6 站、孩子完成 3 站，集滿 9 個印章，就能解鎖親子回憶卡。同一支手機也能輪流玩！</p>
       <div class="journey-hint" aria-label="親子冒險旅程">
-        <span>🧭 家長 5 站</span><span aria-hidden="true">➜</span><span>🎈 孩子 3 站</span><span aria-hidden="true">➜</span><span>🎁 親子回憶卡</span>
+        <span>🧭 家長 6 站</span><span aria-hidden="true">➜</span><span>🎈 孩子 3 站</span><span aria-hidden="true">➜</span><span>🎁 親子回憶卡</span>
       </div>
       <div class="role-grid">
         <button type="button" class="role" id="parentButton">
           <span class="role-emoji map-role-art" data-map-art="duo" aria-hidden="true"></span>
-          <strong>我是家長</strong><small>5 關＋選填留言</small>
+          <strong>我是家長</strong><small id="parentCountLabel">6 關＋選填留言</small>
           <span class="go">開始分享 ›</span>
         </button>
         <button type="button" class="role" id="childButton">
@@ -249,6 +257,17 @@
       <span class="section-kicker">BONUS · 可自由跳過</span>
       <h2>最後，還有一句話想告訴我們嗎？</h2>
       <p class="small">可以分享你最喜歡的地方，或下次希望改進的事。這題不填也沒關係！</p>
+      <div class="future-contact" id="futureContactPanel" hidden>
+          <div class="future-contact-title">💌 <strong>希望收到未來親子活動通知嗎？</strong></div>
+          <p class="small">願意留下資料的家長可以填寫；不填、不勾選，也能完成問卷。</p>
+          <label for="contactName">家長姓名（選填）</label>
+          <input type="text" id="contactName" maxlength="40" autocomplete="name" placeholder="請輸入姓名"/>
+          <label for="contactPhone">手機號碼（選填）</label>
+          <input type="tel" id="contactPhone" maxlength="22" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxx"/>
+          <label class="contact-consent"><input type="checkbox" id="contactConsent"/><span>我同意主辦單位（社團法人法輪大法學會、臺灣自媒體應用科技學會）使用上述姓名及手機號碼，僅用於日後類似親子活動通知；我可向主辦單位要求停止通知或刪除聯絡資料。</span></label>
+          <p class="small">只有填寫姓名、電話並主動勾選同意，才會儲存聯絡資訊；與活動滿意度答案分開建檔。</p>
+          <p class="contact-error" id="contactError" hidden role="alert"></p>
+      </div>
       <div class="comment"><label for="commentField">我的小建議（選填）</label><textarea id="commentField" maxlength="300" placeholder="例如：希望下次能有更多親子一起挑戰的小遊戲⋯⋯"></textarea><small>最多 300 字，請勿填寫姓名、電話等個資。</small></div>
       <div class="finish-actions"><button class="btn wide" type="button" id="parentSubmit">🎉 完成闖關，送出感受</button><button type="button" class="linkbtn" id="commentBack">← 返回上一關</button></div>
     </section>
@@ -462,7 +481,8 @@
         {kicker:'最喜歡的環節',title:'哪一個環節，讓你印象最深刻？',options:[['💡','趣味搶答'],['🎬','影片挑戰'],['🤝','親子互動'],['🎭','神韻藝術分享']]},
         {kicker:'今天帶走的收穫',title:'今天你覺得最大的收穫是？',options:[['🌱','學習自律'],['💬','親子溝通'],['🎯','專注與堅持'],['💖','美好的親子時光']]},
         {kicker:'一起認識美好的藝術',title:'活動後，您想進一步了解神韻嗎？',options:[['✨','很有興趣'],['🌷','想再了解看看'],['🙂','目前還沒有'],['🤔','還不確定']]},
-        {kicker:'還能更好的地方',title:'您覺得今天的活動哪方面可以再改進？',options:[['🕒','流程與時間安排'],['🙋','更多親子互動機會'],['🧩','內容說明更清楚'],['👍','目前都很滿意']]}
+        {kicker:'還能更好的地方',title:'您覺得今天的活動哪方面可以再改進？',options:[['🕒','流程與時間安排'],['🙋','更多親子互動機會'],['🧩','內容說明更清楚'],['👍','目前都很滿意']]},
+        {kicker:'未來的親子約定',title:'未來再辦類似的親子成長活動，您願意參加嗎？',options:[['😍','願意，希望收到活動通知'],['😊','有興趣，想先了解活動內容'],['🙂','暫時不考慮']]}
       ],
       child:[
         {kicker:'今天開不開心',title:'今天的活動，你覺得好玩嗎？',options:[['😄','很好玩'],['🙂','還不錯'],['😐','普通'],['🙁','不太好玩']]},
@@ -471,6 +491,46 @@
       ]
     };
     let role='', answers=[], step=0, surveyId='', saving=false, answerLock=false;
+    let backendFeedbackVersion='unknown',capabilityRequest=null;
+    function jsonpFeedbackCapabilities(){
+      return new Promise((resolve,reject)=>{
+        const cb='fbCaps_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+        const script=document.createElement('script');let done=false,timer;
+        function finish(err,r){if(done)return;done=true;clearTimeout(timer);try{delete window[cb]}catch(_){}script.remove();err?reject(err):resolve(r)}
+        window[cb]=result=>finish(null,result);
+        script.onerror=()=>finish(new Error('無法連線確認問卷版本'));
+        timer=setTimeout(()=>finish(new Error('確認問卷版本逾時')),6500);
+        script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({action:'feedbackCapabilities',callback:cb,nonce:String(Date.now())});
+        document.body.appendChild(script);
+      });
+    }
+    async function ensureParentFeedbackVersion(){
+      if(preview)return true;
+      if(backendFeedbackVersion!=='unknown')return backendFeedbackVersion==='new';
+      if(!capabilityRequest)capabilityRequest=jsonpFeedbackCapabilities().then(r=>{
+        backendFeedbackVersion=r&&r.ok&&r.parentQuestions===6&&r.contactOptIn===true?'new':'old';
+        return backendFeedbackVersion==='new';
+      }).finally(()=>{capabilityRequest=null});
+      return capabilityRequest;
+    }
+    function clearContactFields(){
+      $('contactName').value='';$('contactPhone').value='';$('contactConsent').checked=false;$('contactError').hidden=true;
+    }
+    function showParentContactPanel(){
+      const active=role==='parent'&&q.parent.length===6&&(answers[5]===0||answers[5]===1);
+      $('futureContactPanel').hidden=!active;
+      if(!active)clearContactFields();
+    }
+    function getContactSubmission(){
+      if($('futureContactPanel').hidden)return {ok:true,send:false};
+      const name=$('contactName').value.trim(),phone=$('contactPhone').value.trim(),consent=$('contactConsent').checked;
+      if(!name&&!phone&&!consent)return {ok:true,send:false};
+      let norm=phone.replace(/[^0-9+]/g,'');
+      if(norm.startsWith('+886'))norm='0'+norm.slice(4);
+      if(!consent)return {ok:false,message:'若要留下姓名或電話，請先勾選聯絡同意；也可清空欄位直接完成。'};
+      if(!name||!/^09[0-9]{8}$/.test(norm))return {ok:false,message:'若要留下聯絡資料，請填寫姓名及 09 開頭的 10 碼手機號碼。'};
+      return {ok:true,send:true,name:name.slice(0,40),phone:norm};
+    }
     const completedRoles=new Set();
     // 回憶卡只顯示當次經過預覽完成或正式儲存確認的答案，不保存個人資料。
     const roleResponses={};
@@ -497,16 +557,27 @@
     }
     function begin(nextRole){
       role=nextRole;answers=[];step=0;surveyId=makeId();saving=false;answerLock=false;
-      $('commentField').value='';$('retrySubmit').hidden=true;
+      $('commentField').value='';clearContactFields();$('retrySubmit').hidden=true;
       renderQuestion();show('questionPanel');
     }
-    $('parentButton').addEventListener('click',()=>begin('parent'));
+    $('parentButton').addEventListener('click',async()=>{
+      const btn=$('parentButton');if(btn.disabled)return;
+      btn.disabled=true;const go=btn.querySelector('.go'),old=go.textContent;go.textContent='確認系統版本…';
+      try{
+        const supported=await ensureParentFeedbackVersion();
+        if(!supported&&q.parent.length===6){
+          q.parent.pop();$('parentCountLabel').textContent='5 關＋選填留言（第6題待啟用）';
+        }
+        begin('parent');
+      }catch(_){alert('暫時無法確認問卷版本，請確認網路後再試，避免答案漏存。')}
+      finally{go.textContent=old;btn.disabled=false}
+    });
     $('childButton').addEventListener('click',()=>begin('child'));
     function renderAdventureTrail(){
-      const route=role==='parent'?['house','buzzer','phone','stage','heart']:['buzzer','stage','heart'];
+      const route=role==='parent'?(q.parent.length===6?['house','buzzer','phone','stage','heart','gift']:['house','buzzer','phone','stage','heart']):['buzzer','stage','heart'];
       const total=q[role].length;
       const list=$('adventureTrail');
-      list.style.setProperty('--station-count',String(total));
+      list.style.setProperty('--station-count',String(total));list.dataset.stations=String(total);
       list.replaceChildren();
       for(let i=0;i<total;i++){
         const stop=document.createElement('button');
@@ -556,7 +627,7 @@
             step++;
             answerLock=false;
             if(step===list.length){
-              if(role==='parent')show('commentPanel');else complete();
+              if(role==='parent'){showParentContactPanel();show('commentPanel')}else complete();
             }else{renderQuestion();show('questionPanel');}
           },190);
         });
@@ -603,7 +674,7 @@
       if(completedRoles.has('parent')&&completedRoles.has('child')){
         setFinishMapArt('gift');
         $('finishTitle').textContent='親子心情闖關全部完成！';
-        $('finishText').textContent='8 個站點全部完成！這張專屬回憶卡記錄你們今天的真實心情。';
+        $('finishText').textContent=(q.parent.length+q.child.length)+' 個站點全部完成！這張專屬回憶卡記錄你們今天的真實心情。';
         renderMemoryCard();
         $('anotherRole').hidden=true;
         return;
@@ -619,6 +690,11 @@
     }
     function complete(){
       if(answers.length!==q[role].length)return;
+      if(role==='parent'){
+        const contact=getContactSubmission();
+        if(!contact.ok){$('contactError').textContent=contact.message;$('contactError').hidden=false;show('commentPanel');return}
+        $('contactError').hidden=true;
+      }
       $('anotherRole').hidden=true; // 正式版必須先確認儲存，再換人作答。
       $('saveConfirm').className='confirm';$('retrySubmit').hidden=true;
       if(preview){
@@ -634,7 +710,7 @@
       }
       show('finishPanel');
     }
-    function jsonpFeedbackCheck(id,timeoutMs=6000){
+    function jsonpFeedbackCheck(id,timeoutMs=6000,expectContact=false){
       return new Promise((resolve,reject)=>{
         const cb='fbCheck_'+Date.now()+'_'+Math.floor(Math.random()*1000000);
         const script=document.createElement('script');let done=false,timer;
@@ -642,6 +718,7 @@
         window[cb]=data=>finish(null,data);
         script.onerror=()=>finish(new Error('查詢連線失敗'));
         const query=new URLSearchParams({action:'checkFeedback',surveyId:id,callback:cb,nonce:Date.now().toString()});
+        if(expectContact)query.set('expectContact','1');
         script.src=GAS_WEB_APP_URL+'?'+query;
         timer=setTimeout(()=>finish(new Error('確認逾時')),timeoutMs);document.body.appendChild(script);
       });
@@ -672,10 +749,16 @@
         answer3:String(answers[2]),
         answer4:role==='parent'?String(answers[3]):'',
         answer5:role==='parent'?String(answers[4]):'',
+        answer6:role==='parent'&&q.parent.length===6?String(answers[5]):'',
         comment:role==='parent'?$('commentField').value.trim().slice(0,300):'',
         pageUrl:location.origin+location.pathname,
         utm_source:u.get('utm_source')||'on_site_qr'
       };
+      const contact=getContactSubmission();
+      if(role==='parent'&&q.parent.length===6&&contact.ok&&contact.send){
+        data.contactName=contact.name;data.contactPhone=contact.phone;data.contactConsent='1';
+      }
+      const expectContact=!!data.contactConsent;
       const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
       try{
         const submittedId=surveyId,submittedRole=role,submittedAnswers=answers.slice();
@@ -692,7 +775,7 @@
             if(remaining<1500)break;
             const r=await postFeedback(data,Math.min(15000,remaining));
             if(st.done)break;
-            if(r&&r.ok&&r.saved)return 'post';
+            if(r&&r.ok&&r.saved&&(!expectContact||r.contactSaved===true))return 'post';
             if(r&&r.ok===false&&(r.status==='invalid'||r.status==='closed'))return {final:r.message||'目前無法送出問卷。'};
             if(r&&r.status==='busy'){
               say('目前同時送出的人較多，正在自動重試…');
@@ -714,7 +797,7 @@
             if(wait)await sleep(wait);
             if(st.done)break;
             try{
-              const c=await jsonpFeedbackCheck(submittedId,Math.min(5500,Math.max(500,deadline-Date.now())));
+              const c=await jsonpFeedbackCheck(submittedId,Math.min(5500,Math.max(500,deadline-Date.now())),expectContact);
               if(c&&c.ok&&c.found)return 'check';
               if(c&&c.status==='closed')return {final:'問卷目前未開放填答。'};
             }catch(_){}
