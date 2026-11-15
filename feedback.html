@@ -490,7 +490,7 @@
         {kicker:'帶回家的小小願望',title:'今天學到的事，你最想回家試試哪一項？',options:[['📵','少玩一點手機'],['🎯','專心做好一件事'],['💬','和爸媽多聊聊'],['🌈','還沒想好']]}
       ]
     };
-    let role='', answers=[], step=0, surveyId='', saving=false, answerLock=false;
+    let role='', answers=[], step=0, surveyId='', contactId='', saving=false, answerLock=false;
     let backendFeedbackVersion='unknown',capabilityRequest=null;
     function jsonpFeedbackCapabilities(){
       return new Promise((resolve,reject)=>{
@@ -556,7 +556,7 @@
       if(preview)$('previewBar').textContent='純畫面預覽｜此次不會寫入 Google Sheet；請使用不含 ?preview=1 的正式網址做資料寫入測試。';
     }
     function begin(nextRole){
-      role=nextRole;answers=[];step=0;surveyId=makeId();saving=false;answerLock=false;
+      role=nextRole;answers=[];step=0;surveyId=makeId();contactId=makeId();saving=false;answerLock=false;
       $('commentField').value='';clearContactFields();$('retrySubmit').hidden=true;
       renderQuestion();show('questionPanel');
     }
@@ -718,7 +718,7 @@
         window[cb]=data=>finish(null,data);
         script.onerror=()=>finish(new Error('查詢連線失敗'));
         const query=new URLSearchParams({action:'checkFeedback',surveyId:id,callback:cb,nonce:Date.now().toString()});
-        if(expectContact)query.set('expectContact','1');
+        if(expectContact){query.set('expectContact','1');query.set('contactId',contactId);}
         script.src=GAS_WEB_APP_URL+'?'+query;
         timer=setTimeout(()=>finish(new Error('確認逾時')),timeoutMs);document.body.appendChild(script);
       });
@@ -756,6 +756,7 @@
       };
       const contact=getContactSubmission();
       if(role==='parent'&&q.parent.length===6&&contact.ok&&contact.send){
+        data.contactId=contactId;
         data.contactName=contact.name;data.contactPhone=contact.phone;data.contactConsent='1';
       }
       const expectContact=!!data.contactConsent;
@@ -798,7 +799,7 @@
             if(st.done)break;
             try{
               const c=await jsonpFeedbackCheck(submittedId,Math.min(5500,Math.max(500,deadline-Date.now())),expectContact);
-              if(c&&c.ok&&c.found)return 'check';
+              if(c&&c.ok&&c.found&&(!expectContact||c.contactSaved===true))return 'check';
               if(c&&c.status==='closed')return {final:'問卷目前未開放填答。'};
             }catch(_){}
           }
