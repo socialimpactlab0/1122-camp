@@ -193,7 +193,13 @@
     .contact-consent{display:flex;align-items:flex-start;gap:10px;margin-top:15px;font-size:13px;color:#604c3c;line-height:1.65;cursor:pointer}
     .contact-consent input{width:20px;height:20px;flex:0 0 20px;accent-color:#d96a23;margin-top:2px}
     .contact-error{background:#ffeded;color:#9f3d32;border:1px solid #f5b8b0;border-radius:11px;padding:10px 12px;font-size:13px;font-weight:800}
-    @media(max-width:560px){.contact-fields{padding:14px}.contact-grid{grid-template-columns:1fr}}
+    @media(max-width:560px){
+      .contact-fields{padding:14px}.contact-grid{grid-template-columns:1fr}
+      .adventure-trail[data-count="6"] .trail-art{width:clamp(33px,10vw,49px);height:clamp(33px,10vw,49px)}
+      .adventure-trail[data-count="6"]::before{top:22px}
+      .adventure-trail[data-count="6"] .trail-stop .trail-label{font-size:9px}
+      .adventure-trail[data-count="6"] .trail-stamp{width:20px;height:20px;font-size:12px}
+    }
     @media(prefers-reduced-motion:reduce){.trail-stamp,.memory-card{animation:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
   </style>
@@ -532,6 +538,7 @@
       const total=q[role].length;
       const list=$('adventureTrail');
       list.style.setProperty('--station-count',String(total));
+      list.dataset.count=String(total);
       list.replaceChildren();
       for(let i=0;i<total;i++){
         const stop=document.createElement('button');
