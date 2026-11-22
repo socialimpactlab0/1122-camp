@@ -216,7 +216,7 @@
     <section class="panel locked" id="lockedPanel" hidden aria-label="問卷開放日期">
       <div class="calendar map-calendar-art" data-map-art="flag" aria-hidden="true"></div>
       <h2 id="lockedTitle">測試已結束，正式問卷即將開放！</h2>
-      <p id="lockedDescription">11/20 起停止測試。11/22（日）16:30 活動結束後，歡迎家長與孩子回來分享真實感受。</p>
+      <p id="lockedDescription">11/20 起停止測試。11/22（日）16:00 起開放填答，歡迎家長與孩子分享真實感受。</p>
       <p class="small">主辦單位：社團法人法輪大法學會・臺灣自媒體應用科技學會</p>
     </section>
     <section class="panel" id="choosePanel" hidden aria-label="選擇家長或孩子">
@@ -454,7 +454,7 @@
   <script>
   (function(){
     'use strict';
-    // 使用臺灣時間決定：11/19 前可測試入表、11/20～11/22 16:30 關閉、活動結束正式開放。
+    // 使用臺灣時間決定：11/19 前可測試入表、11/20～11/22 16:00 關閉、16:00 正式開放。
     // GAS 後端也須部署相同日期規則，以防變更裝置時間繞過限制。
     function taipeiNowText(){
       const parts=new Intl.DateTimeFormat('en-US',{
@@ -466,7 +466,7 @@
     }
     const taipeiNow=taipeiNowText();
     const SURVEY_PHASE=taipeiNow<'2026-11-20 00:00'?'test':
-      (taipeiNow<'2026-11-22 16:30'?'closed':'live');
+      (taipeiNow<'2026-11-22 16:00'?'closed':'live');
     const SURVEY_LIVE=SURVEY_PHASE!=='closed';
     const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
     const previewRequested=new URLSearchParams(location.search).get('preview')==='1';
