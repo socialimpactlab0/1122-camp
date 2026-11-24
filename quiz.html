@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5f5ed">
-  <title>3 題了解孩子的自律習慣｜11/22 台南免費親子活動</title>
-  <meta name="description" content="孩子的自律，不只是少看手機。用 3 道生活情境選擇題，看看您最想與孩子一起練習什麼。了解 11/22 台南免費親子活動。">
+  <title>3 題了解孩子的自律習慣｜12/26 台南免費親子活動</title>
+  <meta name="description" content="孩子的自律，不只是少看手機。用 3 道生活情境選擇題，看看您最想與孩子一起練習什麼。了解 12/26 台南免費親子活動。">
   <meta property="og:type" content="website">
   <meta property="og:title" content="孩子的自律，不只是少看手機｜3 題親子互動問答">
-  <meta property="og:description" content="用 3 題生活情境，一起探索親子自律的練習方向。11/22 台南免費親子活動。">
+  <meta property="og:description" content="用 3 題生活情境，一起探索親子自律的練習方向。12/26 台南免費親子活動。">
   <meta property="og:image" content="https://socialimpactlab0.github.io/1122-camp/images/1122-hero-photo.jpg">
   <meta property="og:url" content="https://socialimpactlab0.github.io/1122-camp/quiz.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -146,7 +146,7 @@
           <span class="choice-action">查看活動介紹 ›</span>
         </a>
       </div>
-      <p class="intro-disclosure"><strong>溫馨提醒：</strong>三題問答沒有標準答案，您的回答將協助主辦單位了解家長的需求，讓活動安排更貼近親子期待。如後續報名，問答資料將與報名資料連結。</p>
+      <p class="intro-disclosure"><strong>溫馨提醒：</strong>三題問答沒有標準答案，作答後會出現適合親子一起練習的小建議。答案只儲存在此裝置，不會自動傳送給主辦單位或連結報名資料。</p>
     </section>
     <section class="card" id="quizCard" aria-label="親子互動三題" hidden>
       <div id="quizPanel">
@@ -158,7 +158,7 @@
         <div class="options" id="options"></div>
         <div class="footerline">
           <button class="back" type="button" id="backBtn">← 上一題</button>
-          <span class="smallnote">完成後將儲存答案，用於活動改善</span>
+          <span class="smallnote">完成後會顯示練習建議（答案僅存此裝置）</span>
         </div>
       </div>
       <div class="result" id="resultPanel" aria-hidden="true" aria-live="polite">
@@ -168,12 +168,12 @@
         <p id="resultSummary"></p>
         <div class="highlight" id="resultTip"></div>
         <div class="eventbox">
-          <strong>11/22（日）台南免費親子活動</strong>
-          <p>13:30 報到｜14:00–16:30｜台南維悅酒店</p>
-          <p>國小 3～6 年級親子｜趣味搶答・影片挑戰・親子互動</p>
+          <strong>12/26（六）台南免費親子活動</strong>
+          <p>13:30 報到｜14:00–16:30｜德光里活動中心</p>
+          <p>國小 1～6 年級親子｜趣味搶答・影片挑戰・親子互動</p>
           <p>目前名額請依活動官網公告為準；線上報名暫停時仍可電話洽詢。</p>
         </div>
-        <p class="save-message" id="saveMessage" role="status" aria-live="polite">正在確認問答資料是否已儲存…</p>
+        <p class="save-message" id="saveMessage" role="status" aria-live="polite">正在整理您的親子練習建議…</p>
         <button class="secondary save-retry" id="saveRetryBtn" type="button" hidden>重新同步問答資料</button>
         <div class="result-actions" id="resultActions">
           <a class="primary" id="directSignupLink" href="./#signup">直接報名／查看名額 ›</a>
@@ -188,7 +188,7 @@
   <script>
     (function(){
       'use strict';
-      const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
+      // 12/26 互動問答：個人結果僅保存在本機，不提交到 11/22 的 GAS 名單。
       const questions=[
         {title:'孩子目前最讓您煩惱的是什麼？',options:['經常捨不得放下手機或平板','寫功課容易拖延，常需要提醒','想培養更主動的生活與學習習慣']},
         {title:'當孩子不願意配合時，您通常怎麼做？',options:['多提醒幾次，希望孩子快點行動','先約定時間或規則，再一起執行','試著聽孩子的想法，再討論怎麼做']},
@@ -222,18 +222,18 @@
         if(!id){id=uuid();set(store,key,id)}
         return id;
       }
-      const visitorId=ensureId(localStorage,'camp1122_visitor_id');
-      const sessionId=ensureId(sessionStorage,'camp1122_session_id');
-      let quizId=ensureId(localStorage,'camp1122_last_quiz_id');
-      const rawAnswers=get(localStorage,'camp1122_quiz_answers');
+      const visitorId=ensureId(localStorage,'camp1226_visitor_id');
+      const sessionId=ensureId(sessionStorage,'camp1226_session_id');
+      let quizId=ensureId(localStorage,'camp1226_last_quiz_id');
+      const rawAnswers=get(localStorage,'camp1226_quiz_answers');
       try {
         const saved=rawAnswers?JSON.parse(rawAnswers):[];
         if(Array.isArray(saved)&&saved.length<=3&&saved.every(x=>[0,1,2].includes(x)))answers=saved;
       }catch(_){}
       const utm={};
       ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(k=>{
-        utm[k]=query.get(k)||get(localStorage,'camp1122_'+k)||'';
-        if(query.has(k))set(localStorage,'camp1122_'+k,query.get(k));
+        utm[k]=query.get(k)||get(localStorage,'camp1226_'+k)||'';
+        if(query.has(k))set(localStorage,'camp1226_'+k,query.get(k));
       });
       const adSource=query.get('ad')||utm.utm_content||utm.utm_campaign||utm.utm_source||'direct';
 
@@ -243,7 +243,7 @@
       function eventUrl(hash){
         const url=new URL('./',window.location.href);
         ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ad'].forEach(k=>{
-          const v=query.get(k)||get(localStorage,'camp1122_'+k);
+          const v=query.get(k)||get(localStorage,'camp1226_'+k);
           if(v)url.searchParams.set(k,v);
         });
         if(!url.searchParams.has('utm_source'))url.searchParams.set('utm_source','quiz');
@@ -262,65 +262,14 @@
         });
       });
 
-      function jsonpCheck(timeoutMs){
-        return new Promise((resolve,reject)=>{
-          const cb='campQuizCheck_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
-          const script=document.createElement('script');
-          let done=false,timer;
-          function finish(error,val){
-            if(done)return;done=true;clearTimeout(timer);
-            delete window[cb];script.remove();
-            if(error)reject(error);else resolve(val);
-          }
-          window[cb]=val=>finish(null,val);
-          script.onerror=()=>finish(new Error('問答查詢失敗'));
-          script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({action:'checkQuiz',quizId:quizId,callback:cb,nonce:Date.now()});
-          timer=setTimeout(()=>finish(new Error('問答查詢逾時')),timeoutMs||6500);
-          document.body.appendChild(script);
-        });
-      }
       async function saveQuiz(){
-        if(answers.length!==3||saving)return;
-        if(get(localStorage,'camp1122_quiz_saved')===quizId&&!afterSignup){
-          saveMessage.textContent='三題答案已儲存，感謝您的協助！';
-          saveMessage.className='save-message';saveRetry.hidden=true;
-          return;
-        }
-        saving=true;
-        saveMessage.textContent='正在儲存與確認三題答案…';
-        saveMessage.className='save-message';saveRetry.hidden=true;
-        const params=Object.assign({},utm,{
-          action:'saveQuiz',quizId:quizId,visitor_id:visitorId,session_id:sessionId,
-          answer1:String(answers[0]),answer2:String(answers[1]),answer3:String(answers[2]),
-          adSource:adSource,pageUrl:location.href,
-          registrationToken:afterSignup?(get(sessionStorage,'camp1122_last_registered_token')||''):''
-        });
-        try{
-          const controller=new AbortController();
-          const timer=setTimeout(()=>controller.abort(),15000);
-          try{await fetch(GAS_WEB_APP_URL,{
-            method:'POST',mode:'no-cors',credentials:'omit',referrerPolicy:'no-referrer',
-            body:new URLSearchParams(params),signal:controller.signal
-          })}finally{clearTimeout(timer)}
-          let verified=false;
-          for(let i=0;i<4;i++){
-            await new Promise(resolve=>setTimeout(resolve,i===0?700:1400));
-            try{
-              const res=await jsonpCheck(5000);
-              if(res&&res.ok&&res.found){verified=true;break}
-            }catch(_){}
-          }
-          if(verified){
-            set(localStorage,'camp1122_quiz_saved',quizId);
-            saveMessage.textContent='三題答案已成功儲存，感謝您的協助！';
-            saveMessage.className='save-message';saveRetry.hidden=true;
-          }else throw new Error('目前無法確認是否已寫入試算表');
-        }catch(_){
-          saveMessage.textContent='問答已完成，但目前無法確認是否儲存成功。答案暫存在這台裝置，可按「重新同步」。';
-          saveMessage.className='save-message warn';saveRetry.hidden=false;
-        }finally{saving=false}
-      }
-      function openQuiz(){
+  if(answers.length!==3)return;
+  set(localStorage,'camp1226_quiz_saved',quizId);
+  saveMessage.textContent='🎉 您已完成三題問答！答案僅保存在此裝置，不會上傳到報名資料。';
+  saveMessage.className='save-message';
+  saveRetry.hidden=true;
+}
+function openQuiz(){
         intro.hidden=true;card.hidden=false;render();
         card.scrollIntoView({block:'start',behavior:'smooth'});
       }
@@ -343,7 +292,7 @@
           b.addEventListener('click',()=>{
             if(!started){started=true;pixel('ParentQuizStart')}
             answers.push(i);
-            set(localStorage,'camp1122_quiz_answers',JSON.stringify(answers));
+            set(localStorage,'camp1226_quiz_answers',JSON.stringify(answers));
             render();
           });
           options.appendChild(b);
@@ -367,13 +316,13 @@
         result.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
       }
       back.addEventListener('click',()=>{
-        if(answers.length){answers.pop();set(localStorage,'camp1122_quiz_answers',JSON.stringify(answers));render()}
+        if(answers.length){answers.pop();set(localStorage,'camp1226_quiz_answers',JSON.stringify(answers));render()}
       });
       restart.addEventListener('click',()=>{
         answers=[];started=false;complete=false;quizId=uuid();
-        set(localStorage,'camp1122_last_quiz_id',quizId);
-        remove(localStorage,'camp1122_quiz_answers');
-        remove(localStorage,'camp1122_quiz_saved');
+        set(localStorage,'camp1226_last_quiz_id',quizId);
+        remove(localStorage,'camp1226_quiz_answers');
+        remove(localStorage,'camp1226_quiz_saved');
         saveRetry.hidden=true;
         render();
         quiz.scrollIntoView({block:'start',behavior:'smooth'});
