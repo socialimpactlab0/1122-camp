@@ -2928,7 +2928,7 @@ let enabled=false,busy=false,full=false;
 const q=new URLSearchParams(location.search);
 function uuid(){if(crypto&&crypto.randomUUID)return crypto.randomUUID();return String(Date.now())+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)}
 function getStore(store,key){try{let v=store.getItem(key);if(!v){v=uuid();store.setItem(key,v)}return v}catch(e){return uuid()}}
-const visitor=getStore(localStorage,'camp1226_visitor'),session=getStore(sessionStorage,'camp1226_session');
+const visitor=getStore(localStorage,'camp1226_visitor_id'),session=getStore(sessionStorage,'camp1226_session_id');
 const fields=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'];
 const base={eventId:EVENT_ID,pageUrl:location.href,visitor_id:visitor,session_id:session,adSource:q.get('utm_source')||q.get('adSource')||'direct'};
 fields.forEach(k=>base[k]=q.get(k)||'');
@@ -2981,10 +2981,21 @@ const token=pendingToken(),data=Object.fromEntries(new FormData(form).entries())
 if(!/^09\d{8}$/.test((data.phone||'').trim())){resultMsg('請輸入09開頭的10碼手機號碼',false);return;}
 busy=true;send.disabled=true;send.textContent='正在確認報名…';resultMsg('資料送出中，請稍候，不要關閉網頁。',true);
 const payload={...base,...data,eventId:EVENT_ID,action:'register1226',clientRecordId:token};
+  // 與第一頁問答使用相同匿名識別碼；若先報名後問答，也能以報名 token 回填關聯。
+  try{
+    const ans=JSON.parse(localStorage.getItem('camp1226_quiz_answers')||'[]');
+    const id=localStorage.getItem('camp1226_last_quiz_id')||'';
+    if(Array.isArray(ans)&&ans.length===3&&ans.every(x=>[0,1,2].includes(x))&&id){
+      payload.quizId=id;
+      payload.answer1=String(ans[0]);
+      payload.answer2=String(ans[1]);
+      payload.answer3=String(ans[2]);
+    }
+  }catch(_){} 
 try{
 try{await fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:new URLSearchParams(payload)});}catch(e){}
 const result=await verify(token);
-if(result.ok){resultMsg('🎉 報名成功！報名編號：'+result.serial+'。活動前主辦單位會再通知。',true);form.reset();sessionStorage.removeItem('camp1226_pending');signupReminder.hidden=false;}
+if(result.ok){resultMsg('🎉 報名成功！報名編號：'+result.serial+'。活動前主辦單位會再通知。',true);sessionStorage.setItem('camp1226_last_registered_token',token);form.reset();sessionStorage.removeItem('camp1226_pending');signupReminder.hidden=!!payload.quizId;}
 else{resultMsg(result.message,false);if(result.final)sessionStorage.removeItem('camp1226_pending');}
 }finally{busy=false;await refresh()}
 });
