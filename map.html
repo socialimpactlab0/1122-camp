@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>親子自律挑戰地圖｜從神韻看見自律之美・11/22 免費親子活動</title>
-<meta name="description" content="11/22 親子自律成長活動互動地圖：點一點每個站點，看看當天會玩什麼、學什麼。" />
+<title>親子自律挑戰地圖｜從神韻看見自律之美・12/26 免費親子活動</title>
+<meta name="description" content="12/26 親子自律成長活動互動地圖：點一點每個站點，看看當天會玩什麼、學什麼。" />
 
 <!-- Q 版圓體字「粉圓體」（Google Fonts）。載入失敗時會自動改用系統字型，不影響功能 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -299,9 +299,9 @@
 <div class="topbar wrap"><a class="back" id="backLink" href="index.html">← 回活動介紹</a></div>
 
 <header class="head wrap">
-  <span class="eyebrow"><i></i>從神韻看見自律之美・11/22 親子自律成長活動</span>
+  <span class="eyebrow"><i></i>從神韻看見自律之美・12/26 親子自律成長活動</span>
   <h1>親子自律<em>挑戰地圖</em></h1>
-  <p class="lead"><span class="nb">跟著小路走一圈，</span><span class="nb">看看 11/22 下午</span><span class="nb">我們會一起玩什麼、學什麼。</span><br>點點看每個站點吧！</p>
+  <p class="lead"><span class="nb">跟著小路走一圈，</span><span class="nb">看看 12/26 下午</span><span class="nb">我們會一起玩什麼、學什麼。</span><br>點點看每個站點吧！</p>
   <div class="chips" id="chips"></div>
 </header>
 
@@ -337,9 +337,9 @@
 
   <section class="cta" aria-label="立即報名">
     <h2>完成挑戰・人人有禮</h2>
-    <p><span class="nb">免費參加，</span><span class="nb">家長 30 名＋孩子 30 名，</span><span class="nb">額滿即止</span></p>
+    <p><span class="nb">免費參加，</span><span class="nb">限60組親子，</span><span class="nb">額滿即止</span></p>
     <a class="btn" id="ctaBtn" href="#">立即免費報名</a>
-    <small>活動洽詢：<a href="tel:0913837389" style="text-decoration:underline">陳小姐 0913-837-389</a></small>
+    <small>活動洽詢：<a href="tel:0930885835" style="text-decoration:underline">陳小姐 0930-885-835</a></small>
   </section>
 </main>
 
@@ -349,7 +349,7 @@
   <div class="modal-card">
     <div class="big" id="doneArt" aria-hidden="true"></div>
     <h2 id="doneTitle">地圖挑戰完成！</h2>
-    <p>5 站都探索完囉！<br>11/22 現場等你來挑戰，完成挑戰・人人有禮。</p>
+    <p>5 站都探索完囉！<br>12/26 現場等你來挑戰，完成挑戰・人人有禮。</p>
     <a class="btn" id="doneCta" href="#">立即免費報名</a>
     <button class="btn ghost" id="doneClose" type="button" style="width:100%">繼續逛逛</button>
   </div>
@@ -371,8 +371,8 @@
     registerUrl: 'index.html#signup',
 
     // 報名截止時間（用來算「剩 N 天」）和畫面上顯示的截止日
-    deadline: '2026-11-15T23:59:59+08:00',
-    deadlineText: '11/15',
+    deadline: '',
+    deadlineText: '額滿即止',
 
     // 之後有 AI 插畫時，把圖放進 images 資料夾，再把檔名寫在這裡。
     // 例：'images/map-bg.jpg'　　留空 '' 就是用現在程式畫的 Q 版底圖
@@ -384,9 +384,9 @@
 
   // 上方資訊小標籤（最後一個標籤的「剩 N 天」會自動計算）
   var INFO_CHIPS = [
-    '11/22（日）14:00–16:30',
-    '台南維悅酒店',
-    '國小 3～6 年級',
+    '12/26（六）14:00–16:30',
+    '德光里活動中心',
+    '國小 1～6 年級',
     '免費'
   ];
 
@@ -397,7 +397,7 @@
   var STATIONS = [
     { id:'start', edge:true, art:'flag', short:'報名出發', name:'報名出發', kicker:'起點',
       x:20, y:85, color:'#ffe27a',
-      what:'填寫免費報名表，一起來挑戰！家長 30 名＋孩子 30 名，額滿即止。',
+      what:'填寫免費報名表，一起來挑戰！限60組親子，額滿即止。',
       parent:'報名成功後，主辦單位會於活動前以電話或訊息提醒。',
       extra:'info', cta:true },
 
@@ -448,13 +448,13 @@
   ];
 
   var PRIZES = [
-    { img:'images/prize-gold.webp', alt:'神韻藝術品漢風綺麗保溫瓶', title:'🥇 金獎（積分高的拿金獎）',
-      text:'益智型玩具＋神韻藝術品「漢風綺麗保溫瓶」（定價 1060 元）' },
-    { img:'images/prize-silver.webp', alt:'神韻藝術品仙境勝景書籤', title:'🥈 銀獎',
-      text:'益智型玩具＋神韻藝術品「仙境勝景書籤」' }
+    { img:'images/prize-gold.webp', alt:'神韻藝術品漢風綺麗保溫瓶', title:'過往活動金獎示例',
+      text:'過往活動獎品示例，12/26 禮品品項以現場公告為準' },
+    { img:'images/prize-silver.webp', alt:'神韻藝術品仙境勝景書籤', title:'過往活動銀獎示例',
+      text:'過往活動獎品示例，12/26 禮品品項以現場公告為準' }
   ];
 
-  var ADDRESS = '台南市安平區慶平路539號';
+  var ADDRESS = '臺南市東區德光里崇德路111號';
 
   /* ============================================================
      以下是程式區，一般不需要修改
@@ -749,7 +749,7 @@
     var box = $('#chips');
     INFO_CHIPS.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; box.appendChild(s); });
     var d = daysLeft(), hot = document.createElement('span'); hot.className = 'hot';
-    hot.textContent = d === null ? CONFIG.deadlineText + ' 截止'
+    hot.textContent = d === null ? '報名名額有限・'+CONFIG.deadlineText
       : d < 0 ? '報名已截止'
       : d === 0 ? '今天 ' + CONFIG.deadlineText + ' 截止'
       : CONFIG.deadlineText + ' 截止・剩 ' + d + ' 天';
@@ -927,12 +927,12 @@
 
     if (st.extra === 'info') {
       h += '<div class="p-extra"><ul class="info-list">' +
-        '<li><b>日期</b>2026/11/22（日）</li>' +
+        '<li><b>日期</b>2026/12/26（六）</li>' +
         '<li><b>時間</b>13:30 報到｜14:00–16:30</li>' +
-        '<li><b>地點</b>台南維悅酒店<br><span style="color:#7a6650;font-size:14px">' + esc(ADDRESS) + '</span></li>' +
-        '<li><b>對象</b>國小 3～6 年級孩子與父母</li>' +
-        '<li><b>費用</b>免費參加｜家長 30 名＋孩子 30 名</li>' +
-        '<li><b>截止</b>' + esc(CONFIG.deadlineText) + '</li></ul></div>';
+        '<li><b>地點</b>德光里活動中心<br><span style="color:#7a6650;font-size:14px">' + esc(ADDRESS) + '</span></li>' +
+        '<li><b>對象</b>國小 1～6 年級孩子與父母</li>' +
+        '<li><b>費用</b>免費參加｜限60組親子</li>' +
+        '<li><b>報名</b>' + esc(CONFIG.deadlineText) + '</li></ul></div>';
     }
     if (st.extra === 'prizes') {
       h += '<div class="p-extra">' + PRIZES.map(function (p) {
