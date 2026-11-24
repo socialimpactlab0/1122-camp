@@ -152,7 +152,7 @@
           <span class="choice-action">查看活動介紹 ›</span>
         </a>
       </div>
-      <p class="intro-disclosure"><strong>溫馨提醒：</strong>三題問答沒有標準答案，作答後會出現適合親子一起練習的小建議。答案只儲存在此裝置，不會自動傳送給主辦單位或連結報名資料。</p>
+      <p class="intro-disclosure"><strong>溫馨提醒：</strong>三題問答沒有標準答案，答完三題後，答案會存入主辦單位的 Google Sheet，供活動需求統計。問答不直接收集姓名、電話；若之後在同一裝置報名，可連結報名編號。您也可以略過問答直接報名。</p>
     </section>
     <section class="card" id="quizCard" aria-label="親子互動三題" hidden>
       <div class="quiz-entry-row"><span class="eyebrow">12/26 免費親子活動・3 題互動</span><a class="quiz-skip" id="quizSkipLink" href="./?view=details">直接了解活動 →</a></div>
@@ -165,7 +165,7 @@
         <div class="options" id="options"></div>
         <div class="footerline">
           <button class="back" type="button" id="backBtn">← 上一題</button>
-          <span class="smallnote">完成後會顯示練習建議（答案僅存此裝置）</span>
+          <span class="smallnote">答完會顯示建議，並將答案存入活動紀錄</span>
         </div>
       </div>
       <div class="result" id="resultPanel" aria-hidden="true" aria-live="polite">
@@ -180,7 +180,7 @@
           <p>國小 1～6 年級親子｜趣味搶答・影片挑戰・親子互動</p>
           <p>目前名額請依活動官網公告為準；線上報名暫停時仍可電話洽詢。</p>
         </div>
-        <p class="save-message" id="saveMessage" role="status" aria-live="polite">正在整理您的親子練習建議…</p>
+        <p class="save-message" id="saveMessage" role="status" aria-live="polite">正在儲存三題答案…</p>
         <button class="secondary save-retry" id="saveRetryBtn" type="button" hidden>重新同步問答資料</button>
         <div class="result-actions" id="resultActions">
           <a class="primary" id="directSignupLink" href="./#signup">直接報名／查看名額 ›</a>
@@ -195,7 +195,8 @@
   <script>
     (function(){
       'use strict';
-      // 12/26 互動問答：個人結果僅保存在本機，不提交到先前活動的 GAS 問答名單。
+      // 12/26 三題答案寫入獨立 Sheet，報名後可依匿名識別碼連結。
+      const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzQ3t-2gBDw4DbXtLt2OEB4kLtCL2yc5tjpCf3jMze7tl1hNodASZzkAYfQHrkXNIl1/exec';
       const questions=[
         {title:'孩子目前最讓您煩惱的是什麼？',options:['經常捨不得放下手機或平板','寫功課容易拖延，常需要提醒','想培養更主動的生活與學習習慣']},
         {title:'當孩子不願意配合時，您通常怎麼做？',options:['多提醒幾次，希望孩子快點行動','先約定時間或規則，再一起執行','試著聽孩子的想法，再討論怎麼做']},
@@ -243,6 +244,7 @@
         set(localStorage,'camp1226_last_quiz_id',quizId);
         remove(localStorage,'camp1226_quiz_answers');
         remove(localStorage,'camp1226_quiz_saved');
+        remove(localStorage,'camp1226_quiz_sheet_saved');
       }
       if(query.has('start')){
         try{const clean=new URL(location.href);clean.searchParams.delete('start');history.replaceState(null,'',clean.href)}catch(_){}
@@ -281,11 +283,49 @@
       });
 
       async function saveQuiz(){
-  if(answers.length!==3)return;
-  set(localStorage,'camp1226_quiz_saved',quizId);
-  saveMessage.textContent='🎉 您已完成三題問答！答案僅保存在此裝置，不會上傳到報名資料。';
-  saveMessage.className='save-message';
-  saveRetry.hidden=true;
+  if(answers.length!==3||saving)return;
+  if(get(localStorage,'camp1226_quiz_sheet_saved')===quizId){
+    saveMessage.textContent='🎉 三題答案已成功儲存！';saveRetry.hidden=true;return;
+  }
+  saving=true;saveMessage.textContent='正在確認問答資料是否已寫入…';saveRetry.hidden=true;
+  function jsonp(action,extras={}){
+    return new Promise((resolve,reject)=>{
+      const cb='q1226_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+      const script=document.createElement('script');let done=false,timer;
+      function finish(err,r){if(done)return;done=true;clearTimeout(timer);delete window[cb];script.remove();err?reject(err):resolve(r)}
+      window[cb]=r=>finish(null,r);
+      script.onerror=()=>finish(new Error('連線失敗'));
+      script.src=GAS_WEB_APP_URL+'?'+new URLSearchParams({...extras,action,callback:cb,t:String(Date.now())});
+      timer=setTimeout(()=>finish(new Error('逾時')),7000);
+      document.body.appendChild(script);
+    });
+  }
+  try{
+    const cfg=await jsonp('registrationConfig1226');
+    if(cfg?.ok!==true||cfg?.eventId!=='1226'||cfg?.quizEnabled!==true)throw Error('問答儲存尚未部署');
+    const payload={action:'saveQuiz1226',eventId:'1226',quizId,visitor_id:visitorId,session_id:sessionId,
+      answer1:String(answers[0]),answer2:String(answers[1]),answer3:String(answers[2]),
+      registrationToken:afterSignup?(get(sessionStorage,'camp1226_last_registered_token')||''):''};
+    const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),15000);
+    try{await fetch(GAS_WEB_APP_URL,{method:'POST',mode:'no-cors',credentials:'omit',
+      referrerPolicy:'no-referrer',body:new URLSearchParams(payload),signal:ctrl.signal});}
+    finally{clearTimeout(timer)}
+    let found=false;
+    for(let i=0;i<5;i++){
+      await new Promise(done=>setTimeout(done,i===0?800:1250));
+      try{const r=await jsonp('checkQuiz1226',{quizId,visitor_id:visitorId});
+        if(r?.ok===true&&r?.eventId==='1226'&&r?.found===true){found=true;break;}}
+      catch(_){}
+    }
+    if(!found)throw Error('未確認寫入');
+    set(localStorage,'camp1226_quiz_saved',quizId);
+    set(localStorage,'camp1226_quiz_sheet_saved',quizId);
+    saveMessage.textContent='🎉 三題答案已成功儲存，感謝您！';
+    saveMessage.className='save-message';saveRetry.hidden=true;
+  }catch(e){
+    saveMessage.textContent='已完成問答，但尚未確認存入 Google Sheet，可按「重新同步問答資料」重試；不影響報名。';
+    saveMessage.className='save-message warn';saveRetry.hidden=false;
+  }finally{saving=false}
 }
 function openQuiz(){
         intro.hidden=true;card.hidden=false;render();
@@ -341,6 +381,7 @@ function openQuiz(){
         set(localStorage,'camp1226_last_quiz_id',quizId);
         remove(localStorage,'camp1226_quiz_answers');
         remove(localStorage,'camp1226_quiz_saved');
+        remove(localStorage,'camp1226_quiz_sheet_saved');
         saveRetry.hidden=true;
         render();
         quiz.scrollIntoView({block:'start',behavior:'smooth'});
