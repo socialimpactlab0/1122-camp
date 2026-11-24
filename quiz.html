@@ -91,6 +91,12 @@
     .save-retry{margin-top:0!important;border:1px solid #d6ded2!important;border-radius:12px}
     .result-actions{display:grid;gap:2px}
     .privacy{font-size:12px;line-height:1.85;color:#7c887d;max-width:720px;margin:19px auto 0;text-align:center}
+    .question-first .masthead{display:none}
+    .question-first .page{padding-top:20px}
+    .question-first #quizCard{margin-top:0}
+    .quiz-entry-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .quiz-skip{color:#52725b;font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:7px 2px}
+    .quiz-skip:focus-visible{outline:2px solid #365946;outline-offset:4px}
     [hidden]{display:none!important}
     @media(max-width:700px){
       .topbar{padding:13px 0}
@@ -115,7 +121,7 @@
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
-<body>
+<body class="question-first">
   <header class="topbar">
     <div class="container"><span class="brand">從神韻看見自律之美</span><a class="toplink" id="topEventLink" href="./">查看活動資訊</a></div>
   </header>
@@ -128,7 +134,7 @@
       </div>
       <div class="mastphoto"><img src="images/1122-hero-photo.jpg" alt="過往親子活動實拍：家長和孩子共同互動"><span class="photolabel">過往親子活動實拍</span></div>
     </section>
-    <section class="card intro-card" id="introPanel" aria-label="選擇參與方式">
+    <section class="card intro-card" id="introPanel" aria-label="選擇參與方式" hidden>
       <span class="eyebrow">歡迎來到親子自律成長活動</span>
       <h2>您想先從哪裡開始？</h2>
       <p class="intro-lead">先用 3 題小問答，了解自己最想和孩子練習的方向；或先看看活動內容，再決定是否參加。</p>
@@ -149,6 +155,7 @@
       <p class="intro-disclosure"><strong>溫馨提醒：</strong>三題問答沒有標準答案，作答後會出現適合親子一起練習的小建議。答案只儲存在此裝置，不會自動傳送給主辦單位或連結報名資料。</p>
     </section>
     <section class="card" id="quizCard" aria-label="親子互動三題" hidden>
+      <div class="quiz-entry-row"><span class="eyebrow">12/26 免費親子活動・3 題互動</span><a class="quiz-skip" id="quizSkipLink" href="./?view=details">直接了解活動 →</a></div>
       <div id="quizPanel">
         <div class="progress-top"><span id="progressName">第 1 題，共 3 題</span><span id="progressValue">1 / 3</span></div>
         <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
@@ -230,6 +237,16 @@
         const saved=rawAnswers?JSON.parse(rawAnswers):[];
         if(Array.isArray(saved)&&saved.length<=3&&saved.every(x=>[0,1,2].includes(x)))answers=saved;
       }catch(_){}
+      // 從原報名網址進入時從第 1 題開始；重新整理保留尚未答完的進度。
+      if(!afterSignup && (query.get('start')==='1' || answers.length===3)){
+        answers=[];quizId=uuid();
+        set(localStorage,'camp1226_last_quiz_id',quizId);
+        remove(localStorage,'camp1226_quiz_answers');
+        remove(localStorage,'camp1226_quiz_saved');
+      }
+      if(query.has('start')){
+        try{const clean=new URL(location.href);clean.searchParams.delete('start');history.replaceState(null,'',clean.href)}catch(_){}
+      }
       const utm={};
       ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(k=>{
         utm[k]=query.get(k)||get(localStorage,'camp1226_'+k)||'';
@@ -256,6 +273,7 @@
       byId('directSignupLink').href=eventUrl('signup');
       byId('topEventLink').href=eventUrl('');
       byId('afterSignupLink').href=eventUrl('');
+      byId('quizSkipLink').href=eventUrl('');
       ['introEventLink','eventLink','directSignupLink','afterSignupLink'].forEach(id=>{
         byId(id).addEventListener('click',()=>{
           pixel(id==='introEventLink'?'ParentQuizInfoFirst':'ParentQuizEventClick');
@@ -328,7 +346,7 @@ function openQuiz(){
         quiz.scrollIntoView({block:'start',behavior:'smooth'});
       });
       saveRetry.addEventListener('click',saveQuiz);
-      if(afterSignup){openQuiz()}
+      openQuiz();
       // 一般 FB 點擊首先由家長選擇問答或活動；不強迫作答。
     })();
   </script>
