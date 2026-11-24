@@ -4,6 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 12/26 第一頁：一般入站先進入三題互動；由問答、地圖、目錄與錨點回來則直接顯示完整原始報名網站。 -->
+  <script>
+  (function(){
+    var params=new URLSearchParams(window.location.search);
+    var enteringDetails=params.get('from_quiz')==='1' || params.get('view')==='details' || !!window.location.hash;
+    if(!enteringDetails){
+      var next=new URL('quiz.html',window.location.href);
+      next.searchParams.set('start','1');
+      next.hash='';
+      window.location.replace(next.href);
+    }
+  })();
+  </script>
 
 
   <!-- 明亮易讀的繁體中文字體；載入失敗時仍使用裝置內建中文字型 -->
