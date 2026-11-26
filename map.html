@@ -337,7 +337,7 @@
 
   <section class="cta" aria-label="立即報名">
     <h2>完成挑戰・人人有禮</h2>
-    <p><span class="nb">免費參加，</span><span class="nb">限60組親子，</span><span class="nb">額滿即止</span></p>
+    <p><span class="nb">本場免費開放 40 組親子（共 80 人）報名，</span><span class="nb">由主辦單位人工控管受理</span></p>
     <a class="btn" id="ctaBtn" href="#">立即免費報名</a>
     <small>活動洽詢：<a href="tel:0930885835" style="text-decoration:underline">陳小姐 0930-885-835</a></small>
   </section>
@@ -372,7 +372,7 @@
 
     // 報名截止時間（用來算「剩 N 天」）和畫面上顯示的截止日
     deadline: '',
-    deadlineText: '額滿即止',
+    deadlineText: '人工控管',
 
     // 之後有 AI 插畫時，把圖放進 images 資料夾，再把檔名寫在這裡。
     // 例：'images/map-bg.jpg'　　留空 '' 就是用現在程式畫的 Q 版底圖
@@ -397,7 +397,7 @@
   var STATIONS = [
     { id:'start', edge:true, art:'flag', short:'報名出發', name:'報名出發', kicker:'起點',
       x:20, y:85, color:'#ffe27a',
-      what:'填寫免費報名表，一起來挑戰！限60組親子，額滿即止。',
+      what:'填寫免費報名表，一起來挑戰！本場預計40組親子（共80人），依主辦單位人工受理情況為準。',
       parent:'報名成功後，主辦單位會於活動前以電話或訊息提醒。',
       extra:'info', cta:true },
 
@@ -749,7 +749,7 @@
     var box = $('#chips');
     INFO_CHIPS.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; box.appendChild(s); });
     var d = daysLeft(), hot = document.createElement('span'); hot.className = 'hot';
-    hot.textContent = d === null ? '報名名額有限・'+CONFIG.deadlineText
+    hot.textContent = d === null ? '線上報名由主辦單位人工控管'
       : d < 0 ? '報名已截止'
       : d === 0 ? '今天 ' + CONFIG.deadlineText + ' 截止'
       : CONFIG.deadlineText + ' 截止・剩 ' + d + ' 天';
@@ -931,7 +931,7 @@
         '<li><b>時間</b>13:30 報到｜14:00–16:30</li>' +
         '<li><b>地點</b>德光里活動中心<br><span style="color:#7a6650;font-size:14px">' + esc(ADDRESS) + '</span></li>' +
         '<li><b>對象</b>國小 1～6 年級孩子與父母</li>' +
-        '<li><b>費用</b>免費參加｜限60組親子</li>' +
+        '<li><b>費用</b>免費參加｜預計40組親子（共80人）</li>' +
         '<li><b>報名</b>' + esc(CONFIG.deadlineText) + '</li></ul></div>';
     }
     if (st.extra === 'prizes') {
