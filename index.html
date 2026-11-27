@@ -2557,20 +2557,6 @@
 </script>
 
     <section id="signup" class="signup-section">
-      <div class="container form-box">
-        <label for="campSession"><strong>免費報名｜請選擇一個場次</strong></label>
-        <select id="campSession" style="display:block;width:100%;margin:12px 0;padding:12px;font:inherit">
-          <option value="">請選擇場次</option>
-          <option value="1225">12/25（五）永康區・大橋里活動中心</option>
-          <option value="1226">12/26（六）東區・德光里活動中心</option>
-        </select>
-        <div id="campWest" hidden>
-          <p>臺南市永康區大橋三街230號｜13:30 報到，14:00–16:30 活動</p>
-          <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSd-0BFs5k57U7DaMDKNWSPcnj4KQlG-JAPpzIPQNq2GP2qZBA/viewform" target="_blank" rel="noopener">另開永康場報名表</a> ｜ <a href="tel:0953056201">洽詢郭小姐</a></p>
-          <iframe title="12/25 永康大橋里親子自律活動報名表" data-src="https://docs.google.com/forms/d/e/1FAIpQLSd-0BFs5k57U7DaMDKNWSPcnj4KQlG-JAPpzIPQNq2GP2qZBA/viewform?embedded=true" style="width:100%;height:85vh;border:0"></iframe>
-        </div>
-      </div>
-      <div id="campEast" hidden>
       <div class="container signup-full-announcement" id="signupFullNotice" hidden aria-live="polite">
         <div class="signup-full-card">
           <p class="signup-full-success" id="signupFullSuccess" role="status" hidden></p>
@@ -2583,7 +2569,8 @@
           <p><strong>線上報名目前已暫停受理。</strong></p>
           <p>目前由主辦單位人工管理報名受理情況，歡迎改以電話洽詢。</p>
           <p><strong>若您仍希望帶孩子參加，歡迎來電詢問是否尚有可安排的名額。</strong></p>
-          <a class="btn btn-primary signup-full-call" href="tel:0930885835">撥打 0930-885-835 洽詢陳小姐</a>
+          <a class="btn btn-primary signup-full-call" href="tel:0930885835">東區場 0930-885-835 陳小姐</a>
+          <a class="btn btn-primary" href="tel:0953056201">永康場 0953-056-201 郭小姐</a>
           <p>感謝您的支持與理解，期待與您和孩子相見！</p>
           <p class="signup-full-note"><strong>溫馨提醒：</strong>主辦單位得視實際報名情況、場地及活動需求，保留調整參加名額與活動內容之權利；如有重要異動，將適時通知已報名的家長。</p>
         </div>
@@ -2604,11 +2591,11 @@
           </div>
 
           <div class="small">
-            日期：2026/12/26（六）<br>
-            時間：13:30報到｜14:00–16:30<br>
-            地點：德光里活動中心<br>
-            地址：臺南市東區德光里崇德路111號<br>
-            報名專線：0930-885-835 陳小姐
+            12/25（五）永康大橋里活動中心・大橋三街230號<br>
+            洽詢郭小姐 0953-056-201<br>
+            12/26（六）東區德光里活動中心・崇德路111號<br>
+            洽詢陳小姐 0930-885-835<br>
+            兩場皆為 13:30 報到，14:00–16:30 活動
           </div>
         </div>
 
@@ -2616,10 +2603,16 @@
           <input type="hidden" id="adSource" name="adSource" value="">
           <div class="signup-push">
             <strong>每場免費開放 40 組親子（共 80 人）報名，成功後活動前會再通知。</strong>
-            <p>本活動免費參加，孩子需由父母陪同。表單約1分鐘完成，請確認12/26（六）13:30報到、14:00–16:30可親子同行後再送出。</p>
+            <p>本活動免費參加，孩子需由父母陪同。表單約1分鐘完成，請確認所選場次當天13:30報到、14:00–16:30可親子同行後再送出。</p>
           </div>
           <h2 class="form-box-title">填寫報名資料</h2>
-          <div id="readiness" role="status" aria-live="polite">正在確認12/26報名系統，請稍候…</div>
+          <label for="campSession"><strong>免費報名｜請選擇一個場次</strong></label>
+        <select id="campSession" name="campSession" required style="display:block;width:100%;margin:12px 0;padding:12px;font:inherit">
+          <option value="">請選擇場次</option>
+          <option value="1225">12/25（五）永康區・大橋里活動中心</option>
+          <option value="1226">12/26（六）東區・德光里活動中心</option>
+        </select>
+          <div id="readiness" role="status" aria-live="polite">正在確認報名系統，請稍候…</div>
           <p class="form-box-subtitle">參加對象為國小1～6年級孩子與父母，家長與孩子請共同出席。</p>
 
           <div class="form-grid">
@@ -2673,7 +2666,6 @@
           </div>
         </form>
       </div>
-    </div>
     </section>
 
 <section id="experience" class="experience-section">
@@ -2939,17 +2931,6 @@ const readiness=document.querySelector('#readiness'),status=document.querySelect
 const openForm=document.querySelector('#signupOpenForm'),fullNotice=document.querySelector('#signupFullNotice'),fullSuccess=document.querySelector('#signupFullSuccess');
 const signupReminder=document.querySelector('#signupQuizReminder');
 let enabled=false,busy=false,full=false;
-const choice=document.getElementById('campSession');
-function displaySession(){
-  const west=document.getElementById('campWest');
-  west.hidden=choice.value!=='1225';
-  document.getElementById('campEast').hidden=choice.value!=='1226';
-  const frame=west.querySelector('iframe');
-  if(!west.hidden&&!frame.hasAttribute('src'))frame.src=frame.dataset.src;
-}
-choice.addEventListener('change',displaySession);
-window.addEventListener('pageshow',displaySession);
-displaySession();
 const q=new URLSearchParams(location.search);
 function uuid(){if(crypto&&crypto.randomUUID)return crypto.randomUUID();return String(Date.now())+'-'+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)}
 function getStore(store,key){try{let v=store.getItem(key);if(!v){v=uuid();store.setItem(key,v)}return v}catch(e){return uuid()}}
@@ -2971,9 +2952,9 @@ function setState(isReady,isFull=false){
 enabled=!!isReady;full=!!isFull;send.disabled=!enabled||full||busy;
 openForm.hidden=full;fullNotice.hidden=!full;
 if(!full)fullSuccess.hidden=true;
-if(!enabled){readiness.textContent='12/26 報名系統正在準備中，目前可先透過電話 0930-885-835 洽詢。';send.textContent='線上報名準備中';}
+if(!enabled){readiness.textContent='報名系統正在準備中，請洽各場聯絡人。';send.textContent='線上報名準備中';}
 else if(full){readiness.textContent='線上報名目前已暫停受理，請電話洽詢。';send.textContent='線上報名暫停・電話洽詢';}
-else{readiness.textContent='12/26 報名系統已開放，歡迎填寫。';send.textContent='送出免費報名';}
+else{readiness.textContent='兩場共用報名表已開放，歡迎填寫。';send.textContent='送出免費報名';}
 }
 async function refresh(){
 try{
@@ -3005,7 +2986,9 @@ if(!form.reportValidity())return;
 const token=pendingToken(),data=Object.fromEntries(new FormData(form).entries());
 if(!/^09\d{8}$/.test((data.phone||'').trim())){resultMsg('請輸入09開頭的10碼手機號碼',false);return;}
 busy=true;send.disabled=true;send.textContent='正在確認報名…';resultMsg('資料送出中，請稍候，不要關閉網頁。',true);
-const payload={...base,...data,eventId:EVENT_ID,action:'register1226',clientRecordId:token};
+const sessionLabel=form.elements.campSession.selectedOptions[0].textContent.trim();
+const note='【場次】'+sessionLabel+(data.note?'\n'+data.note:'');
+const payload={...base,...data,note,eventId:EVENT_ID,action:'register1226',clientRecordId:token};
   // 與第一頁問答使用相同匿名識別碼；若先報名後問答，也能以報名 token 回填關聯。
   try{
     const ans=JSON.parse(localStorage.getItem('camp1226_quiz_answers')||'[]');
@@ -3020,7 +3003,7 @@ const payload={...base,...data,eventId:EVENT_ID,action:'register1226',clientReco
 try{
 try{await fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:new URLSearchParams(payload)});}catch(e){}
 const result=await verify(token);
-if(result.ok){resultMsg('🎉 報名成功！報名編號：'+result.serial+'。活動前主辦單位會再通知。',true);sessionStorage.setItem('camp1226_last_registered_token',token);form.reset();sessionStorage.removeItem('camp1226_pending');signupReminder.hidden=!!payload.quizId;}
+if(result.ok){resultMsg('🎉 '+sessionLabel+' 報名成功！報名編號：'+result.serial+'。活動前主辦單位會再通知。',true);sessionStorage.setItem('camp1226_last_registered_token',token);form.reset();sessionStorage.removeItem('camp1226_pending');signupReminder.hidden=!!payload.quizId;}
 else{resultMsg(result.message,false);if(result.final)sessionStorage.removeItem('camp1226_pending');}
 }finally{busy=false;await refresh()}
 });
