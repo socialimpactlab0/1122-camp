@@ -2493,7 +2493,7 @@
             <span>親子同行</span>
             <span>互動搶答與積分</span>
             <span>有精美禮物・人人有獎</span>
-            <span>每場免費開放 40 組親子（共 80 人）報名</span>
+            <span>永康大橋里 35 組（70 人）、東區德光里 60 組（120 人），免費報名</span>
           </div>
 
           <div class="hero-proof">
@@ -2602,7 +2602,7 @@
         <form class="form-box" id="signupForm">
           <input type="hidden" id="adSource" name="adSource" value="">
           <div class="signup-push">
-            <strong>每場免費開放 40 組親子（共 80 人）報名，成功後活動前會再通知。</strong>
+            <strong>永康大橋里 35 組（70 人）、東區德光里 60 組（120 人），免費報名，成功後活動前會再通知。</strong>
             <p>本活動免費參加，孩子需由父母陪同。表單約1分鐘完成，請確認所選場次當天13:30報到、14:00–16:30可親子同行後再送出。</p>
           </div>
           <h2 class="form-box-title">填寫報名資料</h2>
@@ -2959,7 +2959,7 @@ else{readiness.textContent='兩場共用報名表已開放，歡迎填寫。';se
 async function refresh(){
 try{
 const cap=await jsonp({action:'registrationConfig1226'},10500);
-if(!cap||cap.ok!==true||cap.eventId!==EVENT_ID||cap.eventDate!=='2026-12-26'||cap.targetGroups!==40||cap.manualControl!==true){setState(false);return;}
+if(!cap||cap.ok!==true||cap.eventId!==EVENT_ID||cap.eventDate!=='2026-12-26'||cap.manualControl!==true){setState(false);return;}
 const st=await jsonp({action:'registrationStatus1226'});
 if(!st||st.ok!==true||st.eventId!==EVENT_ID||st.manualControl!==true||typeof st.full!=='boolean'){setState(false);return;}
 setState(true,st.full);
